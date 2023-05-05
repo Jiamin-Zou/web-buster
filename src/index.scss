@@ -1,9 +1,9 @@
 @import "./styles/css_reset.scss";
-@import "./styles/example.scss";
 @font-face {
     font-family: ThaleahFat;
     src: url(../src/assets/font/ThaleahFat.ttf);
 }
+
 $game-color: teal;
 $game-font: ThaleahFat;
 
@@ -55,8 +55,8 @@ body {
     border-top: 0px;
     margin: 20px;
     margin-top: 0px;
-    width: 800px;
-    height: 500px;
+    // width: 800px;
+    // height: 500px;
 }
 .game-head {
     display: flex;
