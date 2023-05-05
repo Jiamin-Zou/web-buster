@@ -5,10 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.height = 500;
 
     let player = new Image();
-    player.src="../src/assets/images/sprites/player_walk.png";
+    player.src="../src/assets/images/sprites/player_walking.png";
+    let bg = new Image();
+    bg.src = "../src/assets/images/background/game_bg.png"
 
     let width = 32;
-    let height = 32;
+    let height = 33;
     let frame = 7;
     let frameY = 0;
     let currentFrame = 0;
@@ -41,7 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animate() {
         ctx.clearRect(0,0,canvas.width,canvas.height);
-        ctx.drawImage(player, currentFrame*width, frameY*height, width, height, x, canvas.height-150, width*2, height*2);
+        ctx.drawImage(bg, 0,0, canvas.width, canvas.height)
+        ctx.drawImage(player, currentFrame*width, frameY*height, width, height, x, canvas.height-130, width*2, height*2);
         window.setTimeout(() => {requestAnimationFrame(animate)}, 1000/30);
     }
     animate();
