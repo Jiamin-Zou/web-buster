@@ -1,13 +1,16 @@
+import playerSprite from "../src/assets/images/sprites/player_walking.png";
+import gameBGImg from "../src/assets/images/background/game_bg.png";
+
 document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     canvas.width = 800;
     canvas.height = 500;
 
-    let player = new Image();
-    player.src="../src/assets/images/sprites/player_walking.png";
-    let bg = new Image();
-    bg.src = "../src/assets/images/background/game_bg.png"
+    let player = document.createElement("img");
+    player.src=playerSprite;
+    let bg = document.createElement("img");
+    bg.src = gameBGImg;
 
     let width = 32;
     let height = 33;

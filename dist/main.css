@@ -1,3 +1,188 @@
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:"";content:none}table{border-collapse:collapse;border-spacing:0}@font-face{font-family:ThaleahFat;src:url(../src/assets/font/ThaleahFat.ttf)}body{background-image:url(../src/assets/images/background/page_background.png);display:flex;justify-content:center;font-family:ThaleahFat}.main-container{width:100%;height:100%;display:flex;flex-direction:column;align-items:center}.header{width:80%;height:100px;border:4px ridge #ffdead;background-color:teal;font-family:ThaleahFat;color:blue;font-size:65pt;font-weight:bold;text-decoration:underline;text-decoration-color:#ff0;text-decoration-style:dotted;text-shadow:3px 4px red;text-align:center;display:flex;justify-content:center}.header h1{height:80%;background-color:ivory;padding:3px;width:fit-content;border-radius:5px;border:5px double navy;border-style:double}#canvas{background-color:teal;border:4px ridge #ffdead;border-top:0px;margin:20px;margin-top:0px}.game-head{display:flex;justify-content:space-between;align-items:center;color:#fff;background-color:#000;border:4px ridge #ffdead;border-bottom:0px;margin:20px;margin-bottom:0px;padding:20;width:800px;height:40px}.game-head .player-health{display:flex}.footer{width:80%;height:150px;border:4px ridge #ffdead;background-color:teal;display:flex;justify-content:space-between}.audio-control{width:20%;display:flex;flex-direction:column;justify-content:center;align-items:center;background-color:#fff;margin:10px;border:3px solid blue}.audio-control p{font-size:24px}.audio-control>p{font-size:26px}.audio-control #bgm-on,.audio-control #sfx-on{display:none}.audio-control .bgm-sound-icon,.audio-control .sfx-sound-icon{font-size:15px}.audio-control .bgm-sound-icon:hover,.audio-control .sfx-sound-icon:hover{cursor:pointer}.audio-control .sound-control{display:flex}.instructions{width:50%;display:flex;flex-direction:column;justify-content:center;align-items:center;background-color:#fff;margin:10px;border:3px solid blue}.links{width:20%;display:flex;flex-direction:column;justify-content:center;align-items:center;background-color:#fff;margin:10px;border:3px solid blue}
+/*!*************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
+  \*************************************************************************************************************************************/
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
 
-/*# sourceMappingURL=main.css.map*/
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+@font-face {
+  font-family: ThaleahFat;
+  src: url(../src/assets/font/ThaleahFat.ttf);
+}
+body {
+  background-image: url(../src/assets/images/background/page_background.png);
+  display: flex;
+  justify-content: center;
+  font-family: ThaleahFat;
+}
+
+.main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  width: 80%;
+  height: 100px;
+  border: 4px ridge navajowhite;
+  background-color: teal;
+  font-family: ThaleahFat;
+  color: blue;
+  font-size: 65pt;
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-color: yellow;
+  text-decoration-style: dotted;
+  text-shadow: 3px 4px red;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.header h1 {
+  height: 80%;
+  background-color: ivory;
+  padding: 3px;
+  width: fit-content;
+  border-radius: 5px;
+  border: 5px double navy;
+  border-style: double;
+}
+
+#canvas {
+  background-color: teal;
+  border: 4px ridge navajowhite;
+  border-top: 0px;
+  margin: 20px;
+  margin-top: 0px;
+}
+
+.game-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  background-color: black;
+  border: 4px ridge navajowhite;
+  border-bottom: 0px;
+  margin: 20px;
+  margin-bottom: 0px;
+  padding: 20;
+  width: 800px;
+  height: 40px;
+}
+.game-head .player-health {
+  display: flex;
+}
+
+.footer {
+  width: 80%;
+  height: 150px;
+  border: 4px ridge navajowhite;
+  background-color: teal;
+  display: flex;
+  justify-content: space-between;
+}
+
+.audio-control {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  margin: 10px;
+  border: 3px solid blue;
+}
+.audio-control p {
+  font-size: 24px;
+}
+.audio-control > p {
+  font-size: 26px;
+}
+.audio-control #bgm-on, .audio-control #sfx-on {
+  display: none;
+}
+.audio-control .bgm-sound-icon, .audio-control .sfx-sound-icon {
+  font-size: 15px;
+}
+.audio-control .bgm-sound-icon:hover, .audio-control .sfx-sound-icon:hover {
+  cursor: pointer;
+}
+.audio-control .sound-control {
+  display: flex;
+}
+
+.instructions {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  margin: 10px;
+  border: 3px solid blue;
+}
+
+.links {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  margin: 10px;
+  border: 3px solid blue;
+}
