@@ -2,13 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./dist/main.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/8918e1da19.js" crossorigin="anonymous"></script>
     <script src="./dist/main.js"></script>
     <title>Web Buster!</title>
 </head>
 <body>
-    <div id="main"></div>
+    <div class="main-container">
+        <div class="header">
+            <h1 id="game-name">Web Buster</h1>
+        </div>
+
+        <div class="game-container">
+            <div class="game-head">
+                <div class="player-health">
+                    <p>HP</p>
+                    <div id="hp-stat">💖💖💖💖💖</div>
+                </div>
+                <div>Enemy Count: XX</div>
+            </div>
+            
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <div class="footer">
+            <div class="audio-control">
+                <p>Audio Control</p>
+                <br>
+                <div class="sound-control">
+                    <p>BGM</p>
+                    <div class="bgm-sound-icon" id="bgm-on">
+                        <i class="fa-solid fa-volume-high"> On</i>
+                    </div>
+                    <div class="bgm-sound-icon" id="bgm-off">
+                        <i class="fa-solid fa-volume-xmark"> OFF</i>
+                    </div>
+                </div>
+                <br>
+                <div class="sound-control">
+                    <p>SFX</p>
+                    <div class="sfx-sound-icon" id="sfx-on">
+                        <i class="fa-solid fa-volume-high"> ON</i>
+                    </div>
+                    <div class="sfx-sound-icon" id="sfx-off">
+                        <i class="fa-solid fa-volume-xmark"> OFF</i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <p>Instructions</p>
+
+            </div>
+
+            <div class="links">
+                <a href="https://jiamin-zou.github.io/web-buster/">
+                    <i class="fa-brands fa-square-github fa-2xl"></i>
+                </a>
+            </div>
+
+        </div>
+    </div>
 </body>
 </html>
