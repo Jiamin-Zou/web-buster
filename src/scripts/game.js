@@ -60,6 +60,23 @@ class Game {
         })
     }
 
+    platformScroll(dir) {
+        // dir = player moving direction
+        //everything should move the opposite direction of player movement
+        let spd = 0
+        switch (dir) {
+            case "left":
+                spd = this.player.speed;
+                break;
+            case "right":
+                spd = this.player.speed * (-1);
+                break;
+        }
+        this.platforms.forEach((platform) => {
+            platform.pos[0] += spd
+        })
+    }
+
     step() {
         this.player.update();
         this.checkOnPlaform();
