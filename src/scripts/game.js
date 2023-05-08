@@ -16,6 +16,11 @@ class Game {
         const player = new Player({game: this})
         return player;
     }
+    step(delta) {
+        this.player.update(ctx)
+
+    }
+
     draw(ctx) {
         ctx.clearRect(0, 0, this.screenWidth, this.screenHeight)
         this.player.update(ctx);

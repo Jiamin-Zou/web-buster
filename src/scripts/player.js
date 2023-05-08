@@ -14,6 +14,7 @@ class Player extends MovingObject {
         args.height = 38;
         args.pos = Player.STARTPOS;
         args.health = 30;
+        args.frames = 6;
         super(args);
 
         this.idleLeft = idleLeft;
@@ -22,7 +23,6 @@ class Player extends MovingObject {
         this.runRight = runRight;
         this.hpDisplay = document.querySelector("#hp-stat");
         this.hpDisplay.innerText = this.health;
-        this.frames = this.img.width / this.width
         this.pressedKey = {
             left: false,
             right: false,
@@ -32,7 +32,7 @@ class Player extends MovingObject {
         }
     };
 
-    move() {
+    updateMovement() {
         const spd = this.speed
         if (this.pressedKey.left) {
             this.vel[0] = -spd;
@@ -44,6 +44,10 @@ class Player extends MovingObject {
 
         if (this.pressedKey.up){
             this.vel[1] = -spd;
+        }
+
+        if(this.pressedKey.shoot) {
+            this.shoot();
         }
     }
 

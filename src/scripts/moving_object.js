@@ -16,11 +16,12 @@ class MovingObject {
         this.frameY = 0
         this.dWidth = this.width * 2;
         this.dHeight = this.height * 2;
-        this.moving = false;
+        this.frames = args.frames
     }
 
     draw(ctx) {
         const [dX, dY] = this.pos;
+        this.frameX = ++this.frameX % this.frames;
         const sX = this.frameX * this.width;
         const sY = this. frameY * this.height;
 
@@ -36,7 +37,10 @@ class MovingObject {
         } else {
             this.vel[1] = 0
         }
-        this.move()
+        this.updateMovement()
+    }
+    updateMovement() {
+
     }
 
     move(timeDelta) {
