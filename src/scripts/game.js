@@ -192,7 +192,7 @@ class Game {
         this.projectiles.forEach((prj) => {
             this.enemies.forEach((enemy) => {
                 if (Util.projectileCollison(prj, enemy) && !enemy.isHurt) {
-                    prj.remove()
+                    prj.health --
                     enemy.health--;
                     enemy.isHurt = true;
                 }
