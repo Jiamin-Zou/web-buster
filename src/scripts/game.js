@@ -15,11 +15,12 @@ class Game {
     constructor (canvas) {
         this.screenWidth = canvas.width;
         this.screenHeight = canvas.height;
-        this.background = new Background()
-        this.player = this.addPlayer();
+        this.backgrounds = [];
         this.enemies = [];
         this.projectiles = [];
         this.platforms = []
+        this.player = this.addPlayer();
+        this.createBackground();
         this.createPlatforms();
         this.createEnemies()
         
@@ -28,6 +29,18 @@ class Game {
     addPlayer() {
         const player = new Player({game: this})
         return player;
+    }
+
+    createBackground() {
+        const bgImg = Util.loadSprite("src/assets/images/background/background.png");
+        const bgArgs = {
+            img: bgImg,
+            pos: [0, 0],
+            width: 10000,
+            height: 600
+        }
+        const bg = new Background(bgArgs);
+        this.backgrounds.push(bg);
     }
 
     createFloor(img, width, height) {
@@ -40,7 +53,6 @@ class Game {
                 pos: pos,
                 width: width,
                 height: height,
-                scale: 1,
                 type: "floor",
             }
             const floor = new Platform(args);
@@ -50,19 +62,20 @@ class Game {
     }
 
     createPlatforms() {
-        const img = Util.loadSprite("src/assets/images/sprites/floor_tile.png");
+        const floor = Util.loadSprite("src/assets/images/sprites/floor_tile.png");
         const width = 500;
         const height = 80;
-        this.createFloor(img, width, height);
+        this.createFloor(floor, width, height);
 
-        const scale = 0.5;
+
+        const plat = Util.loadSprite("src/assets/images/sprites/platform_1_224_31.png")
 
         Util.PLATFORMS_POS.forEach((pos) => {
             const args = {
-                img:img,
+                img: plat,
                 pos: pos,
-                width: width,
-                height: height,
+                width: 224,
+                height: 31,
             }
             const platform = new Platform (args)
             this.platforms.push(platform)
@@ -96,7 +109,7 @@ class Game {
 
     draw(ctx) {
         ctx.clearRect(0, 0, this.screenWidth, this.screenHeight)
-        this.background.draw(ctx)
+        this.drawBackground(ctx)
         this.drawPlatforms(ctx);
         this.player.draw(ctx);
     }
@@ -104,6 +117,12 @@ class Game {
     drawPlatforms(ctx) {
         this.platforms.forEach( (platform) => {
             platform.draw(ctx);
+        })
+    }
+
+    drawBackground(ctx) {
+        this.backgrounds.forEach( (background) => {
+            background.draw(ctx);
         })
     }
 

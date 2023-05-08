@@ -4,7 +4,7 @@ class platform {
         this.pos = args.pos;
         this.width = args.width;
         this.height = args.height;
-        this.scale = args.scale || 0.5
+        this.scale = args.scale || 1
         this.type = args.type || "platform"
         this.dWidth = this.width * this.scale;
         this.dHeight = this.height * this.scale
