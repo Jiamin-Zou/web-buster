@@ -1,41 +1,63 @@
 class GameView {
-    static MOVES = {
-        w: [0, -1], // up
-        a: [-1, 0], // left
-        d: [1, 0], // right
-      };
+    static LEFT_KEY = ["ArrowLeft", "a"];
+    static RIGHT_KEY = ["ArrowRight", "d"];
+    static UP_KEY = ["ArrowUp", "w"]
+    static DOWN_KEY = ["ArrowDown","s"]
+    static SHOOT_KEY = [" "];
 
     constructor(game, ctx) {
         this.ctx = ctx;
         this.game = game;
-        this.player = this.game.addPlayer();
-    }
-
-    bindKeyHandlers() {
-        const player = this.player;
-
-        Object.keys(GameVeiw.MOVES).forEach( (key) => {
-            const move = GameView.MOVES(key);
-            key(key, () => {player.move(move)})
-        })
-
-        key("space",() => {player.shoot()} );
+        this.bindKeyHandlers()
+        this.animate = this.animate.bind(this)
     }
 
     start() {
-        this.bindKeyHandlers();
-        this.lastTime = 0;
-        requestAnimationFrame(this.animate.bind(this));
+        this.animate();
     }
 
-    animate(time) {
-        const timeDelta = time - this.lastTime;
-
-        this.game.step(timeDelta);
+    animate() {
+        requestAnimationFrame(this.animate);
         this.game.draw(this.ctx);
-        this.lastTime = time;
+    }
 
-        requestAnimationFrame(this.animate.bind(this));
+    bindKeyHandlers() {
+        document.addEventListener("keydown", this.handleKeyDown.bind(this))
+        document.addEventListener("keyup", this.handleKeyUp.bind(this))
+    }
+
+    handleKeyDown(e) {
+        const key = e.key;
+        const player = this.game.player;
+        console.log("keydown:-" + key +"-")
+        if (GameView.LEFT_KEY.includes(key)) {
+            player.vel[0] -= player.speed;
+        } else if ( GameView.RIGHT_KEY.includes(key)) {
+            player.vel[0] += player.speed;
+        } else if ( GameView.UP_KEY.includes(key)) {
+            player.vel[1] -= player.speed;
+        } else if ( GameView.DOWN_KEY.includes(key)) {
+            player.vel[1] += player.speed;
+        } else if ( GameView.SHOOT_KEY.includes(key)) {
+            //player.shoot()
+        }
+    }
+
+    handleKeyUp(e) {
+        const key = e.key;
+        const player = this.game.player;
+        console.log("keyup:-" + key +"-")
+        if (GameView.LEFT_KEY.includes(key)) {
+            player.vel[0] -= player.speed;
+        } else if ( GameView.RIGHT_KEY.includes(key)) {
+            player.vel[0] += player.speed;
+        } else if ( GameView.UP_KEY.includes(key)) {
+            player.vel[1] -= player.speed;
+        } else if ( GameView.DOWN_KEY.includes(key)) {
+            player.vel[1] += player.speed;
+        } else if ( GameView.SHOOT_KEY.includes(key)) {
+            //player.shoot()
+        }
     }
 
 }

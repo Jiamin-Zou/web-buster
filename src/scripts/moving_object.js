@@ -1,22 +1,41 @@
 const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
 
 class MovingObject {
+    static GRAVITY = 0.8;
+
     constructor (args) {
-        this.image = args.img;
+        this.img = args.img;
         this.width = args.width;
         this.height = args.height;
+        this.pos = args.pos;
+        this.vel = args.vel || [0, 0];
+        this.speed = args.speed || 5;
+        this.health = args.health;
+        this.game = args.game;
         this.frameX = 0;
         this.frameY = 0
-        this.pos = args.pos;
-        this.vel = args.vel;
-        this.speed = args.speed;
-        this.health = args.heath;
-        this.game = args.game;
+        this.dWidth = this.width * 2;
+        this.dHeight = this.height * 2;
         this.moving = false;
     }
 
     draw(ctx) {
-        ctx.drawImage(this.img, 0, 0, this,width, this,height, 0, 700-this.height, this.width, this,height)
+        const [dX, dY] = this.pos;
+        const sX = this.frameX * this.width;
+        const sY = this. frameY * this.height;
+
+        ctx.drawImage(this.img, sX, sY, this.width, this.height, dX, dY, this.dWidth, this.dHeight)
+    }
+
+    update(ctx) {
+        this.draw(ctx);
+        this.pos[0] += this.vel[0]
+        this.pos[1] += this.vel[1]
+        if (this.pos[1] + this.dHeight + this.vel[1] < this.game.screenHeight) {
+            this.vel[1] +=MovingObject.GRAVITY;
+        } else {
+            this.vel[1] = 0
+        }
     }
 
     move(timeDelta) {
