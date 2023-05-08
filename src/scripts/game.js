@@ -12,7 +12,7 @@ class Game {
         this.enemies = [];
         this.projectiles = [];
         this.platforms = []
-        this.createFloor()
+        this.createPlatforms();
         
     }
 
@@ -21,11 +21,7 @@ class Game {
         return player;
     }
 
-    createFloor(){
-        const img = Util.loadSprite("src/assets/images/sprites/floor_tile.png");
-        const width = 500;
-        const height = 80
-        // debugger
+    createFloor(img, width, height) {
         let x = 0
         const y = this.screenHeight - 80;
         while (x < 10000) {
@@ -35,12 +31,33 @@ class Game {
                 pos: pos,
                 width: width,
                 height: height,
+                scale: 1,
                 type: "floor",
             }
-            const platform = new Platform(args);
-            this.platforms.push(platform);
+            const floor = new Platform(args);
+            this.platforms.push(floor);
             x += width;
         }
+    }
+
+    createPlatforms() {
+        const img = Util.loadSprite("src/assets/images/sprites/floor_tile.png");
+        const width = 500;
+        const height = 80;
+        this.createFloor(img, width, height);
+
+        const scale = 0.5;
+
+        Util.PLATFORMS_POS.forEach((pos) => {
+            const args = {
+                img:img,
+                pos: pos,
+                width: width,
+                height: height,
+            }
+            const platform = new Platform (args)
+            this.platforms.push(platform)
+        })
     }
 
     step() {
