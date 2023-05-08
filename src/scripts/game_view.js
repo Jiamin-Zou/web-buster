@@ -18,6 +18,7 @@ class GameView {
 
     animate() {
         requestAnimationFrame(this.animate);
+        this.game.step();
         this.game.draw(this.ctx);
     }
 

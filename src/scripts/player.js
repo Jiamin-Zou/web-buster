@@ -1,7 +1,9 @@
 import MovingObject from "./moving_object.js"
 import * as Util from "./util.js"
 class Player extends MovingObject {
-    static STARTPOS = [100, 400]
+    static STARTPOS = [100, (600 - 80 - 38 * 2)]
+    // x = 100; from left
+    // y = (gameHeight - floorHeight - player dHeight)
 
 
     constructor(args) {

@@ -28,12 +28,11 @@ class MovingObject {
         ctx.drawImage(this.img, sX, sY, this.width, this.height, dX, dY, this.dWidth, this.dHeight)
     }
 
-    update(ctx) {
-        this.draw(ctx);
+    update() {
         this.pos[0] += this.vel[0]
         this.pos[1] += this.vel[1]
         if (this.pos[1] + this.dHeight + this.vel[1] < this.game.screenHeight) {
-            this.vel[1] +=MovingObject.GRAVITY;
+            this.vel[1] += MovingObject.GRAVITY;
         } else {
             this.vel[1] = 0
         }

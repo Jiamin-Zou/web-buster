@@ -43,20 +43,28 @@ class Game {
         }
     }
 
-    step(delta) {
-        this.player.update(ctx)
-
+    step() {
+        this.player.update();
+        this.checkOnPlaform();
     }
 
     draw(ctx) {
         ctx.clearRect(0, 0, this.screenWidth, this.screenHeight)
         this.drawPlatforms(ctx);
-        this.player.update(ctx);
+        this.player.draw(ctx);
     }
 
     drawPlatforms(ctx) {
-        this.platforms.forEach((platform) => {
+        this.platforms.forEach( (platform) => {
             platform.draw(ctx);
+        })
+    }
+
+    checkOnPlaform() {
+        this.platforms.forEach( (platform) => {
+            if (Util.isOnPlatform(this.player, platform)) {
+                this.player.vel[1] = 0;
+            }
         })
     }
 }
