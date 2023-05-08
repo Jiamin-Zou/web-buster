@@ -1,7 +1,9 @@
 import MovingObject from "./moving_object.js"
 import * as Util from "./util.js"
 class Player extends MovingObject {
-    static STARTPOS = [100, (600 - 80 - 38 * 2)]
+    static START_POS = [100, (600 - 80 - 38 * 2)]
+    static MOVE_BOUND_LEFT = 100;
+    static MOVE_BOUND_RIGHT = 500;
     // x = 100; from left
     // y = (gameHeight - floorHeight - player dHeight)
 
@@ -14,7 +16,7 @@ class Player extends MovingObject {
         args.img = idleRight;
         args.width = 32;
         args.height = 38;
-        args.pos = Player.STARTPOS;
+        args.pos = Player.START_POS;
         args.health = 30;
         args.frames = 6;
         super(args);
@@ -35,11 +37,12 @@ class Player extends MovingObject {
     };
 
     updateMovement() {
-        const spd = this.speed
-        if (this.pressedKey.left) {
+        const spd = this.speed;
+        const x = this.pos[0];
+        if (this.pressedKey.left && x > Player.MOVE_BOUND_LEFT) {
             this.vel[0] = -spd;
             this.img = this.runLeft;
-        } else if (this.pressedKey.right) {
+        } else if (this.pressedKey.right && x < Player.MOVE_BOUND_RIGHT) {
             this.vel[0] = spd;
             this.img = this.runRight;
         } else {this.vel[0] = 0}
