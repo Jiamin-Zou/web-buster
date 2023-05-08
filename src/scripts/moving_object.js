@@ -1,7 +1,7 @@
 const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
 
 class MovingObject {
-    static GRAVITY = 0.8;
+    static GRAVITY = 0.5;
 
     constructor (args) {
         this.img = args.img;
@@ -9,7 +9,7 @@ class MovingObject {
         this.height = args.height;
         this.pos = args.pos;
         this.vel = args.vel || [0, 0];
-        this.speed = args.speed || 5;
+        this.speed = args.speed || 7;
         this.health = args.health;
         this.game = args.game;
         this.frameX = 0;

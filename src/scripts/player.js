@@ -48,14 +48,15 @@ class Player extends MovingObject {
         } else {
             this.vel[0] = 0
             if (this.pressedKey.right) {
+                this.img = this.runRight;
                 this.game.platformScroll("right");
             } else if (this.pressedKey.left) {
+                this.img = this.runLeft;
                 this.game.platformScroll("left");
             }
         }
-
         if (this.pressedKey.up){
-            this.vel[1] = -spd;
+            this.vel[1] = -spd * 1.4;
         }
 
         if(this.pressedKey.shoot) {

@@ -1,9 +1,12 @@
+let basetime = Date.now();
+const FPS = 1000/45;
+
 class GameView {
     static LEFT_KEY = ["ArrowLeft", "a"];
     static RIGHT_KEY = ["ArrowRight", "d"];
     static UP_KEY = ["ArrowUp", "w"]
     static DOWN_KEY = ["ArrowDown","s"]
-    static SHOOT_KEY = [" "];
+    static SHOOT_KEY = [" "]; //space key
 
     constructor(game, ctx) {
         this.ctx = ctx;
@@ -17,9 +20,15 @@ class GameView {
     }
 
     animate() {
-        requestAnimationFrame(this.animate);
-        this.game.step();
-        this.game.draw(this.ctx);
+        const now = Date.now();
+        const check = now - basetime;
+        if (check / FPS >= 1) {
+            basetime = now;
+            this.game.step();
+            this.game.draw(this.ctx);
+        }
+        requestAnimationFrame(this.animate, FPS);
+        
     }
 
     bindKeyHandlers() {
@@ -28,7 +37,8 @@ class GameView {
     }
 
     handleKeyDown(e) {
-        const key = e.key;
+        e.preventDefault()
+        const key = e.key.toLowerCase();
         const player = this.game.player;
         if (GameView.LEFT_KEY.includes(key)) {
             player.pressedKey.left = true;
@@ -44,7 +54,8 @@ class GameView {
     }
 
     handleKeyUp(e) {
-        const key = e.key;
+        e.preventDefault()
+        const key = e.key.toLowerCase();
         const player = this.game.player;
         if (GameView.LEFT_KEY.includes(key)) {
             player.img = player.idleLeft;

@@ -2,9 +2,15 @@ import Platform from "./platform.js"
 import Player from "./player.js";
 import Enemy from "./enemy.js";
 import * as Util from "./util.js"
+// dims width x height
+// player: original(32 x 38) * 2 = 64 x 76
+// background: 10,000 x 600
+// canvas: 800 x 600
+// floor: 500 x 80
+// platform = floor * 0.5 = 250 x 40
 
 class Game {
-    static GRAVITY = 0.5;
+    static GRAVITY = 3;
     constructor (canvas) {
         this.screenWidth = canvas.width;
         this.screenHeight = canvas.height;
@@ -69,7 +75,7 @@ class Game {
                 spd = this.player.speed;
                 break;
             case "right":
-                spd = this.player.speed * (-1);
+                spd = -this.player.speed;
                 break;
         }
         this.platforms.forEach((platform) => {
