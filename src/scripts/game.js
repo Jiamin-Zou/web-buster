@@ -1,3 +1,4 @@
+import Background from "./background.js";
 import Platform from "./platform.js"
 import Player from "./player.js";
 import Enemy from "./enemy.js";
@@ -14,6 +15,7 @@ class Game {
     constructor (canvas) {
         this.screenWidth = canvas.width;
         this.screenHeight = canvas.height;
+        this.background = new Background()
         this.player = this.addPlayer();
         this.enemies = [];
         this.projectiles = [];
@@ -90,6 +92,7 @@ class Game {
 
     draw(ctx) {
         ctx.clearRect(0, 0, this.screenWidth, this.screenHeight)
+        this.background.draw(ctx)
         this.drawPlatforms(ctx);
         this.player.draw(ctx);
     }
