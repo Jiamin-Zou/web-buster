@@ -11,7 +11,6 @@ import * as Util from "./util.js"
 // platform = floor * 0.5 = 250 x 40
 
 class Game {
-    static GRAVITY = 3;
     constructor (canvas) {
         this.screenWidth = canvas.width;
         this.screenHeight = canvas.height;
@@ -22,7 +21,7 @@ class Game {
         this.player = this.addPlayer();
         this.createBackground();
         this.createPlatforms();
-        this.createEnemies()
+        this.createEnemies();
         
     }
 
@@ -83,10 +82,19 @@ class Game {
     }
 
     createEnemies() {
+        Util.ENEMY_POS.forEach((pos) => {
+            const args = {
+                pos: pos,
+                game: this,
+            }
+            let enemyType = 1;
+            const enemy = new Enemy(args, enemyType)
+            this.enemies.push(enemy);
+        })
 
     }
 
-    platformScroll(dir) {
+    Scroll(dir) {
         // dir = player moving direction
         //everything should move the opposite direction of player movement
         let spd = 0
@@ -99,19 +107,33 @@ class Game {
                 break;
         }
         this.platforms.forEach((platform) => {
-            platform.pos[0] += spd
+            platform.pos[0] += spd;
+        })
+        this.enemies.forEach((enemy) => {
+            enemy.pos[0] += spd;
         })
     }
 
     step() {
-        this.player.update();
+        this.updateAllMovingUpjects()
+        this.checkOnPlatform();
     }
 
     draw(ctx) {
         ctx.clearRect(0, 0, this.screenWidth, this.screenHeight)
         this.drawBackground(ctx)
         this.drawPlatforms(ctx);
-        this.player.draw(ctx);
+        this.drawAllMovingObjects(ctx)
+    }
+
+    allMovingObjects() {
+        return this.enemies.concat([this.player]);
+    }
+
+    drawAllMovingObjects(ctx){
+        this.allMovingObjects().forEach((obj) =>{
+            obj.draw(ctx)
+        })
     }
 
     drawPlatforms(ctx) {
@@ -126,16 +148,27 @@ class Game {
         })
     }
 
+    updateAllMovingUpjects() {
+        this.allMovingObjects().forEach((obj) =>{
+            obj.update()
+        })
+    }
+
     checkOnPlatform() {
-        let check = false;
+        // let check = false;
         this.platforms.forEach( (platform) => {
-            if (Util.isOnPlatform(this.player, platform)) {
-                // this.player.vel[1] = 0;
-                check = true;
-            }
+            this.allMovingObjects().forEach((obj) => {
+                if (Util.isOnPlatform(obj, platform)) {
+                    if(obj === this.player) {
+                        this.player.inJump = false;
+                    }
+                    obj.vel[1] = 0;
+                    // check = true;
+                }
+            })
         })
 
-        return check;
+        // return check;
     }
 
     inUpperBound(obj) {

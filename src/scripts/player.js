@@ -1,5 +1,6 @@
 import MovingObject from "./moving_object.js"
 import * as Util from "./util.js"
+
 class Player extends MovingObject {
     static START_POS = [100, (600 - 80 - 38 * 2)]
     static MOVE_BOUND_LEFT = 100;
@@ -51,10 +52,10 @@ class Player extends MovingObject {
             this.vel[0] = 0
             if (this.pressedKey.right) {
                 this.img = this.runRight;
-                this.game.platformScroll("right");
+                this.game.Scroll("right");
             } else if (this.pressedKey.left) {
                 this.img = this.runLeft;
-                this.game.platformScroll("left");
+                this.game.Scroll("left");
             }
         }
 
@@ -73,10 +74,10 @@ class Player extends MovingObject {
             this.shoot();
         }
         
-        if(this.game.checkOnPlatform()) {
-            this.vel[1] = 0;
-            this.inJump = false;
-        }
+        // if(this.game.checkOnPlatform()) {
+        //     this.vel[1] = 0;
+        //     this.inJump = false;
+        // }
     }
 
     shoot() {

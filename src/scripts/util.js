@@ -6,6 +6,7 @@ export function loadSprite(src) {
 
 // dims width x height
 // player: original(32 x 38) * 2 = 64 x 76
+// enemy: original(32 x 32) * 2 = 64 x 64
 // background: 10,000 x 600
 // canvas: 800 x 600
 // floor: 500 x 80
@@ -55,7 +56,11 @@ export const PLATFORMS_POS = [
     [9600, 300],
     [9700, 200]
 ];
-
+// base y: 456 min
 export const ENEMY_POS = [
+    [ 500, 456],
+    [ 735, 200],
+    [ 798, 456],
+    [1289, 304]
 
 ];

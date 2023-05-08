@@ -8,7 +8,11 @@ $game-color: teal;
 $game-font: ThaleahFat;
 
 body {
-    background-image: url("../src/assets/images/background/page_background.png");
+    background: url("../src/assets/images/background/bg.png") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
     display: flex;
     justify-content: center;
     font-family: $game-font;

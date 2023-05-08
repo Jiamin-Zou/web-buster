@@ -11,12 +11,13 @@ class MovingObject {
         this.vel = args.vel || [0, 0];
         this.speed = args.speed || 7;
         this.health = args.health;
+        this.frames = args.frames
         this.game = args.game;
         this.frameX = 0;
         this.frameY = 0
+        // scaled 2x
         this.dWidth = this.width * 2;
         this.dHeight = this.height * 2;
-        this.frames = args.frames
     }
 
     draw(ctx) {
