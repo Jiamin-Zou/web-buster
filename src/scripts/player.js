@@ -2,13 +2,12 @@ import MovingObject from "./moving_object.js"
 import Projectile from "./projectile.js";
 import * as Util from "./util.js"
 let jumpBasetime = Date.now();
-let hurtBasetime = Date.now();
 let shootBasetime = Date.now();
 
 class Player extends MovingObject {
     static START_POS = [100, (600 - 80 - 38 * 2)]
     static MOVE_BOUND_LEFT = 100;
-    static MOVE_BOUND_RIGHT = 500;
+    static MOVE_BOUND_RIGHT = 400;
     static UP_BOUND = 80;
     // x = 100; from left
     // y = (gameHeight - floorHeight - player dHeight)
@@ -35,7 +34,6 @@ class Player extends MovingObject {
         this.hpDisplay = document.querySelector("#hp-stat");
         this.hpDisplay.innerText = this.health;
         this.inJump = false;
-        this.isHurt = false;
         this.shootCooldown = false;
         this.pressedKey = {
             left: false,
@@ -44,15 +42,14 @@ class Player extends MovingObject {
             down: false,
             shoot: false
         }
-        this.shotPos = []
     };
 
     updateMovement() {
         const spd = this.speed;
         const [x, y] = this.pos;
         if (this.pressedKey.left && x > Player.MOVE_BOUND_LEFT && !this.isHurt) {
-            this.vel[0] = -spd;
             this.img = this.runLeft;
+            this.vel[0] = -spd;
         } else if (this.pressedKey.right && x < Player.MOVE_BOUND_RIGHT && !this.isHurt) {
             this.vel[0] = spd;
             this.img = this.runRight;

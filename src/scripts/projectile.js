@@ -51,7 +51,7 @@ class Projectile extends MovingObject {
 
     updateMovement(){
         const dX = this.pos[0];
-        if (Math.abs(dX - this.baseX) >= 400) {
+        if (Math.abs(dX - this.baseX) >= 400 || this.health === 0) {
             this.game.remove(this)
         }
 

@@ -27,6 +27,16 @@ export function isOnPlatform(obj, platform) {
     return (isAbovePlatform && touchingPlatTop && inLeftBound && inRightBound)
 };
 
+export function projectileCollison(projectile, obj){
+
+    const shooter = projectile.shooter;
+    const [pX, pY] = projectile.pos;
+    const [oX, oY] = obj.pos;
+    const xBoundCheck = (pX >= oX) && (pX <= oX + obj.dWidth);
+    const yBoundCheck = (pY >= oY) && (pY <= oY + obj.dHeight);
+    return (obj !== shooter && xBoundCheck && yBoundCheck);
+}
+
 export const PLATFORMS_POS = [
 
 // pos restriction x:(0 ~ (10000 - 250)), y:((0 + 76) ~ (600 - 80 -40 - 76))

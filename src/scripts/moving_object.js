@@ -1,5 +1,6 @@
 // const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
-let shootBasetime = Date.now();
+let hurtBasetime = Date.now();
+const I_FRAME = 3000; // 3 second iFrame
 
 class MovingObject {
     static GRAVITY = 0.5;
@@ -19,6 +20,7 @@ class MovingObject {
         this.frames = args.frames
         this.game = args.game;
         this.type = args.type;
+        this.isHurt = false;
 
 
         this.frameX = 0;
@@ -38,6 +40,11 @@ class MovingObject {
     }
 
     update() {
+        if (this.health === 0 && this.type !== "player") {
+            this.remove()
+        }
+        this.checkiFrame()
+
         this.pos[0] += this.vel[0]
         this.pos[1] += this.vel[1]
         if (this.pos[1] + this.dHeight + this.vel[1] < this.game.screenHeight && this.type !== "projectile") {
@@ -47,6 +54,15 @@ class MovingObject {
         }
         this.updateMovement()
     }
+
+    checkiFrame() {
+        const now = Date.now();
+        const check = now - hurtBasetime;
+        if(this.isHurt && check / I_FRAME >= 1) {
+            this.isHurt = false;
+        }
+    }
+
     updateMovement() {
         
     }

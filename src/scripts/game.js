@@ -128,6 +128,7 @@ class Game {
     step() {
         this.updateAllMovingUpjects()
         this.checkOnPlatform();
+        this.checkCollision();
     }
 
     draw(ctx) {
@@ -187,10 +188,24 @@ class Game {
         return (x <= 10);
     }
 
+    checkCollision() {
+        this.projectiles.forEach((prj) => {
+            this.enemies.forEach((enemy) => {
+                if (Util.projectileCollison(prj, enemy) && !enemy.isHurt) {
+                    prj.remove()
+                    enemy.health--;
+                    enemy.isHurt = true;
+                }
+            })
+        })
+    }
+
     remove(obj) {
         if (obj instanceof Projectile) {
-            const idx = this.projectiles.indexOf(obj)
-            this.projectiles.splice(idx, 1);
+            this.projectiles.splice((this.projectiles.indexOf(obj)), 1);
+        } else if (obj instanceof Enemy) {
+            const idx = this.enemies.indexOf(obj)
+            this.enemies.splice((this.enemies.indexOf(obj)), 1)
         }
     }
 }
