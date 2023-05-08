@@ -50,7 +50,6 @@ In addition, this project will include:
 - HTML
 - CSS/SCSS
 - Canvas API
-- KeymasterJS
 - Webpack
 - Babel
 - [Font Awesome](https://fontawesome.com/) icon library
