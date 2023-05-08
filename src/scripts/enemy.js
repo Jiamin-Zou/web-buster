@@ -10,6 +10,9 @@ class Enemy extends MovingObject {
         args.height = 32;
         args.frames = 4;
         args.health = 3;
+        args.idleLeft = idleLeft;
+        args.idleRight = idleRight;
+        args.type = "enemy";
         super(args)
         this.idleLeft = idleLeft;
         this.idleRight = idleRight

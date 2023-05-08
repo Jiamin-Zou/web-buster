@@ -1,4 +1,5 @@
 import MovingObject from "./moving_object.js"
+import Projectile from "./projectile.js";
 import * as Util from "./util.js"
 let jumpBasetime = Date.now();
 let hurtBasetime = Date.now();
@@ -19,17 +20,18 @@ class Player extends MovingObject {
         const runRight = Util.loadSprite("src/assets/images/sprites/player-run-shoot-right.png");
         const runLeft = Util.loadSprite("src/assets/images/sprites/player-run-shoot-left.png");
         args.img = idleRight;
+        args.idleLeft = idleLeft;
+        args.idleRight = idleRight;
+        args.runLeft = runLeft;
+        args.runRight = runRight;
         args.width = 32;
         args.height = 38;
         args.pos = Player.START_POS;
         args.health = 30;
         args.frames = 6;
+        args.type = "player";
         super(args);
 
-        this.idleLeft = idleLeft;
-        this.idleRight = idleRight;
-        this.runLeft = runLeft;
-        this.runRight = runRight;
         this.hpDisplay = document.querySelector("#hp-stat");
         this.hpDisplay.innerText = this.health;
         this.inJump = false;
@@ -42,6 +44,7 @@ class Player extends MovingObject {
             down: false,
             shoot: false
         }
+        this.shotPos = []
     };
 
     updateMovement() {
@@ -67,35 +70,36 @@ class Player extends MovingObject {
         if (this.pressedKey.up && y > Player.UP_BOUND && !this.inJump && !this.isHurt){
             this.inJump = true;
             this.vel[1] = -spd * 2;
-
-        }
-
-        if(this.pressedKey.shoot && !this.isHurt) {
-
-            this.shoot();
+            
         }
         
-        // if(this.game.checkOnPlatform()) {
-        //     this.vel[1] = 0;
-        //     this.inJump = false;
-        // }
+        if(this.pressedKey.shoot && !this.isHurt) {
+            this.shoot();
+        }
     }
 
     shoot() {
         const now = Date.now()
         const check = now - shootBasetime;
-        // 1 second cool
-        if (check / 1000 >= 1) {
+        // 0.3 second cool
+        if (check / 300 >= 1) {
             shootBasetime = now;
             this.shootCooldown = false;
         }
 
         if (!this.shootCooldown) {
-            if (this.img === this.idleLeft) {
+            let dir = "right"
+            const args = { game:this.game };
+            if (this.img === this.idleLeft || this.img === this.runLeft) {
                 this.img = this.runLeft;
-            } else if (this.img === this.idleRight) {
+                dir = "left";
+            } else if (this.img === this.idleRight || this.img === this.runRight) {
                 this.img = this.runRight;
+                dir = "right";
             }
+            // debugger
+            new Projectile(args, this, dir)
+            
             console.log("Player is shooting a projectile");
             this.shootCooldown = true;
         }

@@ -1,20 +1,27 @@
-const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
+// const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
+let shootBasetime = Date.now();
 
 class MovingObject {
     static GRAVITY = 0.5;
 
     constructor (args) {
         this.img = args.img;
+        this.idleLeft = args.idleLeft;
+        this.idleRight = args.idleRight;
+        this.runLeft = args.runLeft || this.idleLeft;
+        this.runRight = args.runRight || this.idleRight;
         this.width = args.width;
         this.height = args.height;
         this.pos = args.pos;
         this.vel = args.vel || [0, 0];
         this.speed = args.speed || 7;
-        this.health = args.health;
+        this.health = args.health || 1;
         this.frames = args.frames
         this.game = args.game;
+        this.type = args.type;
+
+
         this.frameX = 0;
-        this.frameY = 0
         // scaled 2x
         this.dWidth = this.width * 2;
         this.dHeight = this.height * 2;
@@ -24,15 +31,16 @@ class MovingObject {
         const [dX, dY] = this.pos;
         this.frameX = ++this.frameX % this.frames;
         const sX = this.frameX * this.width;
-        const sY = this. frameY * this.height;
-
+        const sY = 0 * this.height;
+        
         ctx.drawImage(this.img, sX, sY, this.width, this.height, dX, dY, this.dWidth, this.dHeight)
+        // if (this.type === "projectile") debugger;
     }
 
     update() {
         this.pos[0] += this.vel[0]
         this.pos[1] += this.vel[1]
-        if (this.pos[1] + this.dHeight + this.vel[1] < this.game.screenHeight) {
+        if (this.pos[1] + this.dHeight + this.vel[1] < this.game.screenHeight && this.type !== "projectile") {
             this.vel[1] += MovingObject.GRAVITY;
         } else {
             this.vel[1] = 0
@@ -40,7 +48,11 @@ class MovingObject {
         this.updateMovement()
     }
     updateMovement() {
+        
+    }
 
+    remove() {
+        this.game.remove(this);
     }
 
     // move(timeDelta) {

@@ -2,6 +2,7 @@ import Background from "./background.js";
 import Platform from "./platform.js"
 import Player from "./player.js";
 import Enemy from "./enemy.js";
+import Projectile from "./projectile.js";
 import * as Util from "./util.js"
 // dims width x height
 // player: original(32 x 38) * 2 = 64 x 76
@@ -97,21 +98,31 @@ class Game {
     Scroll(dir) {
         // dir = player moving direction
         //everything should move the opposite direction of player movement
-        let spd = 0
+        let spd = 0;
+        let bgSpd = 0;
+
         switch (dir) {
             case "left":
                 spd = this.player.speed;
+                bgSpd = 5;
                 break;
             case "right":
                 spd = -this.player.speed;
+                bgSpd = -5;
                 break;
         }
+
+        this.backgrounds.forEach((background) => {
+            background.pos[0] += bgSpd;
+        });
+
         this.platforms.forEach((platform) => {
             platform.pos[0] += spd;
-        })
+        });
+
         this.enemies.forEach((enemy) => {
             enemy.pos[0] += spd;
-        })
+        });
     }
 
     step() {
@@ -127,7 +138,7 @@ class Game {
     }
 
     allMovingObjects() {
-        return this.enemies.concat([this.player]);
+        return this.enemies.concat(this.projectiles).concat([this.player]);
     }
 
     drawAllMovingObjects(ctx){
@@ -174,6 +185,13 @@ class Game {
     inUpperBound(obj) {
         const [x, y] = obj.pos;
         return (x <= 10);
+    }
+
+    remove(obj) {
+        if (obj instanceof Projectile) {
+            const idx = this.projectiles.indexOf(obj)
+            this.projectiles.splice(idx, 1);
+        }
     }
 }
 
