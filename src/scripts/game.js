@@ -21,6 +21,7 @@ class Game {
         this.projectiles = [];
         this.platforms = []
         this.createPlatforms();
+        this.createEnemies()
         
     }
 
@@ -68,6 +69,10 @@ class Game {
         })
     }
 
+    createEnemies() {
+
+    }
+
     platformScroll(dir) {
         // dir = player moving direction
         //everything should move the opposite direction of player movement
@@ -87,7 +92,6 @@ class Game {
 
     step() {
         this.player.update();
-        this.checkOnPlaform();
     }
 
     draw(ctx) {
@@ -103,12 +107,21 @@ class Game {
         })
     }
 
-    checkOnPlaform() {
+    checkOnPlatform() {
+        let check = false;
         this.platforms.forEach( (platform) => {
             if (Util.isOnPlatform(this.player, platform)) {
-                this.player.vel[1] = 0;
+                // this.player.vel[1] = 0;
+                check = true;
             }
         })
+
+        return check;
+    }
+
+    inUpperBound(obj) {
+        const [x, y] = obj.pos;
+        return (x <= 10);
     }
 }
 

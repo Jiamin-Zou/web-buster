@@ -4,6 +4,7 @@ class Player extends MovingObject {
     static START_POS = [100, (600 - 80 - 38 * 2)]
     static MOVE_BOUND_LEFT = 100;
     static MOVE_BOUND_RIGHT = 500;
+    static UP_BOUND = 80;
     // x = 100; from left
     // y = (gameHeight - floorHeight - player dHeight)
 
@@ -27,6 +28,7 @@ class Player extends MovingObject {
         this.runRight = runRight;
         this.hpDisplay = document.querySelector("#hp-stat");
         this.hpDisplay.innerText = this.health;
+        this.inJump = false;
         this.pressedKey = {
             left: false,
             right: false,
@@ -38,7 +40,7 @@ class Player extends MovingObject {
 
     updateMovement() {
         const spd = this.speed;
-        const x = this.pos[0];
+        const [x, y] = this.pos;
         if (this.pressedKey.left && x > Player.MOVE_BOUND_LEFT) {
             this.vel[0] = -spd;
             this.img = this.runLeft;
@@ -55,8 +57,11 @@ class Player extends MovingObject {
                 this.game.platformScroll("left");
             }
         }
-        if (this.pressedKey.up){
-            this.vel[1] = -spd * 1.4;
+
+        if (this.pressedKey.up && y > Player.UP_BOUND && !this.inJump){
+            this.inJump = true;
+            this.vel[1] = -spd * 2;
+
         }
 
         if(this.pressedKey.shoot) {
@@ -66,6 +71,11 @@ class Player extends MovingObject {
                 this.img = this.runRight;
             }
             this.shoot();
+        }
+        
+        if(this.game.checkOnPlatform()) {
+            this.vel[1] = 0;
+            this.inJump = false;
         }
     }
 

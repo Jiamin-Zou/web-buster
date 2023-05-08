@@ -1,8 +1,15 @@
 export function loadSprite(src) {
     const img = new Image();
-    img.src = src
+    img.src = src;
     return img;
-}
+};
+
+// dims width x height
+// player: original(32 x 38) * 2 = 64 x 76
+// background: 10,000 x 600
+// canvas: 800 x 600
+// floor: 500 x 80
+// platform = floor * 0.5 = 250 x 40
 
 export function isOnPlatform(obj, platform) {
     const [x, y] = obj.pos;
@@ -11,19 +18,15 @@ export function isOnPlatform(obj, platform) {
     // check is the object is above the platform
     const touchingPlatTop = (y + obj.dHeight + obj.vel[1] >= pY);
     // check if the object's will fall below platform
-    const inLeftBound = x + obj.dWidth - 10 >= pX
+    const inLeftBound = x + obj.dWidth - 10 >= pX;
+    // Check if rightside of obj is still > platform leftside
     const inRightBound = x + 10 <= pX + platform.dWidth;
-    return (isAbovePlatform && touchingPlatTop && inLeftBound && inRightBound)
+    // check if leftside of obj is < platform rightside
 
-}
+    return (isAbovePlatform && touchingPlatTop && inLeftBound && inRightBound)
+};
 
 export const PLATFORMS_POS = [
-// dims width x height
-// player: original(32 x 38) * 2 = 64 x 76
-// background: 10,000 x 600
-// canvas: 800 x 600
-// floor: 500 x 80
-// platform = floor * 0.5 = 250 x 40
 
 // pos restriction x:(0 ~ (10000 - 250)), y:((0 + 76) ~ (600 - 80 -40 - 76))
     [ 300, 300],
@@ -51,4 +54,8 @@ export const PLATFORMS_POS = [
     [9500, 400],
     [9600, 300],
     [9700, 200]
-]
+];
+
+export const ENEMY_POS = [
+
+];

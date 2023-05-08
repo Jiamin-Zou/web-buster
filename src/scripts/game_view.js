@@ -38,7 +38,7 @@ class GameView {
 
     handleKeyDown(e) {
         e.preventDefault()
-        const key = e.key.toLowerCase();
+        const key = e.key;
         const player = this.game.player;
         if (GameView.LEFT_KEY.includes(key)) {
             player.pressedKey.left = true;
@@ -55,7 +55,7 @@ class GameView {
 
     handleKeyUp(e) {
         e.preventDefault()
-        const key = e.key.toLowerCase();
+        const key = e.key;
         const player = this.game.player;
         if (GameView.LEFT_KEY.includes(key)) {
             player.img = player.idleLeft;
