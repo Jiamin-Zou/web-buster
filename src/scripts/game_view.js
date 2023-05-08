@@ -29,7 +29,6 @@ class GameView {
     handleKeyDown(e) {
         const key = e.key;
         const player = this.game.player;
-        console.log("keydown:-" + key +"-")
         if (GameView.LEFT_KEY.includes(key)) {
             player.pressedKey.left = true;
         } else if ( GameView.RIGHT_KEY.includes(key)) {
@@ -46,18 +45,22 @@ class GameView {
     handleKeyUp(e) {
         const key = e.key;
         const player = this.game.player;
-        console.log("keyup:-" + key +"-")
         if (GameView.LEFT_KEY.includes(key)) {
-            player.pressedKey.left = false;
             player.img = player.idleLeft;
+            player.pressedKey.left = false;
         } else if ( GameView.RIGHT_KEY.includes(key)) {
-            player.pressedKey.right = false;
             player.img = player.idleRight;
+            player.pressedKey.right = false;
         } else if ( GameView.UP_KEY.includes(key)) {
             player.pressedKey.up = false;
         } else if ( GameView.DOWN_KEY.includes(key)) {
             // player.pressedKey.down = false;
         } else if ( GameView.SHOOT_KEY.includes(key)) {
+            if (player.img === player.runLeft) {
+                player.img = player.idleLeft;
+            } else if (player.img === player.runRight) {
+                player.img = player.idleRight;
+            }
             player.pressedKey.shoot = false;
         }
     }

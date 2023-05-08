@@ -47,6 +47,11 @@ class Player extends MovingObject {
         }
 
         if(this.pressedKey.shoot) {
+            if (this.img === this.idleLeft) {
+                this.img = this.runLeft;
+            } else if (this.img === this.idleRight) {
+                this.img = this.runRight;
+            }
             this.shoot();
         }
     }

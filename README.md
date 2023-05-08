@@ -54,7 +54,7 @@ In addition, this project will include:
 - Babel
 - [Font Awesome](https://fontawesome.com/) icon library
 - Text Font from [itch.io](https://tinyworlds.itch.io/free-pixel-font-thaleah)
-- Sprite from (TDB)
+- Sprite from [itch.io](https://itch.io/game-assets/free)
 - Sound from (TBD)
 
 <br>
