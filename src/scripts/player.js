@@ -1,5 +1,8 @@
 import MovingObject from "./moving_object.js"
 import * as Util from "./util.js"
+let jumpBasetime = Date.now();
+let hurtBasetime = Date.now();
+let shootBasetime = Date.now();
 
 class Player extends MovingObject {
     static START_POS = [100, (600 - 80 - 38 * 2)]
@@ -30,6 +33,8 @@ class Player extends MovingObject {
         this.hpDisplay = document.querySelector("#hp-stat");
         this.hpDisplay.innerText = this.health;
         this.inJump = false;
+        this.isHurt = false;
+        this.shootCooldown = false;
         this.pressedKey = {
             left: false,
             right: false,
@@ -42,10 +47,10 @@ class Player extends MovingObject {
     updateMovement() {
         const spd = this.speed;
         const [x, y] = this.pos;
-        if (this.pressedKey.left && x > Player.MOVE_BOUND_LEFT) {
+        if (this.pressedKey.left && x > Player.MOVE_BOUND_LEFT && !this.isHurt) {
             this.vel[0] = -spd;
             this.img = this.runLeft;
-        } else if (this.pressedKey.right && x < Player.MOVE_BOUND_RIGHT) {
+        } else if (this.pressedKey.right && x < Player.MOVE_BOUND_RIGHT && !this.isHurt) {
             this.vel[0] = spd;
             this.img = this.runRight;
         } else {
@@ -59,18 +64,14 @@ class Player extends MovingObject {
             }
         }
 
-        if (this.pressedKey.up && y > Player.UP_BOUND && !this.inJump){
+        if (this.pressedKey.up && y > Player.UP_BOUND && !this.inJump && !this.isHurt){
             this.inJump = true;
             this.vel[1] = -spd * 2;
 
         }
 
-        if(this.pressedKey.shoot) {
-            if (this.img === this.idleLeft) {
-                this.img = this.runLeft;
-            } else if (this.img === this.idleRight) {
-                this.img = this.runRight;
-            }
+        if(this.pressedKey.shoot && !this.isHurt) {
+
             this.shoot();
         }
         
@@ -81,7 +82,24 @@ class Player extends MovingObject {
     }
 
     shoot() {
-        console.log("Player is shooting a projectile")
+        const now = Date.now()
+        const check = now - shootBasetime;
+        // 1 second cool
+        if (check / 1000 >= 1) {
+            shootBasetime = now;
+            this.shootCooldown = false;
+        }
+
+        if (!this.shootCooldown) {
+            if (this.img === this.idleLeft) {
+                this.img = this.runLeft;
+            } else if (this.img === this.idleRight) {
+                this.img = this.runRight;
+            }
+            console.log("Player is shooting a projectile");
+            this.shootCooldown = true;
+        }
+        
     }
 
 }

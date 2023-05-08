@@ -8,7 +8,7 @@ class Enemy extends MovingObject {
         args.img = idleLeft;
         args.width = 32;
         args.height = 32;
-        args.frames = 3;
+        args.frames = 4;
         args.health = 3;
         super(args)
         this.idleLeft = idleLeft;

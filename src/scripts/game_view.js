@@ -1,5 +1,5 @@
 let basetime = Date.now();
-const FPS = 1000/45;
+const FPS = 1000/30;
 
 class GameView {
     static LEFT_KEY = ["ArrowLeft", "a"];
