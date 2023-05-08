@@ -36,6 +36,7 @@ class MovingObject {
         } else {
             this.vel[1] = 0
         }
+        this.move()
     }
 
     move(timeDelta) {

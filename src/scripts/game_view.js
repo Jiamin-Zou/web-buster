@@ -31,15 +31,15 @@ class GameView {
         const player = this.game.player;
         console.log("keydown:-" + key +"-")
         if (GameView.LEFT_KEY.includes(key)) {
-            player.vel[0] -= player.speed;
+            player.pressedKey.left = true;
         } else if ( GameView.RIGHT_KEY.includes(key)) {
-            player.vel[0] += player.speed;
+            player.pressedKey.right = true;
         } else if ( GameView.UP_KEY.includes(key)) {
-            player.vel[1] -= player.speed;
+            player.pressedKey.up = true;
         } else if ( GameView.DOWN_KEY.includes(key)) {
-            player.vel[1] += player.speed;
+            // player.pressedKey.down = true;
         } else if ( GameView.SHOOT_KEY.includes(key)) {
-            //player.shoot()
+            player.pressedKey.shoot = true;
         }
     }
 
@@ -48,15 +48,17 @@ class GameView {
         const player = this.game.player;
         console.log("keyup:-" + key +"-")
         if (GameView.LEFT_KEY.includes(key)) {
-            player.vel[0] -= player.speed;
+            player.pressedKey.left = false;
+            player.img = player.idleLeft;
         } else if ( GameView.RIGHT_KEY.includes(key)) {
-            player.vel[0] += player.speed;
+            player.pressedKey.right = false;
+            player.img = player.idleRight;
         } else if ( GameView.UP_KEY.includes(key)) {
-            player.vel[1] -= player.speed;
+            player.pressedKey.up = false;
         } else if ( GameView.DOWN_KEY.includes(key)) {
-            player.vel[1] += player.speed;
+            // player.pressedKey.down = false;
         } else if ( GameView.SHOOT_KEY.includes(key)) {
-            //player.shoot()
+            player.pressedKey.shoot = false;
         }
     }
 
