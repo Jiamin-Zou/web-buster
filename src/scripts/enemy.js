@@ -24,10 +24,11 @@ class Enemy extends MovingObject {
         if (!this.isHurt) {
             const now = Date.now()
             const check = now - this.shootBasetime;
-            // 0.3 second cool
-            if (check / 300 >= 1 && this.shootCount !== Enemy.SHOOT_WAVE) {
+            // 0.2 second cool
+            if (check / 200 >= 1 && this.shootCount !== Enemy.SHOOT_WAVE) {
                 this.shootBasetime = now;
                 this.shootCooldown = false;
+                // 2 sec cold down after wave of 3
             } else if (check / 2000 >= 1 && this.shootCount === Enemy.SHOOT_WAVE) {
                 this.shootBasetime = now;
                 this.shootCooldown = false;

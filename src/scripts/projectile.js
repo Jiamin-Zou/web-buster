@@ -8,12 +8,13 @@ class Projectile extends MovingObject {
         switch (args.dir) {
             case "left":
                 args.img = leftShot;
-                args.vel = [-7, 0];
+                args.vel = [-6, 0];
                 if(shooter.type === "enemy") args.vel = [-3, 0];
                 break;
             case "right":
                 args.img = rightShot;
-                args.vel = [7, 0];
+                args.vel = [6, 0];
+                if(shooter.type === "enemy") args.vel = [3, 0];
                 break;
 
         }
@@ -28,6 +29,8 @@ class Projectile extends MovingObject {
         // need to pass in pos args
         super(args)
         this.shooter = shooter;
+        this.maxDist = 300
+        if (this.shooter.type === "player") this.maxDist = 400;
         this.pos = this.startPos()
         this.baseX = this.pos.slice()[0];
         this.game.projectiles.push(this);
@@ -54,7 +57,7 @@ class Projectile extends MovingObject {
 
     updateMovement(){
         const dX = this.pos[0];
-        if (Math.abs(dX - this.baseX) >= 300 || this.health === 0) {
+        if (Math.abs(dX - this.baseX) >= this.maxDist || this.health === 0) {
             this.game.remove(this)
         }
 

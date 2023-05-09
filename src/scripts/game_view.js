@@ -57,12 +57,14 @@ class GameView {
         switch (key) {
             case "ArrowLeft":
                 player.dir = "left";
+                player.img = player.runLeft;
                 player.pressedKey.left = true;
                 break;
             case "ArrowDown":
                 break;
             case "ArrowRight":
                 player.dir = "right";
+                player.img = player.runRight;
                 player.pressedKey.right = true;
                 break;
             case "ArrowUp":
@@ -127,6 +129,10 @@ class GameView {
     updateEnemyCount() {
         const count = this.game.enemies.length;
         this.enemyCountDisplay.innerHTML = count;
+    }
+
+    restart() {
+        
     }
 
 }

@@ -17,7 +17,8 @@ class Game {
         this.backgrounds = [];
         this.enemies = [];
         this.projectiles = [];
-        this.platforms = []
+        this.platforms = [];
+        this.scrollOffset = 0;
         this.player = this.addPlayer();
         this.createBackground();
         this.createPlatforms();
@@ -108,6 +109,8 @@ class Game {
                 break;
         }
 
+        // this.scrollOffset -= spd;
+
         this.backgrounds.forEach((background) => {
             background.pos[0] += spd * 0.66;
         });
@@ -165,10 +168,7 @@ class Game {
         })
     }
 
-    updateEnemyCount
-
     checkOnPlatform() {
-        // let check = false;
         this.platforms.forEach( (platform) => {
             this.allMovingObjects().forEach((obj) => {
                 if (Util.isOnPlatform(obj, platform)) {
@@ -176,17 +176,11 @@ class Game {
                         this.player.inJump = false;
                     }
                     obj.vel[1] = 0;
-                    // check = true;
                 }
             })
         })
 
         // return check;
-    }
-
-    inUpperBound(obj) {
-        const [x, y] = obj.pos;
-        return (x <= 10);
     }
 
     checkCollision() {

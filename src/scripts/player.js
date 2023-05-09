@@ -34,38 +34,41 @@ class Player extends MovingObject {
         args.type = "player";
         args.dir = "right";
         super(args);
-        
+
         this.inJump = false;
         this.pressedKey = {
             left: false,
             right: false
         }
+        // debugger
     };
-
-    updateHealthDisplay() {
-        this.hpDisplay.innerText = this.health;
-    }
 
     updateMovement() {
         const spd = this.speed;
         const [x, y] = this.pos;
-        if (this.pressedKey.left && x > Player.MOVE_BOUND_LEFT) {
-            this.img = this.runLeft;
-            this.vel[0] = -spd;
-        } else if (this.pressedKey.right && x < Player.MOVE_BOUND_RIGHT) {
+
+        if (this.pressedKey.right && x < Player.MOVE_BOUND_RIGHT) {
             this.vel[0] = spd;
-            this.img = this.runRight;
+        } else if ((this.pressedKey.left && this.game.scrollOffset === 0 && this.pos[0] > 0) || (this.pressedKey.left && x > Player.MOVE_BOUND_LEFT)) {
+            // debugger
+            this.vel[0] = -spd;
         } else {
-            this.vel[0] = 0
+            this.vel[0] = 0;
             if (this.pressedKey.right) {
                 this.img = this.runRight;
                 this.dir = "right";
+                this.game.scrollOffset += 1;
                 this.game.Scroll(this.dir);
-            } else if (this.pressedKey.left) {
+            } else if (this.pressedKey.left && this.game.scrollOffset > 0) {
+                // debugger
                 this.img = this.runLeft;
                 this.dir = "left"
+                this.game.scrollOffset -= 1;
                 this.game.Scroll(this.dir);
             }
+            // debugger
+            console.log(this.game.scrollOffset)
+            console.log(this.pos)
         }
     }
 
@@ -73,7 +76,7 @@ class Player extends MovingObject {
             const now = Date.now()
             const check = now - this.shootBasetime;
             // 0.3 second cool
-            if (check / 300 >= 1) {
+            if (check / 180 >= 1) {
                 this.shootBasetime = now;
                 this.shootCooldown = false;
             }
