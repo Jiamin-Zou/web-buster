@@ -2,7 +2,6 @@ import Background from "./background.js";
 import Platform from "./platform.js"
 import Player from "./player.js";
 import Enemy from "./enemy.js";
-import Projectile from "./projectile.js";
 import * as Util from "./util.js"
 // dims width x height
 // player: original(32 x 38) * 2 = 64 x 76
@@ -120,6 +119,9 @@ class Game {
         this.enemies.forEach((enemy) => {
             enemy.pos[0] += spd;
         });
+        this.projectiles.forEach((prj) => {
+            prj.pos[0] += spd;
+        })
     }
 
     step() {
@@ -163,6 +165,8 @@ class Game {
         })
     }
 
+    updateEnemyCount
+
     checkOnPlatform() {
         // let check = false;
         this.platforms.forEach( (platform) => {
@@ -188,16 +192,21 @@ class Game {
     checkCollision() {
         this.projectiles.forEach((prj) => {
             this.enemies.concat([this.player]).forEach((obj) => {
-                if (Util.projectileCollison(prj, obj) && !obj.isHurt) {
-                    prj.health --
-                    obj.health--;
-                    obj.isHurt = true;
-                    switch (obj.dir) {
-                        case "left":
-                            obj.img = obj.hurtLeft;
-                            break;
-                        case "right":
-                            obj.img = obj.hurtRight;
+                if (Util.projectileCollison(prj, obj)) {
+                    prj.health--;
+                    if(!obj.isHurt) {
+                        obj.health--;
+                        obj.isHurt = true;
+                        switch (obj.dir) {
+                            case "left":
+                                obj.pos[0] += 20;
+                                obj.img = obj.hurtLeft;
+                                break;
+                            case "right":
+                                obj.pos[0] -= 20;
+                                obj.img = obj.hurtRight;
+                                break;
+                        }
                     }
                 }
             })
@@ -210,9 +219,9 @@ class Game {
     }
 
     remove(obj) {
-        if (obj instanceof Projectile) {
+        if (obj.type === "projectile") {
             this.projectiles.splice((this.projectiles.indexOf(obj)), 1);
-        } else if (obj instanceof Enemy) {
+        } else if (obj.type === "enemy") {
             const idx = this.enemies.indexOf(obj)
             this.enemies.splice((this.enemies.indexOf(obj)), 1)
         }

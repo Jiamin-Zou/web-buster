@@ -124,8 +124,17 @@ body {
   width: 800px;
   height: 40px;
 }
-.game-head .player-health {
+.game-head .player-health-container, .game-head .enemy-count-container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.game-head .player-health-container div, .game-head .enemy-count-container div {
+  color: greenyellow;
+}
+.game-head .enemy-count-container div {
+  color: red;
 }
 
 .footer {

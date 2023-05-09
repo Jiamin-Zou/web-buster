@@ -10,7 +10,7 @@ export function loadSprite(src) {
 // background: 10,000 x 600
 // canvas: 800 x 600
 // floor: 500 x 80
-// platform = floor * 0.5 = 250 x 40
+// platform
 
 export function isOnPlatform(obj, platform) {
     const [x, y] = obj.pos;
@@ -32,9 +32,28 @@ export function projectileCollison(projectile, obj){
     const shooter = projectile.shooter;
     const [pX, pY] = projectile.pos;
     const [oX, oY] = obj.pos;
-    const xBoundCheck = (pX >= oX) && (pX <= oX + obj.dWidth);
-    const yBoundCheck = (pY >= oY) && (pY <= oY + obj.dHeight);
-    return (obj.type !== shooter.type && xBoundCheck && yBoundCheck);
+    const hit = (
+        oX + obj.dWidth - 10 >= pX &&
+        pX + projectile.dWidth >= oX + 10 &&
+        oY + obj.dHeight -5 >= pY &&
+        pY + projectile.dHeight >= oY + 5
+    );
+
+    return (obj.type !== shooter.type && hit);
+}
+
+export function rectCollision(obj1, obj2) {
+    const [o1x, o1y] = obj1.pos;
+    const [o2x, o2y] = obj2.pos;
+    const [o1w, o1h] = [obj1.dWidth, obj1.dHeight];
+    const [o2w, o2h] = [obj2.dWidth, obj2.dHeight];
+
+    return (
+        o2x + o2w >= o1x &&
+        o1x + o1w >= o2x &&
+        o2y + o2h >= o1y &&
+        o1y + o1h >= o2y
+    )
 }
 
 export const PLATFORMS_POS = [
@@ -66,11 +85,28 @@ export const PLATFORMS_POS = [
     [9600, 300],
     [9700, 200]
 ];
-// base y: 456 min
+// base y: 600 - 80 - 64 = 456 min
+// enemy: original(32 x 32) * 2 = 64 x 64
 export const ENEMY_POS = [
     [ 500, 456],
     [ 735, 200],
     [ 798, 456],
-    [1289, 304]
-
+    [1289, 304],
+    [1950, 456],
+    [2400, 335],
+    [2676, 456],
+    [3197, 250],
+    [3283, 355],
+    [3756, 456],
+    [3912, 456],
+    [4591, 280],
+    [6034, 333],
+    [6266, 237],
+    [7262, 197],
+    [7395, 456],
+    [8012, 456],
+    [8100, 300],
+    [9560, 335],
+    [9660, 235],
+    [9760, 456]
 ];

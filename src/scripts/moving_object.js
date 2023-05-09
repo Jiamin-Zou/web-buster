@@ -44,11 +44,8 @@ class MovingObject {
     }
 
     update() {
-        if (this.type === "player") {
-            this.updateHealthDisplay()
-            if (this.health === 0) this.game.executeGameOver() 
-        }
         if (this.health === 0 && this.type !== "player") this.remove();
+        if (this.type === "player" && this.health === 0) this.game.executeGameOver(); 
         if (this.type === "enemy") this.shoot();
 
 

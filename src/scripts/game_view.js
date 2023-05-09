@@ -12,6 +12,10 @@ class GameView {
     constructor(game, ctx) {
         this.ctx = ctx;
         this.game = game;
+        this.hpDisplay = document.querySelector("#hp-stat");
+        this.hpDisplay.innerText = this.game.player.health;
+        this.enemyCountDisplay = document.querySelector("#enemy-counts")
+        this.enemyCountDisplay.innerText = this.game.enemies.length;
         this.bindKeyHandlers()
         this.animate = this.animate.bind(this)
     }
@@ -26,6 +30,8 @@ class GameView {
         // if (check / FPS >= 1) {
             // basetime = now;
             this.game.step();
+            this.updateHealthDisplay();
+            this.updateEnemyCount();
             this.game.draw(this.ctx);
         // }
         requestAnimationFrame(this.animate, FPS);
@@ -80,16 +86,47 @@ class GameView {
         switch (key) {
             case "ArrowLeft":
                 // player.dir = "left";
+                player.img = player.idleLeft;
                 player.pressedKey.left = false;
                 break;
             case "ArrowDown":
                 break;
             case "ArrowRight":
                 // player.dir = "right";
+                player.img = player.idleRight;
                 player.pressedKey.right = false;
                 break;
-
+            case "ArrowUp":
+                switch (player.dir) {
+                    case "left":
+                        player.img = player.idleLeft;
+                        break;
+                    case "right":
+                        player.img = player.idleRight;
+                        break;
+                }
+                break;
+            case " ":
+                switch (player.dir) {
+                    case "left":
+                        player.img = player.idleLeft;
+                        break;
+                    case "right":
+                        player.img = player.idleRight;
+                        break;
+                }
+                break;
         }
+    }
+
+    updateHealthDisplay() {
+        const player = this.game.player;
+        this.hpDisplay.innerText = player.health;
+    }
+
+    updateEnemyCount() {
+        const count = this.game.enemies.length;
+        this.enemyCountDisplay.innerHTML = count;
     }
 
 }

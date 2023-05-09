@@ -34,9 +34,7 @@ class Player extends MovingObject {
         args.type = "player";
         args.dir = "right";
         super(args);
-
-        this.hpDisplay = document.querySelector("#hp-stat");
-        this.hpDisplay.innerText = this.health;
+        
         this.inJump = false;
         this.pressedKey = {
             left: false,
