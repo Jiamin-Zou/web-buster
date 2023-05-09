@@ -45,7 +45,6 @@ class MovingObject {
 
     update() {
         if (this.health === 0 && this.type !== "player") this.remove();
-        if (this.type === "player" && this.health === 0) this.game.executeGameOver(); 
         if (this.type === "enemy") this.shoot();
 
 
@@ -72,7 +71,7 @@ class MovingObject {
                     this.img = this.idleLeft;
                     break;
                 case "right":
-                    this.img - this.idleRight;
+                    this.img = this.idleRight;
                     break;
             }
         }

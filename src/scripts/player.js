@@ -1,7 +1,6 @@
 import MovingObject from "./moving_object.js"
 import Projectile from "./projectile.js";
 import * as Util from "./util.js"
-let jumpBasetime = Date.now();
 
 class Player extends MovingObject {
     static START_POS = [100, (600 - 80 - 38 * 2)]
@@ -40,7 +39,6 @@ class Player extends MovingObject {
             left: false,
             right: false
         }
-        // debugger
     };
 
     updateMovement() {
@@ -66,9 +64,6 @@ class Player extends MovingObject {
                 this.game.scrollOffset -= 1;
                 this.game.Scroll(this.dir);
             }
-            // debugger
-            console.log(this.game.scrollOffset)
-            console.log(this.pos)
         }
     }
 

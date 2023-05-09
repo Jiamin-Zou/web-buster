@@ -1,6 +1,6 @@
 let basetime = Date.now();
 import Player from "./player.js";
-const FPS = 1000/30;
+const FPS = 1000/45;
 
 class GameView {
     static LEFT_KEY = ["ArrowLeft", "a"];
@@ -14,6 +14,7 @@ class GameView {
         this.game = game;
         this.hpDisplay = document.querySelector("#hp-stat");
         this.hpDisplay.innerText = this.game.player.health;
+        this.hpBar = document.querySelector("#player-hp-bar");
         this.enemyCountDisplay = document.querySelector("#enemy-counts")
         this.enemyCountDisplay.innerText = this.game.enemies.length;
         this.bindKeyHandlers()
@@ -28,7 +29,7 @@ class GameView {
         // const now = Date.now();
         // const check = now - basetime;
         // if (check / FPS >= 1) {
-            // basetime = now;
+        //     basetime = now;
             this.game.step();
             this.updateHealthDisplay();
             this.updateEnemyCount();
@@ -122,8 +123,21 @@ class GameView {
     }
 
     updateHealthDisplay() {
-        const player = this.game.player;
-        this.hpDisplay.innerText = player.health;
+        const health = this.game.player.health;
+        this.hpDisplay.innerText = health;
+        const hp = document.createElement("li");
+
+        if (this.hpBar.children.length < health) {
+            for (let i = hp.children.length; i < health; i++) {
+                this.hpBar.appendChild(hp)
+            }
+        } else if (this.hpBar.children.length > health) {
+            for (let i = health; i < this.hpBar.children.length; i++) {
+                const lc = this.hpBar.lastChild;
+                if (lc) this.hpBar.removeChild(this.hpBar.lastChild);
+                
+            }
+        }
     }
 
     updateEnemyCount() {
@@ -132,7 +146,7 @@ class GameView {
     }
 
     restart() {
-        
+        this.animate()        
     }
 
 }

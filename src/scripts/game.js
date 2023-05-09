@@ -187,29 +187,30 @@ class Game {
         this.projectiles.forEach((prj) => {
             this.enemies.concat([this.player]).forEach((obj) => {
                 if (Util.projectileCollison(prj, obj)) {
-                    prj.health--;
                     if(!obj.isHurt) {
                         obj.health--;
                         obj.isHurt = true;
-                        switch (obj.dir) {
+                        switch (prj.dir) {
                             case "left":
-                                obj.pos[0] += 20;
-                                obj.img = obj.hurtLeft;
-                                break;
-                            case "right":
                                 obj.pos[0] -= 20;
                                 obj.img = obj.hurtRight;
+                                obj.dir = "right";
+                                break;
+                            case "right":
+                                obj.pos[0] += 20;
+                                obj.img = obj.hurtLeft;
+                                obj.dir = "left";
                                 break;
                         }
                     }
+                    prj.health--;
                 }
             })
         })
     }
 
-    executeGameOver() {
-        console.log("GameOver");
-        debugger
+    isGameOver() {
+        return (this.player.health === 0)
     }
 
     remove(obj) {
