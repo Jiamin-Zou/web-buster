@@ -17,7 +17,9 @@ class Enemy extends MovingObject {
         args.type = "enemy";
         args.dir = "left"
         super(args)
-        this.shootCount = 0;;
+        this.shootCount = 0;
+        this.chaseRange = 350;
+        this.stopRange = 250;
     }
 
     shoot() {
@@ -53,6 +55,45 @@ class Enemy extends MovingObject {
             }
         }
         
+    }
+
+    update() {
+        const player = this.game.player;
+        const [playerX, playerY] = player.pos;
+        const [enemyX, enemyY] = this.pos;
+        const dist = Util.dist(player.pos, this.pos);
+      
+        if (dist < this.chaseRange) {
+          const speed = this.speed;
+          if (playerX < enemyX) {
+            this.dir = "left";
+            this.img = this.runLeft;
+            this.vel[0] = -speed;
+          } else {
+            this.dir = "right";
+            this.img = this.runRight
+            this.vel[0] = speed;
+          }
+      
+          if (dist <= this.stopRange) {
+            this.vel[0] = 0;
+          }
+      
+          // Check if on the ground before allowing jump
+          if (!this.inJump && playerY < enemyY - 50) {
+            const jumpSpeed = 15;
+            this.vel[1] = -jumpSpeed;
+            this.inJump = true;
+          }
+        } else {
+          this.vel[0] = 0;
+        }
+      
+        super.update();
+      }
+    
+
+    updateMovement() {
     }
 
 }

@@ -1,3 +1,5 @@
+import * as Util from "./util.js"
+
 const I_FRAME = 3000; // 3 second iFrame
 
 class MovingObject {
@@ -9,8 +11,8 @@ class MovingObject {
         this.idleRight = args.idleRight;
         this.runLeft = args.runLeft || this.idleLeft;
         this.runRight = args.runRight || this.idleRight;
-        this.hurtLeft =  args.hurtLeft || this.img;
-        this.hurtRight = args.hurtRight || this.img;
+        this.hurtLeft =  args.hurtLeft || this.idleLeft;
+        this.hurtRight = args.hurtRight || this.idleRight;
         this.width = args.width;
         this.height = args.height;
         this.pos = args.pos;
@@ -20,8 +22,9 @@ class MovingObject {
         this.frames = args.frames
         this.game = args.game;
         this.type = args.type;
+        if (this.type === "enemy") this.speed = 3;
         this.dir = args.dir;
-
+        this.inJump = false;
         this.isHurt = false;
         this.shootCooldown = false;
 
@@ -45,9 +48,8 @@ class MovingObject {
 
     update() {
         if (this.health === 0 && this.type !== "player") this.remove();
+        // if (this.type === "enemy") this.chasePlayer();
         if (this.type === "enemy") this.shoot();
-
-
         this.checkiFrame()
 
         this.pos[0] += this.vel[0]
@@ -77,6 +79,10 @@ class MovingObject {
         }
     }
 
+    chasePlayer() {
+
+    }
+
     updateMovement() {
         // to be implemented in childClass
     }
@@ -89,17 +95,17 @@ class MovingObject {
         this.game.remove(this);
     }
 
-    // move(timeDelta) {
-    //     const velocityScale = timeDelta / NORMAL_FRAME_TIME_DELTA,
-    //     offsetX = this.vel[0] * velocityScale,
-    //     offsetY = this.vel[1] * velocityScale;
-
-    //     this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
-
-    //     if (this.game.isOutOfBounds(this.pos)) {
-    //         this.remove();
-    //     }
-    // }
 }
 
 export default MovingObject;
+// move(timeDelta) {
+//     const velocityScale = timeDelta / NORMAL_FRAME_TIME_DELTA,
+//     offsetX = this.vel[0] * velocityScale,
+//     offsetY = this.vel[1] * velocityScale;
+
+//     this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
+
+//     if (this.game.isOutOfBounds(this.pos)) {
+//         this.remove();
+//     }
+// }

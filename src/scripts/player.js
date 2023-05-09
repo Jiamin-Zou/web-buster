@@ -34,7 +34,6 @@ class Player extends MovingObject {
         args.dir = "right";
         super(args);
 
-        this.inJump = false;
         this.pressedKey = {
             left: false,
             right: false

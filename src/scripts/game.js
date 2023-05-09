@@ -172,10 +172,8 @@ class Game {
         this.platforms.forEach( (platform) => {
             this.allMovingObjects().forEach((obj) => {
                 if (Util.isOnPlatform(obj, platform)) {
-                    if(obj === this.player) {
-                        this.player.inJump = false;
-                    }
-                    obj.vel[1] = 0;
+                    obj.inJump = false;
+                        obj.vel[1] = 0;
                 }
             })
         })
@@ -184,6 +182,12 @@ class Game {
     }
 
     checkCollision() {
+        this.checkProjectileCollision();
+        this.checkObjCollision();
+
+    }
+
+    checkProjectileCollision() {
         this.projectiles.forEach((prj) => {
             this.enemies.concat([this.player]).forEach((obj) => {
                 if (Util.projectileCollison(prj, obj)) {
@@ -209,8 +213,25 @@ class Game {
         })
     }
 
+    checkObjCollision () {
+        const entities = this.enemies.concat([this.player]); 
+        entities.forEach((obj1) => {
+            entities.forEach((obj2) => {
+                if (obj1 !== obj2 && Util.rectCollision(obj1, obj2)) {
+
+                    obj1.vel[0] = 0;
+                    obj2.vel[0] = 0;
+                };
+            })
+        })
+    }
+
     isGameOver() {
         return (this.player.health === 0)
+    }
+    
+    isLevelClear() {
+        return this.enemies.length === 0;
     }
 
     remove(obj) {

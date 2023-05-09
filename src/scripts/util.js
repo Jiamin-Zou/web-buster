@@ -4,6 +4,12 @@ export function loadSprite(src) {
     return img;
 };
 
+export function dist(pos1, pos2) {
+    return Math.sqrt(
+      Math.pow(pos1[0] - pos2[0], 2) + Math.pow(pos1[1] - pos2[1], 2)
+    );
+}
+
 // dims width x height
 // player: original(32 x 38) * 2 = 64 x 76
 // enemy: original(32 x 32) * 2 = 64 x 64
