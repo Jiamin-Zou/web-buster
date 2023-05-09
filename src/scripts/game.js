@@ -218,9 +218,41 @@ class Game {
         entities.forEach((obj1) => {
             entities.forEach((obj2) => {
                 if (obj1 !== obj2 && Util.rectCollision(obj1, obj2)) {
-
-                    obj1.vel[0] = 0;
-                    obj2.vel[0] = 0;
+                    if (obj1.type === "player" && !obj1.isHurt) {
+                        obj1.health --;
+                        obj1.isHurt = true;
+                        // debugger
+                        switch (obj1.dir) {
+                            case "left":
+                                obj1.img = obj1.hurtLeft;
+                                obj1.pos[0] -= 50;
+                                break;
+                            case "right":
+                                obj1.img = obj1.hurtRight;
+                                obj1.pos[0] += 50;
+                                break;
+                        }
+                        obj2.vel[0] = 0
+                    } else if(obj2.type === "player" && !obj2.isHurt) {
+                        obj2.health --;
+                        obj2.isHurt = true;
+                        // debugger
+                        switch (obj2.dir) {
+                            case "left":
+                                obj2.img = obj2.hurtLeft;
+                                obj2.pos[0] -= 50;
+                                break;
+                            case "right":
+                                obj2.img = obj2.hurtRight;
+                                obj2.pos[0] += 50;
+                                break;
+                        }
+                        obj1.vel[0] = 0
+                    }
+                    if (!obj1.isHurt && !obj2.isHurt) {
+                        obj1.pos[0] -= 50;
+                        obj2.pos[0] += 50;
+                    }
                 };
             })
         })

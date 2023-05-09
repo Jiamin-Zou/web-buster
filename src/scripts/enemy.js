@@ -3,10 +3,10 @@ import Projectile from "./projectile.js"
 import * as Util from "./util.js"
 
 class Enemy extends MovingObject {
-    static SHOOT_WAVE = 3;
+    static SHOOT_WAVE = 2;
     constructor(args, enemyType) {
-        const idleLeft = Util.loadSprite(`src/assets/images/sprites/enemy_${enemyType}_Idle_left_4.png`)
-        const idleRight = Util.loadSprite(`src/assets/images/sprites/enemy_${enemyType}_Idle_right_4.png`)
+        const idleLeft = Util.loadSprite(`src/assets/images/sprites/enemy_${enemyType}_Idle_left.png`)
+        const idleRight = Util.loadSprite(`src/assets/images/sprites/enemy_${enemyType}_Idle_right.png`)
         args.img = idleLeft;
         args.width = 32;
         args.height = 32;
@@ -26,11 +26,11 @@ class Enemy extends MovingObject {
         if (!this.isHurt) {
             const now = Date.now()
             const check = now - this.shootBasetime;
-            // 0.2 second cool
-            if (check / 200 >= 1 && this.shootCount !== Enemy.SHOOT_WAVE) {
+            // 0.4 second cool
+            if (check / 400 >= 1 && this.shootCount !== Enemy.SHOOT_WAVE) {
                 this.shootBasetime = now;
                 this.shootCooldown = false;
-                // 2 sec cold down after wave of 3
+                // 2 sec cold down after wave of 2 shots
             } else if (check / 2000 >= 1 && this.shootCount === Enemy.SHOOT_WAVE) {
                 this.shootBasetime = now;
                 this.shootCooldown = false;
@@ -40,11 +40,12 @@ class Enemy extends MovingObject {
 
     
             if (!this.shootCooldown) {
+                this.vel[0] = 0;
                 const args = { game:this.game };
-                if (this.img === this.idleLeft || this.img === this.runLeft) {
+                if (this.dir === "left") {
                     this.img = this.runLeft;
                     args.dir = this.dir;
-                } else if (this.img === this.idleRight || this.img === this.runRight) {
+                } else if (this.dir === "right") {
                     this.img = this.runRight;
                     args.dir = this.dir;
                 }
@@ -65,6 +66,7 @@ class Enemy extends MovingObject {
       
         if (dist < this.chaseRange) {
           const speed = this.speed;
+          this.shoot()
           if (playerX < enemyX) {
             this.dir = "left";
             this.img = this.runLeft;
@@ -80,9 +82,10 @@ class Enemy extends MovingObject {
           }
       
           // Check if on the ground before allowing jump
-          if (!this.inJump && playerY < enemyY - 50) {
-            const jumpSpeed = 15;
-            this.vel[1] = -jumpSpeed;
+          // && if playerY is at least 50px above enemy + (offset height different)
+          if (!this.inJump && playerY < enemyY - 50 + (player.dHeight - this.dHeight)) {
+            const jumpHeight = 13;
+            this.vel[1] = -jumpHeight;
             this.inJump = true;
           }
         } else {

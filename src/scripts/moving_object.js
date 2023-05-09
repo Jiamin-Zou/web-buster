@@ -1,6 +1,6 @@
 import * as Util from "./util.js"
 
-const I_FRAME = 3000; // 3 second iFrame
+const I_FRAME = 2500; // 2.5 second iFrame
 
 class MovingObject {
     static GRAVITY = 0.5;
@@ -49,7 +49,7 @@ class MovingObject {
     update() {
         if (this.health === 0 && this.type !== "player") this.remove();
         // if (this.type === "enemy") this.chasePlayer();
-        if (this.type === "enemy") this.shoot();
+        // if (this.type === "enemy") this.shoot();
         this.checkiFrame()
 
         this.pos[0] += this.vel[0]
@@ -65,6 +65,10 @@ class MovingObject {
     checkiFrame() {
         const now = Date.now();
         const check = now - this.hurtBasetime;
+        // 2.5 sec iFrame for player
+        // 1 sec iFrame for enemy
+        let iFrame = I_FRAME;
+        if(this.type === "enemy") iFrame = 1000;
         if(this.isHurt && check / I_FRAME >= 1) {
             this.hurtBasetime = now;
             this.isHurt = false;

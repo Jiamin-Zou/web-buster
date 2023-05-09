@@ -69,7 +69,7 @@ class Player extends MovingObject {
     shoot() {
             const now = Date.now()
             const check = now - this.shootBasetime;
-            // 0.3 second cool
+            // 0.18 second cool
             if (check / 180 >= 1) {
                 this.shootBasetime = now;
                 this.shootCooldown = false;
