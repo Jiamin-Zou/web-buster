@@ -1,4 +1,5 @@
 let basetime = Date.now();
+import Player from "./player.js";
 const FPS = 1000/30;
 
 class GameView {
@@ -20,13 +21,13 @@ class GameView {
     }
 
     animate() {
-        const now = Date.now();
-        const check = now - basetime;
-        if (check / FPS >= 1) {
-            basetime = now;
+        // const now = Date.now();
+        // const check = now - basetime;
+        // if (check / FPS >= 1) {
+            // basetime = now;
             this.game.step();
             this.game.draw(this.ctx);
-        }
+        // }
         requestAnimationFrame(this.animate, FPS);
         
     }
@@ -36,20 +37,38 @@ class GameView {
         document.addEventListener("keyup", this.handleKeyUp.bind(this))
     }
 
+    unbindKeyHandlers() {
+        document.removeEventListener("keydown", this.handleKeyDown.bind(this));
+        document.removeEventListener("keyup", this.handleKeyUp.bind(this));
+    }
+      
+
     handleKeyDown(e) {
         e.preventDefault()
         const key = e.key;
         const player = this.game.player;
-        if (GameView.LEFT_KEY.includes(key)) {
-            player.pressedKey.left = true;
-        } else if ( GameView.RIGHT_KEY.includes(key)) {
-            player.pressedKey.right = true;
-        } else if ( GameView.UP_KEY.includes(key)) {
-            player.pressedKey.up = true;
-        } else if ( GameView.DOWN_KEY.includes(key)) {
-            // player.pressedKey.down = true;
-        } else if ( GameView.SHOOT_KEY.includes(key)) {
-            player.pressedKey.shoot = true;
+
+        switch (key) {
+            case "ArrowLeft":
+                player.dir = "left";
+                player.pressedKey.left = true;
+                break;
+            case "ArrowDown":
+                break;
+            case "ArrowRight":
+                player.dir = "right";
+                player.pressedKey.right = true;
+                break;
+            case "ArrowUp":
+                const upSpd = 10;
+                if(player.pos[1] + upSpd >= Player.UP_BOUND && !player.inJump){
+                    player.inJump = true;
+                    player.vel[1] -= 15;
+                }
+                break;
+            case " ":
+                player.shoot();
+                break;
         }
     }
 
@@ -57,23 +76,19 @@ class GameView {
         e.preventDefault()
         const key = e.key;
         const player = this.game.player;
-        if (GameView.LEFT_KEY.includes(key)) {
-            player.img = player.idleLeft;
-            player.pressedKey.left = false;
-        } else if ( GameView.RIGHT_KEY.includes(key)) {
-            player.img = player.idleRight;
-            player.pressedKey.right = false;
-        } else if ( GameView.UP_KEY.includes(key)) {
-            player.pressedKey.up = false;
-        } else if ( GameView.DOWN_KEY.includes(key)) {
-            // player.pressedKey.down = false;
-        } else if ( GameView.SHOOT_KEY.includes(key)) {
-            if (player.img === player.runLeft) {
-                player.img = player.idleLeft;
-            } else if (player.img === player.runRight) {
-                player.img = player.idleRight;
-            }
-            player.pressedKey.shoot = false;
+
+        switch (key) {
+            case "ArrowLeft":
+                // player.dir = "left";
+                player.pressedKey.left = false;
+                break;
+            case "ArrowDown":
+                break;
+            case "ArrowRight":
+                // player.dir = "right";
+                player.pressedKey.right = false;
+                break;
+
         }
     }
 

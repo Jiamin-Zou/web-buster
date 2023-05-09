@@ -34,7 +34,7 @@ export function projectileCollison(projectile, obj){
     const [oX, oY] = obj.pos;
     const xBoundCheck = (pX >= oX) && (pX <= oX + obj.dWidth);
     const yBoundCheck = (pY >= oY) && (pY <= oY + obj.dHeight);
-    return (obj !== shooter && xBoundCheck && yBoundCheck);
+    return (obj.type !== shooter.type && xBoundCheck && yBoundCheck);
 }
 
 export const PLATFORMS_POS = [

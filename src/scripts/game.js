@@ -99,21 +99,18 @@ class Game {
         // dir = player moving direction
         //everything should move the opposite direction of player movement
         let spd = 0;
-        let bgSpd = 0;
 
         switch (dir) {
             case "left":
                 spd = this.player.speed;
-                bgSpd = 5;
                 break;
             case "right":
                 spd = -this.player.speed;
-                bgSpd = -5;
                 break;
         }
 
         this.backgrounds.forEach((background) => {
-            background.pos[0] += bgSpd;
+            background.pos[0] += spd * 0.66;
         });
 
         this.platforms.forEach((platform) => {
@@ -144,7 +141,7 @@ class Game {
 
     drawAllMovingObjects(ctx){
         this.allMovingObjects().forEach((obj) =>{
-            obj.draw(ctx)
+            if(obj) obj.draw(ctx);
         })
     }
 
@@ -190,14 +187,26 @@ class Game {
 
     checkCollision() {
         this.projectiles.forEach((prj) => {
-            this.enemies.forEach((enemy) => {
-                if (Util.projectileCollison(prj, enemy) && !enemy.isHurt) {
+            this.enemies.concat([this.player]).forEach((obj) => {
+                if (Util.projectileCollison(prj, obj) && !obj.isHurt) {
                     prj.health --
-                    enemy.health--;
-                    enemy.isHurt = true;
+                    obj.health--;
+                    obj.isHurt = true;
+                    switch (obj.dir) {
+                        case "left":
+                            obj.img = obj.hurtLeft;
+                            break;
+                        case "right":
+                            obj.img = obj.hurtRight;
+                    }
                 }
             })
         })
+    }
+
+    executeGameOver() {
+        console.log("GameOver");
+        debugger
     }
 
     remove(obj) {

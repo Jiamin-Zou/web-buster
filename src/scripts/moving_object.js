@@ -1,5 +1,3 @@
-// const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
-let hurtBasetime = Date.now();
 const I_FRAME = 3000; // 3 second iFrame
 
 class MovingObject {
@@ -11,18 +9,24 @@ class MovingObject {
         this.idleRight = args.idleRight;
         this.runLeft = args.runLeft || this.idleLeft;
         this.runRight = args.runRight || this.idleRight;
+        this.hurtLeft =  args.hurtLeft || this.img;
+        this.hurtRight = args.hurtRight || this.img;
         this.width = args.width;
         this.height = args.height;
         this.pos = args.pos;
         this.vel = args.vel || [0, 0];
-        this.speed = args.speed || 7;
+        this.speed = args.speed || 5;
         this.health = args.health || 1;
         this.frames = args.frames
         this.game = args.game;
         this.type = args.type;
+        this.dir = args.dir;
+
         this.isHurt = false;
+        this.shootCooldown = false;
 
-
+        this.shootBasetime = Date.now();
+        this.hurtBasetime = Date.now();
         this.frameX = 0;
         // scaled 2x
         this.dWidth = this.width * 2;
@@ -40,9 +44,14 @@ class MovingObject {
     }
 
     update() {
-        if (this.health === 0 && this.type !== "player") {
-            this.remove()
+        if (this.type === "player") {
+            this.updateHealthDisplay()
+            if (this.health === 0) this.game.executeGameOver() 
         }
+        if (this.health === 0 && this.type !== "player") this.remove();
+        if (this.type === "enemy") this.shoot();
+
+
         this.checkiFrame()
 
         this.pos[0] += this.vel[0]
@@ -57,14 +66,27 @@ class MovingObject {
 
     checkiFrame() {
         const now = Date.now();
-        const check = now - hurtBasetime;
+        const check = now - this.hurtBasetime;
         if(this.isHurt && check / I_FRAME >= 1) {
+            this.hurtBasetime = now;
             this.isHurt = false;
+            switch (this.dir) {
+                case "left":
+                    this.img = this.idleLeft;
+                    break;
+                case "right":
+                    this.img - this.idleRight;
+                    break;
+            }
         }
     }
 
     updateMovement() {
-        
+        // to be implemented in childClass
+    }
+
+    shoot() {
+        // to be implemented in childClass
     }
 
     remove() {

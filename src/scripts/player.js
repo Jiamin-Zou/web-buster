@@ -2,13 +2,12 @@ import MovingObject from "./moving_object.js"
 import Projectile from "./projectile.js";
 import * as Util from "./util.js"
 let jumpBasetime = Date.now();
-let shootBasetime = Date.now();
 
 class Player extends MovingObject {
     static START_POS = [100, (600 - 80 - 38 * 2)]
     static MOVE_BOUND_LEFT = 100;
     static MOVE_BOUND_RIGHT = 400;
-    static UP_BOUND = 80;
+    static UP_BOUND = 40;
     // x = 100; from left
     // y = (gameHeight - floorHeight - player dHeight)
 
@@ -18,88 +17,82 @@ class Player extends MovingObject {
         const idleLeft = Util.loadSprite("src/assets/images/sprites/player-idle-left.png");
         const runRight = Util.loadSprite("src/assets/images/sprites/player-run-shoot-right.png");
         const runLeft = Util.loadSprite("src/assets/images/sprites/player-run-shoot-left.png");
+        const hurtLeft = Util.loadSprite("src/assets/images/sprites/player-hurt-left.png");
+        const hurtRight = Util.loadSprite("src/assets/images/sprites/player-hurt-right.png");
         args.img = idleRight;
         args.idleLeft = idleLeft;
         args.idleRight = idleRight;
         args.runLeft = runLeft;
         args.runRight = runRight;
+        args.hurtLeft = hurtLeft;
+        args.hurtRight = hurtRight;
         args.width = 32;
         args.height = 38;
         args.pos = Player.START_POS;
         args.health = 30;
         args.frames = 6;
         args.type = "player";
+        args.dir = "right";
         super(args);
 
         this.hpDisplay = document.querySelector("#hp-stat");
         this.hpDisplay.innerText = this.health;
         this.inJump = false;
-        this.shootCooldown = false;
         this.pressedKey = {
             left: false,
-            right: false,
-            up: false,
-            down: false,
-            shoot: false
+            right: false
         }
     };
+
+    updateHealthDisplay() {
+        this.hpDisplay.innerText = this.health;
+    }
 
     updateMovement() {
         const spd = this.speed;
         const [x, y] = this.pos;
-        if (this.pressedKey.left && x > Player.MOVE_BOUND_LEFT && !this.isHurt) {
+        if (this.pressedKey.left && x > Player.MOVE_BOUND_LEFT) {
             this.img = this.runLeft;
             this.vel[0] = -spd;
-        } else if (this.pressedKey.right && x < Player.MOVE_BOUND_RIGHT && !this.isHurt) {
+        } else if (this.pressedKey.right && x < Player.MOVE_BOUND_RIGHT) {
             this.vel[0] = spd;
             this.img = this.runRight;
         } else {
             this.vel[0] = 0
             if (this.pressedKey.right) {
                 this.img = this.runRight;
-                this.game.Scroll("right");
+                this.dir = "right";
+                this.game.Scroll(this.dir);
             } else if (this.pressedKey.left) {
                 this.img = this.runLeft;
-                this.game.Scroll("left");
+                this.dir = "left"
+                this.game.Scroll(this.dir);
             }
-        }
-
-        if (this.pressedKey.up && y > Player.UP_BOUND && !this.inJump && !this.isHurt){
-            this.inJump = true;
-            this.vel[1] = -spd * 2;
-            
-        }
-        
-        if(this.pressedKey.shoot && !this.isHurt) {
-            this.shoot();
         }
     }
 
     shoot() {
-        const now = Date.now()
-        const check = now - shootBasetime;
-        // 0.3 second cool
-        if (check / 300 >= 1) {
-            shootBasetime = now;
-            this.shootCooldown = false;
-        }
-
-        if (!this.shootCooldown) {
-            let dir = "right"
-            const args = { game:this.game };
-            if (this.img === this.idleLeft || this.img === this.runLeft) {
-                this.img = this.runLeft;
-                dir = "left";
-            } else if (this.img === this.idleRight || this.img === this.runRight) {
-                this.img = this.runRight;
-                dir = "right";
+            const now = Date.now()
+            const check = now - this.shootBasetime;
+            // 0.3 second cool
+            if (check / 300 >= 1) {
+                this.shootBasetime = now;
+                this.shootCooldown = false;
             }
-            // debugger
-            new Projectile(args, this, dir)
-            
-            console.log("Player is shooting a projectile");
-            this.shootCooldown = true;
-        }
+    
+            if (!this.shootCooldown) {
+                const args = { game:this.game };
+                if (this.dir === "left") {
+                    this.img = this.runLeft;
+                    args.dir = this.dir;
+                } else if (this.dir ==="right") {
+                    this.img = this.runRight;
+                    args.dir = this.dir; 
+                }
+                // debugger
+                new Projectile(args, this)
+                this.shootCooldown = true;
+            }
         
     }
 

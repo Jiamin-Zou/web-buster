@@ -2,17 +2,20 @@ import MovingObject from "./moving_object.js";
 import * as Util from "./util.js"
 
 class Projectile extends MovingObject {
-    constructor(args, shooter, dir) {
+    constructor(args, shooter) {
         const leftShot = Util.loadSprite("src/assets/images/sprites/player-shoot-left-4.png");
         const rightShot = Util.loadSprite("src/assets/images/sprites/player-shoot-right-4.png");
-        if (dir === "left") {
-            args.img = leftShot;
-            args.vel = [-7, 0];
-        } else if (dir === "right") {
-            args.img = rightShot;
-            args.vel = [7, 0];
-        }
+        switch (args.dir) {
+            case "left":
+                args.img = leftShot;
+                args.vel = [-7, 0];
+                break;
+            case "right":
+                args.img = rightShot;
+                args.vel = [7, 0];
+                break;
 
+        }
         // debugger
         args.idleLeft = leftShot;
         args.idleRight = rightShot;
@@ -23,7 +26,6 @@ class Projectile extends MovingObject {
         args.type = "projectile";
         // need to pass in pos args
         super(args)
-        this.dir = dir;
         this.shooter = shooter;
         this.pos = this.startPos()
         this.baseX = this.pos.slice()[0];
