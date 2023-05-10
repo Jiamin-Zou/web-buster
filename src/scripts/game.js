@@ -11,9 +11,11 @@ import * as Util from "./util.js"
 // platform = floor * 0.5 = 250 x 40
 
 class Game {
-    constructor (canvas) {
+    constructor (canvas, difficulty) {
         this.screenWidth = canvas.width;
         this.screenHeight = canvas.height;
+        this.difficulty = difficulty;
+        this.isGameEnd = false;
         this.backgrounds = [];
         this.enemies = [];
         this.projectiles = [];
@@ -125,7 +127,7 @@ class Game {
                 pos: pos,
                 game: this,
             }
-            const enemy = new Enemy(args)
+            const enemy = new Enemy(args, this.difficulty)
             this.enemies.push(enemy);
         })
 
@@ -245,6 +247,7 @@ class Game {
                     if(!obj.isHurt) {
                         obj.health--;
                         obj.isHurt = true;
+                        if (this.player.health === 0) this.isGameEnd = true;
                         switch (prj.dir) {
                             case "left":
                                 obj.pos[0] -= 20;
@@ -272,6 +275,7 @@ class Game {
                     if (obj1.type === "player" && !obj1.isHurt) {
                         obj1.health --;
                         obj1.isHurt = true;
+                        if (this.player.health === 0) this.isGameEnd = true;
                         // debugger
                         switch (obj1.dir) {
                             case "left":
@@ -287,6 +291,7 @@ class Game {
                     } else if(obj2.type === "player" && !obj2.isHurt) {
                         obj2.health --;
                         obj2.isHurt = true;
+                        if (this.player.health === 0) this.isGameEnd = true;
                         // debugger
                         switch (obj2.dir) {
                             case "left":
@@ -309,17 +314,17 @@ class Game {
         })
     }
 
-    isGameOver() {
-        return (this.player.health === 0)
-    }
+    // isGameOver() {
+    //     return (this.player.health === 0)
+    // }
     
-    isLevelClear() {
-        return this.enemies.length === 0;
-    }
+    // isLevelClear() {
+    //     return (this.enemies.length === 0 && this.player.health > 0);
+    // }
 
-    executeGameEnd () {
-
-    }
+    // isOver() {
+    //     return (this.isGameOver || this.isLevelClear);
+    // }
 
     remove(obj) {
         if (obj.type === "projectile") {
@@ -327,6 +332,7 @@ class Game {
         } else if (obj.type === "enemy") {
             const idx = this.enemies.indexOf(obj)
             this.enemies.splice((this.enemies.indexOf(obj)), 1)
+            if (this.enemies.length === 0 ) this.isGameEnd = true;
         }
     }
 }

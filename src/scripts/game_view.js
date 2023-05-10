@@ -1,6 +1,7 @@
 let basetime = Date.now();
 import Player from "./player.js";
 const FPS = 1000/45;
+let reqID;
 
 class GameView {
     static LEFT_KEY = ["ArrowLeft", "a"];
@@ -17,6 +18,9 @@ class GameView {
         this.hpBar = document.querySelector("#player-hp-bar");
         this.enemyCountDisplay = document.querySelector("#enemy-counts")
         this.enemyCountDisplay.innerText = this.game.enemies.length;
+        this.difficultyDisplay = document.querySelector("#game-difficulty");
+        this.difficultyDisplay.innerText = this.game.difficulty
+        // debugger
         this.bindKeyHandlers()
         this.animate = this.animate.bind(this)
     }
@@ -35,8 +39,9 @@ class GameView {
             this.updateEnemyCount();
             this.game.draw(this.ctx);
         // }
-        requestAnimationFrame(this.animate, FPS);
-        
+
+            if (this.game.isGameEnd) this.executeGameEnd();
+        reqID = requestAnimationFrame(this.animate, FPS);
     }
 
     bindKeyHandlers() {
@@ -145,8 +150,15 @@ class GameView {
         this.enemyCountDisplay.innerHTML = count;
     }
 
-    restart() {
-        this.animate()        
+    executeGameEnd () {
+        cancelAnimationFrame(reqID);
+        this.unbindKeyHandlers();
+        const btn = document.querySelector("#game-start-btn");
+        const msg = document.querySelector("#welcome-msg");
+        const menu = document.querySelector("#game-menu");
+        msg.innerText = "Hope you enjoyed playing. Another round?"
+        btn.innerText = "Restart Game"
+        menu.showModal();
     }
 
 }

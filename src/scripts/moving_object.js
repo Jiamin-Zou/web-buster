@@ -23,7 +23,7 @@ class MovingObject {
         // this.frames = args.frames
         this.game = args.game;
         this.type = args.type;
-        if (this.type === "enemy") this.speed = 3;
+        if (this.type === "enemy") this.speed = 4;
         this.dir = args.dir;
         this.isAlive = true;
         this.inJump = false;

@@ -15,7 +15,23 @@
         <div class="header">
             <h1 id="game-name">Web Buster</h1>
         </div>
-
+        <dialog id="game-menu">
+            <div id="welcome-msg">Welcome to <span>Web Buster</span>, hope you enjoy!</div>
+            <div id="instructions">
+                <li>Defeat all the enemies to clear the game!</li>
+                <li class="key">Press <span>Up</span> Arrow to jump</li>
+                <li class="key">Use <span>Left/Right</span> to move</li>
+                <li class="key">Use <span>Space Bar</span> to Shoot</li>
+                <li class="key">Note you have <span>2 seconds of invincibility</span> frame upon getting hurt</li>
+            </div>
+            
+            <ul class="game-diff-ctn">
+                <li class="diff-selections-lv difficulty-selected">1</li>
+                <li class="diff-selections-lv">2</li>
+                <li class="diff-selections-lv">3</li>
+            </ul>
+            <div id="game-start-btn">Start Game</div>
+        </dialog>
         <div class="game-container">
             <div class="game-head">
                 <div class="player-health-container">
@@ -24,6 +40,10 @@
                         <div id="hp-stat"></div>
                     </div>
                     <div id="player-hp-bar"></div>
+                </div>
+                <div>
+                    <p>Difficulty:</p>
+                    <div id="game-difficulty"></div>
                 </div>
                 <div class="enemy-count-container">
                     <p>Enemy Count</p>
@@ -35,9 +55,8 @@
         </div>
 
         <div class="footer">
-            <div class="audio-control">
-                <p>Audio Control</p>
-                <br>
+            <div class="main-controls">
+                <p>Controls</p>
                 <div class="sound-control">
                     <p>BGM</p>
                     <div class="bgm-sound-icon" id="bgm-on">
@@ -47,16 +66,7 @@
                         <i class="fa-solid fa-volume-xmark"> OFF</i>
                     </div>
                 </div>
-                <br>
-                <div class="sound-control">
-                    <p>SFX</p>
-                    <div class="sfx-sound-icon" id="sfx-on">
-                        <i class="fa-solid fa-volume-high"> ON</i>
-                    </div>
-                    <div class="sfx-sound-icon" id="sfx-off">
-                        <i class="fa-solid fa-volume-xmark"> OFF</i>
-                    </div>
-                </div>
+                <div id="open-menu">MENU</div>
             </div>
 
             <div class="instructions">
