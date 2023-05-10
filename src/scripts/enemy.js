@@ -4,14 +4,27 @@ import * as Util from "./util.js"
 
 class Enemy extends MovingObject {
     static SHOOT_WAVE = 2;
-    constructor(args, enemyType) {
+    constructor(args, enemyType=1, difficulty=1) {
         const idleLeft = Util.loadSprite(`src/assets/images/sprites/enemy_${enemyType}_Idle_left.png`)
         const idleRight = Util.loadSprite(`src/assets/images/sprites/enemy_${enemyType}_Idle_right.png`)
         args.img = idleLeft;
         args.width = 32;
         args.height = 32;
         args.frames = 4;
-        args.health = 3;
+        switch (difficulty) {
+          case 1:
+            args.health = 2;
+            break;
+          case 2:
+            args.health = 3;
+            break;
+          case 3:
+            args.health = 5; //crazy
+            break;
+          default:
+            args.health = 2;
+        }
+        
         args.idleLeft = idleLeft;
         args.idleRight = idleRight;
         args.type = "enemy";

@@ -40,7 +40,7 @@ class Player extends MovingObject {
         }
     };
 
-    updateMovement() {
+    update() {
         const spd = this.speed;
         const [x, y] = this.pos;
 
@@ -51,10 +51,8 @@ class Player extends MovingObject {
             this.vel[0] = -spd;
         } else {
             this.vel[0] = 0;
-            if (this.pressedKey.right && this.game.scrollOffset < 1820) {
+            if (this.pressedKey.right && this.game.scrollOffset < 1890) {
                 this.img = this.runRight;
-                console.log(this.game.scrollOffset)
-                console.log(this.pos)
                 this.dir = "right";
                 this.game.scrollOffset += 1;
                 this.game.Scroll(this.dir);
@@ -65,9 +63,9 @@ class Player extends MovingObject {
                 this.game.scrollOffset -= 1;
                 this.game.Scroll(this.dir);
             }
-        // max background scroll = (background.width - canvas.width)/player.speed * 0.66
-        // approx 1991 (max scrollOffset)
         }
+
+        super.update();
     }
 
     shoot() {

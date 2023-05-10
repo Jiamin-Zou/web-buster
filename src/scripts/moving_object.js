@@ -11,12 +11,15 @@ class MovingObject {
         this.runRight = args.runRight || this.idleRight;
         this.hurtLeft =  args.hurtLeft || this.idleLeft;
         this.hurtRight = args.hurtRight || this.idleRight;
+        this.attackLeft = args.attackLeft || this.runLeft;
+        this.attackRight = args.attackRight || this.runRight;
+        this.despawn = args.despawn;
         this.width = args.width;
         this.height = args.height;
         this.pos = args.pos;
         this.vel = args.vel || [0, 0];
         this.speed = args.speed || 5;
-        this.health = args.health || 1;
+        this.health = args.health || 1; //projectile
         this.frames = args.frames
         this.game = args.game;
         this.type = args.type;
@@ -25,7 +28,7 @@ class MovingObject {
         this.inJump = false;
         this.isHurt = false;
         this.shootCooldown = false;
-
+        this.isAlive = true;
         this.shootBasetime = Date.now();
         this.hurtBasetime = Date.now();
         this.frameX = 0;
@@ -50,19 +53,20 @@ class MovingObject {
     }
 
     update() {
-        if (this.health === 0 && this.type !== "player") this.remove();
-        // if (this.type === "enemy") this.chasePlayer();
-        // if (this.type === "enemy") this.shoot();
-        this.checkiFrame()
+        if(this.isAlive) {
+            if (this.health === 0 && this.type !== "player") this.runDespawn();
 
-        this.pos[0] += this.vel[0]
-        this.pos[1] += this.vel[1]
-        if (this.pos[1] + this.dHeight + this.vel[1] < this.game.screenHeight && this.type !== "projectile") {
-            this.vel[1] += MovingObject.GRAVITY;
-        } else {
-            this.vel[1] = 0
+            this.checkiFrame();
+
+            this.pos[0] += this.vel[0]
+            this.pos[1] += this.vel[1]
+            if (this.pos[1] + this.dHeight + this.vel[1] < this.game.screenHeight && this.type !== "projectile") {
+                this.vel[1] += MovingObject.GRAVITY;
+            } else {
+                this.vel[1] = 0
+            }
+            this.updateMovement()
         }
-        this.updateMovement()
     }
 
     checkiFrame() {
@@ -92,8 +96,10 @@ class MovingObject {
         }
     }
 
-    chasePlayer() {
-
+    runDespawn() {
+        // overwritten in enemy && player class
+        this.alive = false;
+        this.remove()
     }
 
     updateMovement() {
@@ -111,14 +117,3 @@ class MovingObject {
 }
 
 export default MovingObject;
-// move(timeDelta) {
-//     const velocityScale = timeDelta / NORMAL_FRAME_TIME_DELTA,
-//     offsetX = this.vel[0] * velocityScale,
-//     offsetY = this.vel[1] * velocityScale;
-
-//     this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
-
-//     if (this.game.isOutOfBounds(this.pos)) {
-//         this.remove();
-//     }
-// }

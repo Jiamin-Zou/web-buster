@@ -30,7 +30,7 @@ class Projectile extends MovingObject {
         super(args)
         this.shooter = shooter;
         this.maxDist = 300
-        if (this.shooter.type === "player") this.maxDist = 400;
+        if (this.shooter.type === "player") this.maxDist = 415;
         this.pos = this.startPos()
         this.baseX = this.pos.slice()[0];
         this.game.projectiles.push(this);

@@ -1,39 +1,46 @@
 import * as Util from "./util.js"
 
-const idleRight = {
+export const idleRight = {
     frameCnt: 0,
     frames: Array(6).fill(6),
     src: Util.loadSprite("src/assets/images/sprites/player-idle-right.png")
 } 
-const idleLeft = {
+export const idleLeft = {
     frameCnt: 0,
     frames: Array(6).fill(6),
     src: Util.loadSprite("src/assets/images/sprites/player-idle-left.png")
 }
-const runRight = {
+export const runRight = {
     frameCnt: 0,
-    frames: Array(6).fill(4),
+    frames: [5, 6, 6, 6, 6, 5],
     src: Util.loadSprite("src/assets/images/sprites/player-run-shoot-right.png")
 }
 
-const runLeft = {
+export const runLeft = {
     frameCnt: 0,
-    frames: Array(6).fill(4),
+    frames: [5, 6, 6, 6, 6, 5],
     src: Util.loadSprite("src/assets/images/sprites/player-run-shoot-left.png")
 }
 
-const hurtLeft = {
+export const hurtLeft = {
     frameCnt: 0,
-    frames: Array(6).fill(3),
+    frames: [3,2,1,4,3,4],
     src: Util.loadSprite("src/assets/images/sprites/player-hurt-left.png")
 }
 
-const hurtRight = {
+export const hurtRight = {
     frameCnt: 0,
-    frames: Array(6).fill(3),
+    frames: [3,2,1,4,3,4],
     src: Util.loadSprite("src/assets/images/sprites/player-hurt-right.png")
 }
 
-const despawn = {
+export const despawn = {
+    frameCnt: 0,
+    frames: Array(5).fill(6),
+    src: Util.loadSprite("src/assets/images/sprites/player-hurt-right.png"),
+    width: 16,
+    height: 16,
+    dWidth: 64,
+    dHeight: 64
 
 }
