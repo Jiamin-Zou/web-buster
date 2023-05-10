@@ -22,8 +22,7 @@ class Game {
         this.player = this.addPlayer();
         this.createBackground();
         this.createPlatforms();
-        this.createEnemies();
-        
+        this.createEnemies();        
     }
 
     addPlayer() {
@@ -32,21 +31,59 @@ class Game {
     }
 
     createBackground() {
-        const bgImg = Util.loadSprite("src/assets/images/background/background.png");
         const bgArgs = {
-            img: bgImg,
+            img: Util.loadSprite("src/assets/images/background/background0.png"),
             pos: [0, 0],
             width: 10000,
-            height: 600
+            height: 600,
+            layer: 0
         }
         const bg = new Background(bgArgs);
         this.backgrounds.push(bg);
+
+        const bg1Arg = {
+            img: Util.loadSprite("src/assets/images/background/background1.png"),
+            width: 576,
+            height: 324,
+            layer: 1
+        }
+        const bg2Arg = {
+            img: Util.loadSprite("src/assets/images/background/background2.png"),
+            width: 576,
+            height: 324,
+            layer: 2
+        }
+        const bg3Arg = {
+            img: Util.loadSprite("src/assets/images/background/background3.png"),
+            width: 576,
+            height: 324,
+            layer: 3
+        }
+
+
+        Util.BG_1_POS.forEach((pos) => {
+            bg1Arg.pos = pos;
+            // debugger
+            this.backgrounds.push(new Background(bg1Arg))
+        });
+
+        Util.BG_2_POS.forEach((pos) => {
+            bg2Arg.pos = pos;
+            this.backgrounds.push(new Background(bg2Arg))
+        });
+
+        Util.BG_3_POS.forEach((pos) => {
+            bg3Arg.pos = pos;
+            this.backgrounds.push(new Background(bg3Arg))
+        });
+
+        // debugger
     }
 
     createFloor(img, width, height) {
         let x = 0
         const y = this.screenHeight - 80;
-        while (x < 10000) {
+        while (x < 11000) {
             const pos = [x, y];
             const args = {
                 img: img,
@@ -112,7 +149,22 @@ class Game {
         // this.scrollOffset -= spd;
 
         this.backgrounds.forEach((background) => {
-            background.pos[0] += spd * 0.66;
+            switch (background.layer) {
+                case 0:
+                    background.pos[0] += spd * 0.66;
+                    break;
+                case 1:
+                    background.pos[0] += spd * 0.77;
+                    break;
+                case 2:
+                    background.pos[0] += spd * 0.85;
+                    break;
+                case 3:
+                    background.pos[0] += spd * 0.94;
+                    break;
+
+            }
+            
         });
 
         this.platforms.forEach((platform) => {

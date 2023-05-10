@@ -1,3 +1,5 @@
+import * as Util from "./util.js"
+
 const idleRight = {
     frameCnt: 0,
     frames: Array(6).fill(6),
@@ -30,4 +32,8 @@ const hurtRight = {
     frameCnt: 0,
     frames: Array(6).fill(3),
     src: Util.loadSprite("src/assets/images/sprites/player-hurt-right.png")
+}
+
+const despawn = {
+
 }

@@ -1,7 +1,5 @@
-import * as Util from "./util.js"
-
-const I_FRAME = 2500; // 2.5 second iFrame
-
+const IFRAME = 2500; // 2.5 second iframe
+const ENEMY_IFRAME = 1000 // 1 second iframe for enemy
 class MovingObject {
     static GRAVITY = 0.5;
 
@@ -34,13 +32,18 @@ class MovingObject {
         // scaled 2x
         this.dWidth = this.width * 2;
         this.dHeight = this.height * 2;
+        this.frameCounter = 0;
     }
 
     draw(ctx) {
         const [dX, dY] = this.pos;
-        this.frameX = ++this.frameX % this.frames;
+        if(this.frameCounter === 6) {
+            this.frameX = ++this.frameX % this.frames;
+            this.frameCounter = 0
+        }
         const sX = this.frameX * this.width;
         const sY = 0 * this.height;
+        this.frameCounter++;
         
         ctx.drawImage(this.img, sX, sY, this.width, this.height, dX, dY, this.dWidth, this.dHeight)
         // if (this.type === "projectile") debugger;
@@ -67,9 +70,15 @@ class MovingObject {
         const check = now - this.hurtBasetime;
         // 2.5 sec iFrame for player
         // 1 sec iFrame for enemy
-        let iFrame = I_FRAME;
-        if(this.type === "enemy") iFrame = 1000;
-        if(this.isHurt && check / I_FRAME >= 1) {
+        let iFrame;
+        switch (this.type) {
+            case "player":
+                iFrame = IFRAME;
+                break;
+            case "enemy":
+                iFrame = ENEMY_IFRAME;
+        }
+        if(this.isHurt && check / iFrame >= 1) {
             this.hurtBasetime = now;
             this.isHurt = false;
             switch (this.dir) {
