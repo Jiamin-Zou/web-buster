@@ -5,8 +5,8 @@ class MovingObject {
 
     constructor (args) {
         this.img = args.img;
-        this.idleLeft = args.idleLeft;
-        this.idleRight = args.idleRight;
+        this.idleLeft = args.idleLeft || this.img;
+        this.idleRight = args.idleRight|| this.img;
         this.runLeft = args.runLeft || this.idleLeft;
         this.runRight = args.runRight || this.idleRight;
         this.hurtLeft =  args.hurtLeft || this.idleLeft;
@@ -20,35 +20,36 @@ class MovingObject {
         this.vel = args.vel || [0, 0];
         this.speed = args.speed || 5;
         this.health = args.health || 1; //projectile
-        this.frames = args.frames
+        // this.frames = args.frames
         this.game = args.game;
         this.type = args.type;
         if (this.type === "enemy") this.speed = 3;
         this.dir = args.dir;
+        this.isAlive = true;
         this.inJump = false;
         this.isHurt = false;
         this.shootCooldown = false;
-        this.isAlive = true;
         this.shootBasetime = Date.now();
         this.hurtBasetime = Date.now();
         this.frameX = 0;
         // scaled 2x
         this.dWidth = this.width * 2;
         this.dHeight = this.height * 2;
-        this.frameCounter = 0;
     }
 
     draw(ctx) {
         const [dX, dY] = this.pos;
-        if(this.frameCounter === 6) {
-            this.frameX = ++this.frameX % this.frames;
-            this.frameCounter = 0
+        if(this.img.frameCnt === this.img.frames[this.frameX]) {
+            this.frameX = ++this.frameX % this.img.frames.length;
+            // debugger
+            this.img.frameCnt = 0;
+            // debugger
         }
+        this.img.frameCnt++;
         const sX = this.frameX * this.width;
         const sY = 0 * this.height;
-        this.frameCounter++;
         
-        ctx.drawImage(this.img, sX, sY, this.width, this.height, dX, dY, this.dWidth, this.dHeight)
+        ctx.drawImage(this.img.src , sX, sY, this.width, this.height, dX, dY, this.dWidth, this.dHeight)
         // if (this.type === "projectile") debugger;
     }
 
@@ -65,7 +66,6 @@ class MovingObject {
             } else {
                 this.vel[1] = 0
             }
-            this.updateMovement()
         }
     }
 
@@ -100,10 +100,6 @@ class MovingObject {
         // overwritten in enemy && player class
         this.alive = false;
         this.remove()
-    }
-
-    updateMovement() {
-        // to be implemented in childClass
     }
 
     shoot() {

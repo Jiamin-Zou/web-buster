@@ -33,16 +33,16 @@ export function isOnPlatform(obj, platform) {
     return (isAbovePlatform && touchingPlatTop && inLeftBound && inRightBound)
 };
 
-export function projectileCollison(projectile, obj){
+export function projectileCollison(projectile, obj) {
 
     const shooter = projectile.shooter;
     const [pX, pY] = projectile.pos;
     const [oX, oY] = obj.pos;
     const hit = (
-        oX + obj.dWidth - 10 >= pX &&
-        pX + projectile.dWidth >= oX + 10 &&
-        oY + obj.dHeight -5 >= pY &&
-        pY + projectile.dHeight >= oY + 5
+        oX + obj.dWidth - 15 >= pX &&
+        pX + projectile.dWidth >= oX + 15 &&
+        oY + obj.dHeight - 7 >= pY &&
+        pY + projectile.dHeight >= oY + 7
     );
 
     return (obj.type !== shooter.type && hit);

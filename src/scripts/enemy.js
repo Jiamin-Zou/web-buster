@@ -1,13 +1,12 @@
 import MovingObject from "./moving_object.js"
 import Projectile from "./projectile.js"
 import * as Util from "./util.js"
+import * as Enemy1Sprite from "./enemy1SpriteInfo.js"
 
 class Enemy extends MovingObject {
     static SHOOT_WAVE = 2;
-    constructor(args, enemyType=1, difficulty=1) {
-        const idleLeft = Util.loadSprite(`src/assets/images/sprites/enemy_${enemyType}_Idle_left.png`)
-        const idleRight = Util.loadSprite(`src/assets/images/sprites/enemy_${enemyType}_Idle_right.png`)
-        args.img = idleLeft;
+    constructor(args, difficulty=1) {
+        args.img = Enemy1Sprite.idleLeft;
         args.width = 32;
         args.height = 32;
         args.frames = 4;
@@ -25,8 +24,15 @@ class Enemy extends MovingObject {
             args.health = 2;
         }
         
-        args.idleLeft = idleLeft;
-        args.idleRight = idleRight;
+        args.idleLeft = Enemy1Sprite.idleLeft;
+        args.idleRight = Enemy1Sprite.idleRight;
+        args.runLeft = Enemy1Sprite.runLeft;
+        args.runRight = Enemy1Sprite.runRight;
+        args.hurtLeft = Enemy1Sprite.hurtLeft;
+        args.hurtRight = Enemy1Sprite.hurtRight;
+        args.attackLeft = Enemy1Sprite.attackLeft;
+        args.attackRight = Enemy1Sprite.attackRight;
+        args.despawn = Enemy1Sprite.despawn;
         args.type = "enemy";
         args.dir = "left"
         super(args)
@@ -56,10 +62,10 @@ class Enemy extends MovingObject {
                 this.vel[0] = 0;
                 const args = { game:this.game };
                 if (this.dir === "left") {
-                    this.img = this.runLeft;
+                    this.img = this.attackLeft;
                     args.dir = this.dir;
                 } else if (this.dir === "right") {
-                    this.img = this.runRight;
+                    this.img = this.attackRight;
                     args.dir = this.dir;
                 }
                 // debugger
@@ -72,6 +78,7 @@ class Enemy extends MovingObject {
     }
 
     update() {
+      // movement to chase player if player is within chase range and sopt range
         const player = this.game.player;
         const [playerX, playerY] = player.pos;
         const [enemyX, enemyY] = this.pos;
@@ -79,38 +86,45 @@ class Enemy extends MovingObject {
       
         if (dist < this.chaseRange) {
           const speed = this.speed;
-          this.shoot()
           if (playerX < enemyX) {
             this.dir = "left";
             this.img = this.runLeft;
+            // debugger
             this.vel[0] = -speed;
           } else {
             this.dir = "right";
-            this.img = this.runRight
+            this.img = this.runRight;
             this.vel[0] = speed;
           }
-      
+          
           if (dist <= this.stopRange) {
             this.vel[0] = 0;
           }
-      
+            
+            this.shoot()
           // Check if on the ground before allowing jump
-          // && if playerY is at least 50px above enemy + (offset height different)
-          if (!this.inJump && playerY < enemyY - 50 + (player.dHeight - this.dHeight)) {
-            const jumpHeight = 13;
+          // && if playerY is at least 75px above enemy + (offset height different)
+          if (!this.inJump && playerY < enemyY - 75 + (player.dHeight - this.dHeight)) {
+            const jumpHeight = 12;
             this.vel[1] = -jumpHeight;
             this.inJump = true;
           }
-        } else {
-          this.vel[0] = 0;
+          } else {
+            this.vel[0] = 0;
+          // if player not within distance, stand idle 
         }
+
+        // switch (this.dir) {
+        //   case "left":
+        //     this.img = this.idleLeft;
+        //     break;
+        //   case "right":
+        //     this.img = this.idleRight;
+        //     break;
+        // }
       
         super.update();
       }
-    
-
-    updateMovement() {
-    }
 
 }
 

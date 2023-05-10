@@ -1,30 +1,25 @@
 import MovingObject from "./moving_object.js";
-import * as Util from "./util.js"
+import * as ProjectileSprites from "./projectileSpriteInfo.js"
 
 class Projectile extends MovingObject {
     constructor(args, shooter) {
-        const leftShot = Util.loadSprite("src/assets/images/sprites/player-shoot-left-4.png");
-        const rightShot = Util.loadSprite("src/assets/images/sprites/player-shoot-right-4.png");
         switch (args.dir) {
             case "left":
-                args.img = leftShot;
+                args.img = ProjectileSprites.leftShot;
                 args.vel = [-6, 0];
                 if(shooter.type === "enemy") args.vel = [-3, 0];
                 break;
             case "right":
-                args.img = rightShot;
+                args.img = ProjectileSprites.rightShot;
                 args.vel = [6, 0];
                 if(shooter.type === "enemy") args.vel = [3, 0];
                 break;
 
         }
         // debugger
-        args.idleLeft = leftShot;
-        args.idleRight = rightShot;
         args.pos = [0, 0]
         args.width = 16;
         args.height = 16;
-        args.frames = 4;
         args.type = "projectile";
         // need to pass in pos args
         super(args)
@@ -44,10 +39,8 @@ class Projectile extends MovingObject {
         const fY = y + (h / 2) - (this.dWidth / 2);
         let fX;
         if (this.dir === "left") {
-            this.img = this.idleLeft
             fX = x - this.dWidth + 4;
         } else if (this.dir === "right") {
-            this.img = this.idleRight
             fX = (x + w) - 4
         }
 
@@ -55,7 +48,8 @@ class Projectile extends MovingObject {
         // debugger
     }
 
-    updateMovement(){
+    update(){
+        super.update();
         const dX = this.pos[0];
         if (Math.abs(dX - this.baseX) >= this.maxDist || this.health === 0) {
             this.game.remove(this)

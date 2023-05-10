@@ -125,8 +125,7 @@ class Game {
                 pos: pos,
                 game: this,
             }
-            let enemyType = 1;
-            const enemy = new Enemy(args, enemyType)
+            const enemy = new Enemy(args)
             this.enemies.push(enemy);
         })
 
@@ -179,6 +178,10 @@ class Game {
         })
     }
 
+    allMovingObjects() {
+        return this.enemies.concat(this.projectiles).concat([this.player]);
+    }
+
     step() {
         this.updateAllMovingUpjects()
         this.checkOnPlatform();
@@ -190,10 +193,6 @@ class Game {
         this.drawBackground(ctx)
         this.drawPlatforms(ctx);
         this.drawAllMovingObjects(ctx)
-    }
-
-    allMovingObjects() {
-        return this.enemies.concat(this.projectiles).concat([this.player]);
     }
 
     drawAllMovingObjects(ctx){
@@ -302,8 +301,8 @@ class Game {
                         obj1.vel[0] = 0
                     }
                     if (!obj1.isHurt && !obj2.isHurt) {
-                        obj1.pos[0] -= 50;
-                        obj2.pos[0] += 50;
+                        obj1.pos[0] -= 40;
+                        obj2.pos[0] += 40;
                     }
                 };
             })
@@ -316,6 +315,10 @@ class Game {
     
     isLevelClear() {
         return this.enemies.length === 0;
+    }
+
+    executeGameEnd () {
+
     }
 
     remove(obj) {
