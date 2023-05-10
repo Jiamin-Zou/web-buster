@@ -55,7 +55,7 @@ class MovingObject {
 
     update() {
         if(this.isAlive) {
-            if (this.health === 0 && this.type !== "player") this.runDespawn();
+            if (this.health === 0) this.runDespawn();
 
             this.checkiFrame();
 
@@ -65,6 +65,10 @@ class MovingObject {
                 this.vel[1] += MovingObject.GRAVITY;
             } else {
                 this.vel[1] = 0
+            }
+
+            if (this.pos[0] < 0 && this.type !== "projectile") {
+                this.pos[0] = 0;
             }
         }
     }

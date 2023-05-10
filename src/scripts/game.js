@@ -9,7 +9,6 @@ import * as Util from "./util.js"
 // canvas: 800 x 600
 // floor: 500 x 80
 // platform = floor * 0.5 = 250 x 40
-
 class Game {
     constructor (canvas, difficulty) {
         this.screenWidth = canvas.width;
@@ -22,17 +21,22 @@ class Game {
         this.platforms = [];
         this.scrollOffset = 0;
         this.player = this.addPlayer();
-        this.createBackground();
+        this.createBackgrounds();
         this.createPlatforms();
-        this.createEnemies();        
+        this.createEnemies();
+        // this.initialPlatforms = this.createPlatforms(); // Store initial platforms
+        // this.initialBackgrounds = this.createBackgrounds(); // Store initial backgrounds
+        // this.initialEnemies = this.createEnemies(); // Store initial enemies   
     }
 
     addPlayer() {
-        const player = new Player({game: this})
+        const player = new Player({game: this, pos: [100, 444]})
         return player;
     }
 
-    createBackground() {
+    createBackgrounds() {
+        // debugger
+        const backgrounds = [];
         const bgArgs = {
             img: Util.loadSprite("src/assets/images/background/background0.png"),
             pos: [0, 0],
@@ -42,6 +46,7 @@ class Game {
         }
         const bg = new Background(bgArgs);
         this.backgrounds.push(bg);
+        backgrounds.push(bg)
 
         const bg1Arg = {
             img: Util.loadSprite("src/assets/images/background/background1.png"),
@@ -64,26 +69,33 @@ class Game {
 
 
         Util.BG_1_POS.forEach((pos) => {
-            bg1Arg.pos = pos;
-            // debugger
-            this.backgrounds.push(new Background(bg1Arg))
+            bg1Arg.pos = pos.slice();
+            const bg1 = new Background(bg1Arg)
+            this.backgrounds.push(bg1);
+            backgrounds.push(bg1);
         });
 
         Util.BG_2_POS.forEach((pos) => {
-            bg2Arg.pos = pos;
-            this.backgrounds.push(new Background(bg2Arg))
+            bg2Arg.pos = pos.slice();
+            const bg2 = new Background(bg2Arg);
+            this.backgrounds.push(bg2);
+            backgrounds.push(bg2);
         });
 
         Util.BG_3_POS.forEach((pos) => {
-            bg3Arg.pos = pos;
-            this.backgrounds.push(new Background(bg3Arg))
+            bg3Arg.pos = pos.slice();
+            const bg3 = new Background(bg3Arg);
+            this.backgrounds.push(bg3);
+            backgrounds.push(bg3);
         });
-
         // debugger
+
+        return backgrounds;
     }
 
     createFloor(img, width, height) {
-        let x = 0
+        const floors = [];
+        let x = -500;
         const y = this.screenHeight - 80;
         while (x < 11000) {
             const pos = [x, y];
@@ -96,15 +108,19 @@ class Game {
             }
             const floor = new Platform(args);
             this.platforms.push(floor);
+            floors.push(floor);
             x += width;
         }
+        return floors;
     }
 
     createPlatforms() {
+        // debugger
+        const platforms = [];
         const floor = Util.loadSprite("src/assets/images/sprites/floor_tile.png");
         const width = 500;
         const height = 80;
-        this.createFloor(floor, width, height);
+        platforms.concat(this.createFloor(floor, width, height));
 
 
         const plat = Util.loadSprite("src/assets/images/sprites/platform_1_224_31.png")
@@ -112,24 +128,32 @@ class Game {
         Util.PLATFORMS_POS.forEach((pos) => {
             const args = {
                 img: plat,
-                pos: pos,
+                pos: pos.slice(),
                 width: 224,
                 height: 31,
             }
-            const platform = new Platform (args)
-            this.platforms.push(platform)
+            const platform = new Platform (args);
+            this.platforms.push(platform);
+            platforms.push(platform);
         })
+        // debugger
+        return platforms;
     }
 
     createEnemies() {
+        // debugger
+        const enemies = [];
         Util.ENEMY_POS.forEach((pos) => {
             const args = {
-                pos: pos,
+                pos: pos.slice(),
                 game: this,
             }
             const enemy = new Enemy(args, this.difficulty)
             this.enemies.push(enemy);
+            enemies.push(enemy);
         })
+        // debugger
+        return enemies;
 
     }
 
@@ -314,26 +338,53 @@ class Game {
         })
     }
 
-    // isGameOver() {
-    //     return (this.player.health === 0)
-    // }
-    
-    // isLevelClear() {
-    //     return (this.enemies.length === 0 && this.player.health > 0);
-    // }
 
-    // isOver() {
-    //     return (this.isGameOver || this.isLevelClear);
-    // }
 
     remove(obj) {
         if (obj.type === "projectile") {
             this.projectiles.splice((this.projectiles.indexOf(obj)), 1);
         } else if (obj.type === "enemy") {
-            const idx = this.enemies.indexOf(obj)
             this.enemies.splice((this.enemies.indexOf(obj)), 1)
             if (this.enemies.length === 0 ) this.isGameEnd = true;
+        } else if (obj.type === "player") {
+            delete this.player;
+            this.isGameEnd = true;
         }
+    }
+
+
+    getInitialPlatforms() {
+        return this.initialPlatforms.map(platform => ({ ...platform }));
+      }
+    
+    getInitialBackgrounds() {
+    return this.initialBackgrounds.map(background => ({ ...background }));
+    }
+
+    getInitialEnemies() {
+    return this.initialEnemies.map(enemy => ({ ...enemy }));
+    }
+
+    reset(difficulty, ctx) {
+        // debugger
+        ctx.clearRect(0, 0, this.screenWidth, this.screenHeight);
+        this.difficulty = difficulty;
+        this.isGameEnd = false;
+        // this.backgrounds = this.getInitialBackgrounds()
+        // this.enemies = this.getInitialEnemies()
+        // this.platforms = this.getInitialPlatforms()
+        this.backgrounds = [];
+        this.enemies = [];
+        this.platforms = [];
+        this.projectiles = [];
+        this.scrollOffset = 0;
+        this.player = this.addPlayer();
+        // debugger;
+        this.createBackgrounds();
+        this.createPlatforms();
+        this.createEnemies();
+        // debugger;
+
     }
 }
 

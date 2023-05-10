@@ -3,7 +3,7 @@ import Projectile from "./projectile.js";
 import * as PlayerSprites from "./playerSpriteInfo.js"
 
 class Player extends MovingObject {
-    static START_POS = [100, (600 - 80 - 38 * 2)]
+    static START_POS = [100, (600 - 80 - 38 * 2)] // [100, 444];
     static MOVE_BOUND_LEFT = 100;
     static MOVE_BOUND_RIGHT = 400;
     static UP_BOUND = 40;
@@ -28,8 +28,7 @@ class Player extends MovingObject {
         args.despawn = PlayerSprites.despawn;
         args.width = 32;
         args.height = 38;
-        args.pos = Player.START_POS;
-        args.health = 30;
+        args.health = 20;
         // args.frames = 6;
         args.type = "player";
         args.dir = "right";

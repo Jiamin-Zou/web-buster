@@ -23,25 +23,50 @@ class GameView {
         // debugger
         this.bindKeyHandlers()
         this.animate = this.animate.bind(this)
+        this.start = this.start.bind(this);
     }
 
     start() {
         this.animate();
     }
 
+    restart(difficulty){
+        // debugger
+        this.game.reset(difficulty, this.ctx);
+        this.difficultyDisplay.innerText = this.game.difficulty
+        this.bindKeyHandlers();
+        // debugger
+        // setTimeout(this.start, 2000)
+    }
+
+    executeGameEnd () {
+        // cancelAnimationFrame(reqID);
+        this.unbindKeyHandlers();
+        const btn = document.querySelector("#game-start-btn");
+        const msg = document.querySelector("#welcome-msg");
+        const menu = document.querySelector("#gameModal");
+        msg.innerText = "Hope you enjoyed playing. Another round?"
+        btn.innerText = "Restart Game"
+        menu.style.display = "flex";
+    }
+
     animate() {
-        // const now = Date.now();
-        // const check = now - basetime;
-        // if (check / FPS >= 1) {
-        //     basetime = now;
+        if (this.game.isGameEnd) {
+            this.executeGameEnd();
+        } else {
+            // const now = Date.now();
+            // const check = now - basetime;
+            // if (check / FPS >= 1) {
+            //     basetime = now;
             this.game.step();
             this.updateHealthDisplay();
             this.updateEnemyCount();
             this.game.draw(this.ctx);
-        // }
+            // }
 
-            if (this.game.isGameEnd) this.executeGameEnd();
-        reqID = requestAnimationFrame(this.animate, FPS);
+        }
+
+        reqID = requestAnimationFrame(this.animate);
     }
 
     bindKeyHandlers() {
@@ -148,17 +173,6 @@ class GameView {
     updateEnemyCount() {
         const count = this.game.enemies.length;
         this.enemyCountDisplay.innerHTML = count;
-    }
-
-    executeGameEnd () {
-        cancelAnimationFrame(reqID);
-        this.unbindKeyHandlers();
-        const btn = document.querySelector("#game-start-btn");
-        const msg = document.querySelector("#welcome-msg");
-        const menu = document.querySelector("#game-menu");
-        msg.innerText = "Hope you enjoyed playing. Another round?"
-        btn.innerText = "Restart Game"
-        menu.showModal();
     }
 
 }

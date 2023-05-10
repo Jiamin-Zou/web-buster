@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="src/assets/images/favicon.png" type="image/x-icon">
-    <link href="dist/main.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/8918e1da19.js" crossorigin="anonymous"></script>
+    <link href="dist/main.css" rel="stylesheet">
     <script src="dist/main.js"></script>
     <title>Web Buster!</title>
 </head>
@@ -15,23 +15,26 @@
         <div class="header">
             <h1 id="game-name">Web Buster</h1>
         </div>
-        <dialog id="game-menu">
-            <div id="welcome-msg">Welcome to <span>Web Buster</span>, hope you enjoy!</div>
-            <div id="instructions">
-                <li>Defeat all the enemies to clear the game!</li>
-                <li class="key">Press <span>Up</span> Arrow to jump</li>
-                <li class="key">Use <span>Left/Right</span> to move</li>
-                <li class="key">Use <span>Space Bar</span> to Shoot</li>
-                <li class="key">Note you have <span>2 seconds of invincibility</span> frame upon getting hurt</li>
+        <div class="modal" id="gameModal">
+            <div id="game-menu">
+                <div id="welcome-msg">Welcome to <span>Web Buster</span>, hope you enjoy!</div>
+                <div id="instructions">
+                    <li>Defeat all the enemies to clear the game!</li>
+                    <li class="key">Press <span>Up</span> Arrow to jump</li>
+                    <li class="key">Use <span>Left/Right</span> to move</li>
+                    <li class="key">Use <span>Space Bar</span> to Shoot</li>
+                    <li class="key">Note you have <span>2 seconds of invincibility</span> frame upon getting hurt</li>
+                </div>
+                
+                <ul class="game-diff-ctn">
+                    <li class="diff-selections-lv difficulty-selected">1</li>
+                    <li class="diff-selections-lv">2</li>
+                    <li class="diff-selections-lv">3</li>
+                </ul>
+                <div id="game-start-btn">Start Game</div>
             </div>
-            
-            <ul class="game-diff-ctn">
-                <li class="diff-selections-lv difficulty-selected">1</li>
-                <li class="diff-selections-lv">2</li>
-                <li class="diff-selections-lv">3</li>
-            </ul>
-            <div id="game-start-btn">Start Game</div>
-        </dialog>
+        </div>
+        
         <div class="game-container">
             <div class="game-head">
                 <div class="player-health-container">
@@ -58,15 +61,14 @@
             <div class="main-controls">
                 <p>Controls</p>
                 <div class="sound-control">
-                    <p>BGM</p>
-                    <div class="bgm-sound-icon" id="bgm-on">
-                        <i class="fa-solid fa-volume-high"> On</i>
+                    <div class="bgm-sound-icon bgm-on">
+                        <i class="fa-solid fa-pause fa-xl"> Pause</i>
                     </div>
-                    <div class="bgm-sound-icon" id="bgm-off">
-                        <i class="fa-solid fa-volume-xmark"> OFF</i>
+                    <audio src=""></audio>
+                    <div class="bgm-sound-icon bgm-off">
+                        <i class="fa-solid fa-play fa-xl"> Play</i>
                     </div>
                 </div>
-                <div id="open-menu">MENU</div>
             </div>
 
             <div class="instructions">

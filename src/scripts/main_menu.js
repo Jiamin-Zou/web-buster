@@ -3,25 +3,26 @@ import GameView from "./game_view.js";
 
 class MenuHandler {
     constructor() {
-        // this.menuBtn = document.querySelector("#open-menu")
+        this.game, this.gameView;
         this.startMenu = document.querySelector("#game-menu");
         this.canvas = document.querySelector("#canvas");
-        this.modal = document.querySelector("#game-menu");
-        this.modal.showModal()
+        this.ctx = this.canvas.getContext("2d")
+        this.modal = document.querySelector("#gameModal");
+        this.modal.style.display = "flex";
         this.startGameBtn = document.querySelector("#game-start-btn");
         this.difficultySelector = document.querySelector(".game-diff-ctn");
         this.startGame = this.startGame.bind(this);
-        this.bindListeners();
+        this.soundToggle = document.querySelector(".sound-control");
+        this.bindEventListeners();
     }
 
-    bindListeners() {
-        // this.menuBtn.addEventListener("click", ()=> {
-        //     this.modal.showModal();
-        // })
+    bindEventListeners() {
         this.startGameBtn.addEventListener("click", ()=> {
-            this.modal.close();
-            this.startGame();
+            this.modal.style.display = "none";
+            // debugger
+                this.startGame()
         })
+
         this.difficultySelector.addEventListener("click", (e)=> {
             const selected = document.querySelector(".difficulty-selected")
             if (selected !== e.target) {
@@ -29,15 +30,40 @@ class MenuHandler {
                 e.target.classList.add("difficulty-selected")
             }
         })
+
+        this.soundToggle.addEventListener("click", (e) => {
+            const playing = document.querySelector(".bgm-on");
+            const paused = document.querySelector(".bgm-off");
+            console.log(playing);
+            console.log(paused);
+
+            // debugger
+            if (playing.style.display === "none") {
+                paused.style.display = "none";
+                playing.style.display = "block";
+            } else if (paused.style.display === "none") {
+                playing.style.display = "none";
+                paused.style.display = "block";
+            }
+        })
     }
 
     startGame() {
         const difficulty = document.querySelector(".difficulty-selected").innerText;
-        const ctx = this.canvas.getContext("2d");
-        
-        const game = new Game(this.canvas, difficulty);
-        const gameView = new GameView(game, ctx);
-        gameView.start()
+        this.modal.style.display = "none";
+        if (this.startGameBtn.innerText === "Start Game") {
+            // debugger
+            this.game = new Game(this.canvas, difficulty);
+            this.gameView = new GameView(this.game, this.ctx);
+            this.gameView.start();
+        } else {
+            // debugger
+            // debugger
+            // this.game = new Game(this.canvas, difficulty);
+            // this.gameView = new GameView(this.game, this.ctx);
+            // this.gameView.start();
+            this.gameView.restart(difficulty);
+        }
     }
 
 

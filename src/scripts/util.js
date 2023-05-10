@@ -144,6 +144,11 @@ export const BG_1_POS = [
     [9524, 201]
 ]
 
+for(let attribute in BG_1_POS) {
+    let key = attribute //string
+    let value = BG_1_POS[attribute]
+}
+
 export const BG_2_POS = [
     [ 267, 236],
     [ 782, 216],

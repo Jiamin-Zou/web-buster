@@ -15,10 +15,10 @@ class Enemy extends MovingObject {
             args.health = 2;
             break;
           case 2:
-            args.health = 3;
+            args.health = 4;
             break;
           case 3:
-            args.health = 5; //crazy
+            args.health = 6; //crazy
             break;
           default:
             args.health = 2;
@@ -68,7 +68,7 @@ class Enemy extends MovingObject {
                     this.img = this.attackRight;
                     args.dir = this.dir;
                 }
-                // debugger
+                // 
                 new Projectile(args, this)
                 this.shootCooldown = true;
                 this.shootCount++;
