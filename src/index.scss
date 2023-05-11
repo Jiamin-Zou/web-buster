@@ -1,5 +1,5 @@
 @import "./styles/css_reset.scss";
-@import "./styles/page.scss";
+// @import "./styles/page.scss";
 @import "./styles/modal_menu.scss";
 
 @font-face {
@@ -7,11 +7,12 @@
     src: url(../src/assets/font/ThaleahFat.ttf);
 }
 
-$game-color: teal;
+$color: rgb(18, 241, 241);
+
 $game-font: ThaleahFat;
 
 body {
-    background: url("../src/assets/images/background/bg.png") no-repeat center center fixed;
+    background: url("../src/assets/images/webpage/background.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -22,9 +23,11 @@ body {
 }
 
 #canvas{
-    background-color: $game-color;
-    border: 4px ridge navajowhite;
-    border-top: 0px;
+    background-color: rgb(18, 241, 241);
+    background-color: rgba($color: #088d7b9c, $alpha: 0.5);
+    border-radius: 10px;
+    border: 8px ridge navajowhite;
+    // border-top: 0px;
 
     // width: 800px;
     // height: 500px;
