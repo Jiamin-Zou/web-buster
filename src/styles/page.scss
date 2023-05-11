@@ -150,6 +150,147 @@
 //     border: 3px solid blue;
 // }
 
-.body{
-    width:100%
+$title-color: rgba($color: #248de45e, $alpha: 1.0);
+$title-shadow: 4px 4px orange;
+
+.main-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    .header {
+        width: 100%;
+        #game-name {
+            font-size: 50px;
+            color: $title-color;
+            text-shadow: $title-shadow;
+        }
+    }
+    .body-container {
+        display: flex;
+        
+        justify-content: space-around;
+        align-content: center;
+        vertical-align: middle;
+        // align-items: center;
+
+        .left-container {
+            font-size: 20px;
+            width: 20%;
+            display:flex;
+            flex-wrap: wrap;
+            // justify-content: center;
+            align-content: space-evenly;
+            // align-items: center;
+            // align-content: space-around;
+            background-color: rgba($color: #088d7b9c, $alpha: 0.5);
+            border-radius: 10px;
+            border: 8px ridge navajowhite;
+            color: whitesmoke;
+            text-shadow: 2px 2px rgba($color: #fafafa42, $alpha: 0.4);
+            .player-health-container, .game-difficulty-display, .enemy-count-display {
+                width: 80%;
+                margin: 5%;
+                padding: 3%;
+                padding-bottom: 6%;
+                border-radius: 5px;
+                border: 2px ridge;
+                box-shadow: 2px 2px rgba($color: #fafafa42, $alpha: 0.4);;
+                background-color: rgba($color: #0000006e, $alpha: 0.5);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .player-health-container {
+                align-self: flex-start;
+                height: 420px;
+                .hp-info {
+                    display: flex;
+                    font-size: 30px;
+                    display: flex;
+                    text-shadow: 2px 2px rgba($color: #fafafa42, $alpha: 0.4);
+                    p {
+                        color: lime;
+                    }
+                    #hp-stat {
+                        color: whitesmoke;
+                    }
+                }
+                #player-hp-bar{
+                    width: 20%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    border: 2px solid;
+                    border-radius: 4px;
+                    box-shadow:3px 3px grey;
+                    background-color: grey;
+                    width: 40px;
+                    height: 380px;
+                    justify-content: flex-end;
+                    li {
+                        border-radius: 5px;;
+                        margin: 2px;
+                        list-style: none;
+                        width:30px;
+                        height: 10px;
+                        list-style: none;
+                        background-color: limegreen;
+                        border: 3px groove rgb(3, 156, 3);
+                        box-shadow: 2px 2px rgba($color: #dd7a08d5, $alpha: 0.7);
+                    }
+                }
+            }
+
+            .game-difficulty-display {
+                align-self: center;
+                display: flex;
+            }
+
+            .enemy-count-display {
+                align-self: flex-baseline;
+                display: flex;
+            }
+        }
+
+        .right-container {
+            font-size: 30px;
+            width: 20%;
+            display:flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            // justify-content: center;
+            justify-content: space-between;
+            // align-content: space-between;
+            // align-items: center;
+            // align-content: space-around;
+            background-color: rgba($color: #088d7b9c, $alpha: 0.5);
+            border-radius: 10px;
+            border: 8px ridge navajowhite;
+            color: whitesmoke;
+            text-shadow: 2px 2px rgba($color: #fafafa42, $alpha: 0.4);
+
+
+            .links {
+                display: flex;
+                flex-direction: column;
+                p {
+                    color: white;
+                }
+                a {
+                    text-decoration: none;
+                    // a:link, a:visited, a:hover, a:active {}
+                }
+                div {
+                    color: rgb(8, 26, 75);
+
+                }
+            }
+            .abouts {
+                font-size: 20px;
+            }
+        }
+
+
+    }
 }

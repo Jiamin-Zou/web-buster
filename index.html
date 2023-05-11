@@ -42,7 +42,7 @@
             <h1 id="game-name">Web Buster</h1>
         </div>
 
-        <div class="body">
+        <div class="body-container">
             
 
             <div class="left-container">
@@ -60,7 +60,7 @@
                     <div id="game-difficulty"></div>
                 </div>
 
-                <div class="enemy-count-disaply">
+                <div class="enemy-count-display">
                     <p>Enemy Count</p>
                     <div id="enemy-counts"></div>
                 </div>
@@ -70,28 +70,6 @@
             
             
             <div class="game-container">
-                <!-- <div class="game-head">
-    
-                    <div class="player-health-container">
-                        <div class="hp-info">
-                            <p>HP:</p>
-                            <div id="hp-stat"></div>
-                        </div>
-                        <div id="player-hp-bar"></div>
-                    </div>
-    
-                    <div class="game-difficulty-diaplay">
-                        <p>Difficulty:</p>
-                        <div id="game-difficulty"></div>
-                    </div>
-    
-                    <div class="enemy-count-disaply">
-                        <p>Enemy Count</p>
-                        <div id="enemy-counts"></div>
-                    </div>
-    
-                </div> -->
-                
                 <canvas id="canvas"></canvas>
             </div>
 
@@ -100,28 +78,32 @@
 
                 <div class="links">
 
-                    <div class="modal toggle">
-                        <i class="fa-sharp fa-solid fa-circle-info fa-2xl"></i>
+                    <div class="modal-toggle">
+                        <div class="fa-sharp fa-solid fa-circle-info"></div>
                         <p>Game Info</p>
                     </div>
 
                     <div class="bgm-toggle">
-                        <i class="fa-solid fa-play fa-2xl"></i>
-                        <p>Play</p>
+                        <div class="fa-solid fa-play"></div>
+                        <p class="audio-display">Play</p>
                     </div>
 
                     <a href="https://github.com/Jiamin-Zou/web-buster">
-                        <i class="fa-brands fa-square-github fa-2xl"></i>
+                        <div class="fa-brands fa-square-github"></div>
+                        <p>github</p>
                     </a>
 
                     <a href="https://www.linkedin.com/in/jiaminzou95/">
-                        <i class="fa-brands fa-linkedin fa-2xl"></i>
+                        <div class="fa-brands fa-linkedin"></div>
+                        <p>Linkedin</p>
                     </a>
 
                 </div>
 
                 <div class="abouts">
-                    <p>This game was created during May of 2023 by <span>Jiamin Zou</span></p>
+                    <p>This game was created
+                        <br> By: <span>Jiamin Zou</span>, May of 2023
+                    </p>
                 </div>
 
             </div>

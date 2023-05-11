@@ -1,3 +1,6 @@
+$title-color: rgba($color: #248de45e, $alpha: 1.0);
+$title-shadow: 4px 4px orange;
+
 .modal {
     display: none;
     position: fixed;
@@ -12,11 +15,7 @@
 }
 
 #game-menu {
-    .close-game-menu {
-        align-self: last baseline;
-        margin-right: 20px;
-        font-size: 30px;
-    }
+
     margin:auto;
     width: 88%;
     height:88%;
@@ -31,7 +30,14 @@
     align-items: center;
     text-align: center;
     box-shadow: 10px 10px rgba($color: #b168082f, $alpha: 0.7);
-
+    .close-game-menu {
+        width: 100%;
+        display: flex;
+        justify-content: right;
+        padding-right: 50px;
+        padding-top: 20px;
+        font-size: 30px;
+    }
     #welcome-msg {
         font-size: 55px;
         border-radius: 20px;
@@ -44,8 +50,8 @@
         list-style: none;
     }
     span {
-        color: rgba($color: #248de45e, $alpha: 1.0);
-        text-shadow: 4px 4px orange;
+        color: $title-color;
+        text-shadow: $title-shadow;
     }
     #instructions {
         margin: 20px;
@@ -72,7 +78,7 @@
             display: flex;
             width: 30%;
             justify-content: space-between;
-            // align-items: center;
+            align-items: center;
             border-radius: 20px;
             padding: 6px;
             border: 2px solid;
