@@ -55,6 +55,10 @@ table {
   border-spacing: 0;
 }
 
+.body {
+  width: 100%;
+}
+
 .modal {
   display: none;
   position: fixed;
@@ -162,8 +166,8 @@ table {
 }
 
 #game-start-btn:hover {
-  background-color: black;
-  color: blue;
+  background-color: white;
+  color: teal;
   text-shadow: 4px 4px orange;
 }
 
