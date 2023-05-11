@@ -33,7 +33,6 @@ class Enemy extends MovingObject {
         this.shootCount = 0;
         this.chaseRange = 350;
         this.stopRange = 250;
-        console.log(this.health)
     }
 
     shoot() {
