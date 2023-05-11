@@ -1,5 +1,4 @@
-import Game from "./scripts/game.js";
-import GameView from "./scripts/game_view.js";
+
 import MenuHandler from "./scripts/main_menu.js";
 
 window.addEventListener('load', () => {

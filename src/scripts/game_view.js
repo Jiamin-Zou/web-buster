@@ -1,14 +1,8 @@
-let basetime = Date.now();
+
 import Player from "./player.js";
-const FPS = 1000/45;
 let reqID;
 
 class GameView {
-    static LEFT_KEY = ["ArrowLeft", "a"];
-    static RIGHT_KEY = ["ArrowRight", "d"];
-    static UP_KEY = ["ArrowUp", "w"]
-    static DOWN_KEY = ["ArrowDown","s"]
-    static SHOOT_KEY = [" "]; //space key
 
     constructor(game, ctx) {
         this.ctx = ctx;
@@ -21,26 +15,28 @@ class GameView {
         this.difficultyDisplay = document.querySelector("#game-difficulty");
         this.difficultyDisplay.innerText = this.game.difficulty
         // debugger
-        this.bindKeyHandlers()
         this.animate = this.animate.bind(this)
         this.start = this.start.bind(this);
+        this.bindKeyHandlers()
+        this.lastFrameTime = 0;
+        this.frameDuration = 1000 / 45; 
     }
 
     start() {
+        this.lastFrameTime = performance.now();
         this.animate();
     }
 
     restart(difficulty){
-        // debugger
+        cancelAnimationFrame(reqID);
         this.game.reset(difficulty, this.ctx);
         this.difficultyDisplay.innerText = this.game.difficulty
         this.bindKeyHandlers();
+        reqID = requestAnimationFrame(this.animate);
         // debugger
-        // setTimeout(this.start, 2000)
     }
 
     executeGameEnd () {
-        // cancelAnimationFrame(reqID);
         this.unbindKeyHandlers();
         const btn = document.querySelector("#game-start-btn");
         const msg = document.querySelector("#welcome-msg");
@@ -50,20 +46,18 @@ class GameView {
         menu.style.display = "flex";
     }
 
-    animate() {
+    animate(currentTime) {
         if (this.game.isGameEnd) {
             this.executeGameEnd();
-        } else {
-            // const now = Date.now();
-            // const check = now - basetime;
-            // if (check / FPS >= 1) {
-            //     basetime = now;
+            return;
+        }
+
+        const elapsed = currentTime - this.lastFrameTime;
+        if (elapsed >= this.frameDuration) {
             this.game.step();
             this.updateHealthDisplay();
             this.updateEnemyCount();
             this.game.draw(this.ctx);
-            // }
-
         }
 
         reqID = requestAnimationFrame(this.animate);

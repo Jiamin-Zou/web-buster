@@ -3,12 +3,7 @@ import Platform from "./platform.js"
 import Player from "./player.js";
 import Enemy from "./enemy.js";
 import * as Util from "./util.js"
-// dims width x height
-// player: original(32 x 38) * 2 = 64 x 76
-// background: 10,000 x 600
-// canvas: 800 x 600
-// floor: 500 x 80
-// platform = floor * 0.5 = 250 x 40
+
 class Game {
     constructor (canvas, difficulty) {
         this.screenWidth = canvas.width;
@@ -24,9 +19,6 @@ class Game {
         this.createBackgrounds();
         this.createPlatforms();
         this.createEnemies();
-        // this.initialPlatforms = this.createPlatforms(); // Store initial platforms
-        // this.initialBackgrounds = this.createBackgrounds(); // Store initial backgrounds
-        // this.initialEnemies = this.createEnemies(); // Store initial enemies   
     }
 
     addPlayer() {
@@ -35,8 +27,6 @@ class Game {
     }
 
     createBackgrounds() {
-        // debugger
-        const backgrounds = [];
         const bgArgs = {
             img: Util.loadSprite("src/assets/images/background/background0.png"),
             pos: [0, 0],
@@ -46,7 +36,6 @@ class Game {
         }
         const bg = new Background(bgArgs);
         this.backgrounds.push(bg);
-        backgrounds.push(bg)
 
         const bg1Arg = {
             img: Util.loadSprite("src/assets/images/background/background1.png"),
@@ -72,29 +61,22 @@ class Game {
             bg1Arg.pos = pos.slice();
             const bg1 = new Background(bg1Arg)
             this.backgrounds.push(bg1);
-            backgrounds.push(bg1);
         });
 
         Util.BG_2_POS.forEach((pos) => {
             bg2Arg.pos = pos.slice();
             const bg2 = new Background(bg2Arg);
             this.backgrounds.push(bg2);
-            backgrounds.push(bg2);
         });
 
         Util.BG_3_POS.forEach((pos) => {
             bg3Arg.pos = pos.slice();
             const bg3 = new Background(bg3Arg);
             this.backgrounds.push(bg3);
-            backgrounds.push(bg3);
         });
-        // debugger
-
-        return backgrounds;
     }
 
     createFloor(img, width, height) {
-        const floors = [];
         let x = -500;
         const y = this.screenHeight - 80;
         while (x < 11000) {
@@ -108,19 +90,15 @@ class Game {
             }
             const floor = new Platform(args);
             this.platforms.push(floor);
-            floors.push(floor);
             x += width;
         }
-        return floors;
     }
 
     createPlatforms() {
-        // debugger
-        const platforms = [];
         const floor = Util.loadSprite("src/assets/images/sprites/floor_tile.png");
         const width = 500;
         const height = 80;
-        platforms.concat(this.createFloor(floor, width, height));
+        this.createFloor(floor, width, height);
 
 
         const plat = Util.loadSprite("src/assets/images/sprites/platform_1_224_31.png")
@@ -134,15 +112,10 @@ class Game {
             }
             const platform = new Platform (args);
             this.platforms.push(platform);
-            platforms.push(platform);
         })
-        // debugger
-        return platforms;
     }
 
     createEnemies() {
-        // debugger
-        const enemies = [];
         Util.ENEMY_POS.forEach((pos) => {
             const args = {
                 pos: pos.slice(),
@@ -150,10 +123,7 @@ class Game {
             }
             const enemy = new Enemy(args, this.difficulty)
             this.enemies.push(enemy);
-            enemies.push(enemy);
         })
-        // debugger
-        return enemies;
 
     }
 
@@ -170,9 +140,6 @@ class Game {
                 spd = -this.player.speed;
                 break;
         }
-
-        // this.scrollOffset -= spd;
-
         this.backgrounds.forEach((background) => {
             switch (background.layer) {
                 case 0:
@@ -187,9 +154,7 @@ class Game {
                 case 3:
                     background.pos[0] += spd * 0.94;
                     break;
-
             }
-            
         });
 
         this.platforms.forEach((platform) => {
@@ -223,7 +188,7 @@ class Game {
 
     drawAllMovingObjects(ctx){
         this.allMovingObjects().forEach((obj) =>{
-            if(obj) obj.draw(ctx);
+            obj.draw(ctx);
         })
     }
 
@@ -254,8 +219,6 @@ class Game {
                 }
             })
         })
-
-        // return check;
     }
 
     checkCollision() {
@@ -338,8 +301,6 @@ class Game {
         })
     }
 
-
-
     remove(obj) {
         if (obj.type === "projectile") {
             this.projectiles.splice((this.projectiles.indexOf(obj)), 1);
@@ -352,27 +313,11 @@ class Game {
         }
     }
 
-
-    getInitialPlatforms() {
-        return this.initialPlatforms.map(platform => ({ ...platform }));
-      }
-    
-    getInitialBackgrounds() {
-    return this.initialBackgrounds.map(background => ({ ...background }));
-    }
-
-    getInitialEnemies() {
-    return this.initialEnemies.map(enemy => ({ ...enemy }));
-    }
-
     reset(difficulty, ctx) {
         // debugger
         ctx.clearRect(0, 0, this.screenWidth, this.screenHeight);
         this.difficulty = difficulty;
         this.isGameEnd = false;
-        // this.backgrounds = this.getInitialBackgrounds()
-        // this.enemies = this.getInitialEnemies()
-        // this.platforms = this.getInitialPlatforms()
         this.backgrounds = [];
         this.enemies = [];
         this.platforms = [];

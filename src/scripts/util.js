@@ -1,8 +1,8 @@
 export function loadSprite(src) {
-    const img = new Image();
-    img.src = src;
-    return img;
-};
+        const img = new Image();
+        img.src = src;
+        return img;
+    }
 
 export function dist(pos1, pos2) {
     return Math.sqrt(

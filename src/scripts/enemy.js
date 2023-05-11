@@ -30,9 +30,6 @@ class Enemy extends MovingObject {
         args.runRight = Enemy1Sprite.runRight;
         args.hurtLeft = Enemy1Sprite.hurtLeft;
         args.hurtRight = Enemy1Sprite.hurtRight;
-        args.attackLeft = Enemy1Sprite.attackLeft;
-        args.attackRight = Enemy1Sprite.attackRight;
-        args.despawn = Enemy1Sprite.despawn;
         args.type = "enemy";
         args.dir = "left"
         super(args)
@@ -49,32 +46,28 @@ class Enemy extends MovingObject {
             if (check / 400 >= 1 && this.shootCount !== Enemy.SHOOT_WAVE) {
                 this.shootBasetime = now;
                 this.shootCooldown = false;
-                // 2 sec cold down after wave of 2 shots
-            } else if (check / 2000 >= 1 && this.shootCount === Enemy.SHOOT_WAVE) {
+                // 2.5 sec cold down after wave of 2 shots
+            } else if (check / 2500 >= 1 && this.shootCount === Enemy.SHOOT_WAVE) {
                 this.shootBasetime = now;
                 this.shootCooldown = false;
                 this.shootCount = 0;
             }
 
-
-    
             if (!this.shootCooldown) {
                 this.vel[0] = 0;
                 const args = { game:this.game };
                 if (this.dir === "left") {
-                    this.img = this.attackLeft;
+                    this.img = this.runLeft;
                     args.dir = this.dir;
                 } else if (this.dir === "right") {
-                    this.img = this.attackRight;
+                    this.img = this.runRight;
                     args.dir = this.dir;
                 }
-                // 
                 new Projectile(args, this)
                 this.shootCooldown = true;
                 this.shootCount++;
             }
         }
-        
     }
 
     update() {
@@ -89,7 +82,6 @@ class Enemy extends MovingObject {
           if (playerX < enemyX) {
             this.dir = "left";
             this.img = this.runLeft;
-            // debugger
             this.vel[0] = -speed;
           } else {
             this.dir = "right";
@@ -113,19 +105,8 @@ class Enemy extends MovingObject {
             this.vel[0] = 0;
           // if player not within distance, stand idle 
         }
-
-        // switch (this.dir) {
-        //   case "left":
-        //     this.img = this.idleLeft;
-        //     break;
-        //   case "right":
-        //     this.img = this.idleRight;
-        //     break;
-        // }
-      
         super.update();
       }
-
 }
 
 export default Enemy;

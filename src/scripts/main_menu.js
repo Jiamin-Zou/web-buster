@@ -12,7 +12,8 @@ class MenuHandler {
         this.startGameBtn = document.querySelector("#game-start-btn");
         this.difficultySelector = document.querySelector(".game-diff-ctn");
         this.startGame = this.startGame.bind(this);
-        this.soundToggle = document.querySelector(".sound-control");
+        this.bgm = document.getElementById("gameBGM");
+        this.audioToggle = document.querySelector(".instructions")
         this.bindEventListeners();
     }
 
@@ -30,22 +31,15 @@ class MenuHandler {
                 e.target.classList.add("difficulty-selected")
             }
         })
-
-        this.soundToggle.addEventListener("click", (e) => {
-            const playing = document.querySelector(".bgm-on");
-            const paused = document.querySelector(".bgm-off");
-            console.log(playing);
-            console.log(paused);
-
-            // debugger
-            if (playing.style.display === "none") {
-                paused.style.display = "none";
-                playing.style.display = "block";
-            } else if (paused.style.display === "none") {
-                playing.style.display = "none";
-                paused.style.display = "block";
+        
+        this.audioToggle.addEventListener("click", (e)=> {
+            if(this.bgm .paused) {
+                this.bgm.play();
+            } else {
+                this.bgm.pause();
             }
         })
+        
     }
 
     startGame() {

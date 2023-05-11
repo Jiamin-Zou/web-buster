@@ -11,16 +11,12 @@ class MovingObject {
         this.runRight = args.runRight || this.idleRight;
         this.hurtLeft =  args.hurtLeft || this.idleLeft;
         this.hurtRight = args.hurtRight || this.idleRight;
-        this.attackLeft = args.attackLeft || this.runLeft;
-        this.attackRight = args.attackRight || this.runRight;
-        this.despawn = args.despawn;
         this.width = args.width;
         this.height = args.height;
         this.pos = args.pos;
         this.vel = args.vel || [0, 0];
         this.speed = args.speed || 5;
         this.health = args.health || 1; //projectile
-        // this.frames = args.frames
         this.game = args.game;
         this.type = args.type;
         if (this.type === "enemy") this.speed = 4;
@@ -40,17 +36,14 @@ class MovingObject {
     draw(ctx) {
         const [dX, dY] = this.pos;
         if(this.img.frameCnt === this.img.frames[this.frameX]) {
-            this.frameX = ++this.frameX % this.img.frames.length;
-            // debugger
+            this.frameX = (this.frameX + 1) % this.img.frames.length
             this.img.frameCnt = 0;
-            // debugger
         }
         this.img.frameCnt++;
         const sX = this.frameX * this.width;
-        const sY = 0 * this.height;
+        const sY = 0;
         
         ctx.drawImage(this.img.src , sX, sY, this.width, this.height, dX, dY, this.dWidth, this.dHeight)
-        // if (this.type === "projectile") debugger;
     }
 
     update() {
@@ -67,8 +60,10 @@ class MovingObject {
                 this.vel[1] = 0
             }
 
-            if (this.pos[0] < 0 && this.type !== "projectile") {
+            if (this.pos[0] < 0 && this.type === "player") {
                 this.pos[0] = 0;
+            } else if (this.pos[0] + this.dWidth > this.game.screenWidth && this.type === "player") {
+                this.pos[0] = this.game.screenWidth - this.dWidth;
             }
         }
     }
@@ -105,15 +100,12 @@ class MovingObject {
         this.alive = false;
         this.remove()
     }
-
     shoot() {
         // to be implemented in childClass
     }
-
     remove() {
         this.game.remove(this);
     }
-
 }
 
 export default MovingObject;

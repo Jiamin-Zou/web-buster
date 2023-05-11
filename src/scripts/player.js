@@ -12,12 +12,6 @@ class Player extends MovingObject {
 
 
     constructor(args) {
-        // const idleRight = Util.loadSprite("src/assets/images/sprites/player-idle-right.png");
-        // const idleLeft = Util.loadSprite("src/assets/images/sprites/player-idle-left.png");
-        // const runRight = Util.loadSprite("src/assets/images/sprites/player-run-shoot-right.png");
-        // const runLeft = Util.loadSprite("src/assets/images/sprites/player-run-shoot-left.png");
-        // const hurtLeft = Util.loadSprite("src/assets/images/sprites/player-hurt-left.png");
-        // const hurtRight = Util.loadSprite("src/assets/images/sprites/player-hurt-right.png");
         args.img = PlayerSprites.idleRight;
         args.idleLeft = PlayerSprites.idleLeft;
         args.idleRight = PlayerSprites.idleRight;
@@ -25,11 +19,9 @@ class Player extends MovingObject {
         args.runRight = PlayerSprites.runRight;
         args.hurtLeft = PlayerSprites.hurtLeft;
         args.hurtRight = PlayerSprites.hurtRight;
-        args.despawn = PlayerSprites.despawn;
         args.width = 32;
         args.height = 38;
         args.health = 20;
-        // args.frames = 6;
         args.type = "player";
         args.dir = "right";
         super(args);
@@ -90,9 +82,7 @@ class Player extends MovingObject {
                 new Projectile(args, this)
                 this.shootCooldown = true;
             }
-        
     }
-
 }
 
 export default Player;
