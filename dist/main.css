@@ -93,6 +93,9 @@ table {
   padding-top: 20px;
   font-size: 30px;
 }
+#game-menu .close-game-menu:hover {
+  cursor: pointer;
+}
 #game-menu #welcome-msg {
   font-size: 55px;
   border-radius: 20px;
@@ -153,6 +156,9 @@ table {
   color: rgba(25, 96, 161, 0.3294117647);
   background-color: aliceblue;
 }
+#game-menu .difficulty-ctn .game-diff-levels .diff-selections-lv:hover {
+  cursor: pointer;
+}
 #game-menu .difficulty-ctn .game-diff-levels .difficulty-selected {
   border: 1px solid navy;
   box-shadow: 3px 3px orange;
@@ -175,6 +181,7 @@ table {
   background-color: white;
   color: teal;
   text-shadow: 4px 4px orange;
+  cursor: pointer;
 }
 
 .main-container {
@@ -325,6 +332,9 @@ table {
 }
 .main-container .body-container .right-container .links div {
   color: rgb(8, 26, 75);
+}
+.main-container .body-container .right-container .links .modal-toggle:hover, .main-container .body-container .right-container .links .bgm-toggle:hover {
+  cursor: pointer;
 }
 .main-container .body-container .right-container .abouts {
   width: 80%;

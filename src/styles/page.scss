@@ -155,8 +155,11 @@ $title-shadow: 4px 4px orange;
                 }
                 div {
                     color: rgb(8, 26, 75);
-
                 }
+                .modal-toggle:hover, .bgm-toggle:hover {
+                    cursor: pointer;
+                }
+
             }
             .abouts {
                 width: 80%;

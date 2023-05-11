@@ -38,6 +38,9 @@ $title-shadow: 4px 4px orange;
         padding-top: 20px;
         font-size: 30px;
     }
+    .close-game-menu:hover {
+        cursor: pointer;
+    }
     #welcome-msg {
         font-size: 55px;
         border-radius: 20px;
@@ -96,6 +99,9 @@ $title-shadow: 4px 4px orange;
                 color: #1960a154;
                 background-color: aliceblue;
             }
+            .diff-selections-lv:hover{
+                cursor: pointer;
+            }
             .difficulty-selected {
                 border: 1px solid navy;
                 box-shadow: 3px 3px orange;
@@ -120,4 +126,5 @@ $title-shadow: 4px 4px orange;
     background-color: rgba($color: #ffffffe7, $alpha: 1.0);
     color: teal;
     text-shadow: 4px 4px orange;
+    cursor: pointer;
 }

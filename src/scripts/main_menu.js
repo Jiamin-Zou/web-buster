@@ -67,6 +67,7 @@ class MenuHandler {
         difficulty = parseInt(difficulty);
         this.modal.style.display = "none";
         if (this.startGameBtn.innerText === "Start Game") {
+            this.startGameBtn.innerText = "Restart Game";
             this.game = new Game(this.canvas, difficulty);
             this.gameView = new GameView(this.game, this.ctx);
             this.gameView.start();

@@ -29,8 +29,11 @@ Select the difficulty before starting the game. The difficulty will only apply w
     - Space bar to shoot projectile
 - Enemy will automatically chase plaeyr id player is in certain ranges and they will shoot at you! Dodge them and fire back!
 
+- Player lose 1 HP when they touch an enemy or hit by a enemy projectile
 - Upon getting hurt, you have 2.5 seconds of invinciblity
 - Enemy have 1 second of invinciblity upon getting hurt
+
+- Game ends when player depleted all their health or all enemy are defeated
 
 
 <br>
