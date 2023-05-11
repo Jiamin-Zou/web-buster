@@ -5,23 +5,20 @@ import * as Enemy1Sprite from "./enemy1SpriteInfo.js"
 
 class Enemy extends MovingObject {
     static SHOOT_WAVE = 2;
-    constructor(args, difficulty=1) {
+    constructor(args, difficulty) {
         args.img = Enemy1Sprite.idleLeft;
         args.width = 32;
         args.height = 32;
-        args.frames = 4;
         switch (difficulty) {
           case 1:
-            args.health = 2;
+            args.health = 1;
             break;
           case 2:
-            args.health = 4;
+            args.health = 3;
             break;
           case 3:
             args.health = 6; //crazy
             break;
-          default:
-            args.health = 2;
         }
         
         args.idleLeft = Enemy1Sprite.idleLeft;
@@ -36,6 +33,7 @@ class Enemy extends MovingObject {
         this.shootCount = 0;
         this.chaseRange = 350;
         this.stopRange = 250;
+        console.log(this.health)
     }
 
     shoot() {

@@ -316,8 +316,8 @@ class Game {
     reset(difficulty, ctx) {
         // debugger
         ctx.clearRect(0, 0, this.screenWidth, this.screenHeight);
-        this.difficulty = difficulty;
         this.isGameEnd = false;
+        this.difficulty = difficulty;
         this.backgrounds = [];
         this.enemies = [];
         this.platforms = [];

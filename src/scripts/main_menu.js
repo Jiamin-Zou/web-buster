@@ -63,7 +63,8 @@ class MenuHandler {
     }
 
     startGame() {
-        const difficulty = document.querySelector(".difficulty-selected").innerText;
+        let difficulty = document.querySelector(".difficulty-selected").innerText;
+        difficulty = parseInt(difficulty);
         this.modal.style.display = "none";
         if (this.startGameBtn.innerText === "Start Game") {
             this.game = new Game(this.canvas, difficulty);
