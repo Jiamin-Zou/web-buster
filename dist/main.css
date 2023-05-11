@@ -69,10 +69,11 @@ table {
 }
 
 #game-menu {
+  border: 2px solid white;
   margin: auto;
   width: 88%;
   height: 88%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
   text-shadow: 4px 4px teal;
   font-size: 30px;
@@ -128,6 +129,11 @@ table {
 }
 #game-menu .difficulty-ctn .diff-select-header {
   font-size: 40px;
+  margin-bottom: 5px;
+}
+#game-menu .difficulty-ctn .diff-select-header .diff-msg {
+  font-size: 25px;
+  color: aliceblue;
 }
 #game-menu .difficulty-ctn .game-diff-levels {
   display: flex;
@@ -179,11 +185,24 @@ table {
 }
 .main-container .header {
   width: 100%;
+  height: 100px;
+  background-color: rgba(8, 20, 134, 0.3960784314);
+  margin-bottom: 20px;
+  border-bottom: 8px ridge navajowhite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .main-container .header #game-name {
-  font-size: 50px;
+  width: 800px;
+  border-radius: 5px;
+  border: 1px solid white;
+  background-color: rgba(150, 181, 202, 0.61);
+  box-shadow: 2px 2px rgba(9, 9, 204, 0.459);
+  font-size: 70px;
   color: #248de4;
   text-shadow: 4px 4px orange;
+  -webkit-text-stroke: 1px white;
 }
 .main-container .body-container {
   display: flex;
@@ -192,11 +211,11 @@ table {
   vertical-align: middle;
 }
 .main-container .body-container .left-container {
-  font-size: 20px;
+  font-size: 30px;
   width: 20%;
   display: flex;
   flex-wrap: wrap;
-  align-content: space-evenly;
+  align-content: center;
   background-color: rgba(8, 141, 123, 0.5);
   border-radius: 10px;
   border: 8px ridge navajowhite;
@@ -252,25 +271,33 @@ table {
   width: 30px;
   height: 10px;
   list-style: none;
-  background-color: limegreen;
+  background-image: linear-gradient(to bottom right, limegreen, greenyellow);
   border: 3px groove rgb(3, 156, 3);
-  box-shadow: 2px 2px rgba(221, 122, 8, 0.7);
+  box-shadow: 2px 2px rgba(221, 122, 8, 0.8);
 }
 .main-container .body-container .left-container .game-difficulty-display {
   align-self: center;
-  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.main-container .body-container .left-container .game-difficulty-display p {
+  color: yellow;
 }
 .main-container .body-container .left-container .enemy-count-display {
   align-self: flex-baseline;
-  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.main-container .body-container .left-container .enemy-count-display p {
+  color: red;
 }
 .main-container .body-container .right-container {
   font-size: 30px;
   width: 20%;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  align-items: center;
   background-color: rgba(8, 141, 123, 0.5);
   border-radius: 10px;
   border: 8px ridge navajowhite;
@@ -278,8 +305,17 @@ table {
   text-shadow: 2px 2px rgba(250, 250, 250, 0.4);
 }
 .main-container .body-container .right-container .links {
+  width: 80%;
+  margin: 5%;
+  padding: 3%;
+  border-radius: 5px;
+  border: 2px ridge;
+  box-shadow: 2px 2px rgba(250, 250, 250, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
+  padding-top: 20%;
+  padding-bottom: 20%;
 }
 .main-container .body-container .right-container .links p {
   color: white;
@@ -291,6 +327,17 @@ table {
   color: rgb(8, 26, 75);
 }
 .main-container .body-container .right-container .abouts {
+  width: 80%;
+  margin: 5%;
+  padding-top: 20%;
+  padding-bottom: 20%;
+  border-radius: 5px;
+  border: 2px ridge;
+  box-shadow: 2px 2px rgba(250, 250, 250, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-size: 20px;
 }
 

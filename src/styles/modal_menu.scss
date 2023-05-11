@@ -15,11 +15,11 @@ $title-shadow: 4px 4px orange;
 }
 
 #game-menu {
-
+    border: 2px solid white;
     margin:auto;
     width: 88%;
     height:88%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     color: white;
     text-shadow: 4px 4px teal;
     font-size: 30px;
@@ -72,7 +72,12 @@ $title-shadow: 4px 4px orange;
         justify-content: center;
         align-items: center;
         .diff-select-header {
-            font-size: 40px;;
+            font-size: 40px;
+            .diff-msg {
+                font-size: 25px;
+                color:aliceblue
+            }
+            margin-bottom: 5px;
         }
         .game-diff-levels {
             display: flex;
