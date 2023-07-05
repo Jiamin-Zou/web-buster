@@ -43,6 +43,7 @@ class Game {
             height: 324,
             layer: 1
         }
+        console.log(bg1Arg.img.height)
         const bg2Arg = {
             img: Util.loadSprite("src/assets/images/background/background2.png"),
             width: 576,
@@ -267,11 +268,11 @@ class Game {
                         switch (obj1.dir) {
                             case "left":
                                 obj1.img = obj1.hurtLeft;
-                                obj1.pos[0] -= 50;
+                                obj1.pos[0] -= 40;
                                 break;
                             case "right":
                                 obj1.img = obj1.hurtRight;
-                                obj1.pos[0] += 50;
+                                obj1.pos[0] += 40;
                                 break;
                         }
                         obj2.vel[0] = 0
@@ -283,15 +284,15 @@ class Game {
                         switch (obj2.dir) {
                             case "left":
                                 obj2.img = obj2.hurtLeft;
-                                obj2.pos[0] -= 50;
+                                obj2.pos[0] -= 40;
                                 break;
                             case "right":
                                 obj2.img = obj2.hurtRight;
-                                obj2.pos[0] += 50;
+                                obj2.pos[0] += 40;
                                 break;
                         }
                         obj1.vel[0] = 0
-                    }
+                    } else
                     if (!obj1.isHurt && !obj2.isHurt) {
                         obj1.pos[0] -= 40;
                         obj2.pos[0] += 40;

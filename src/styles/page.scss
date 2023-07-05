@@ -10,11 +10,12 @@ $title-shadow: 4px 4px orange;
         width: 100%;
         height: 100px;
         background-color: #08148665;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         border-bottom: 8px ridge navajowhite;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-sizing: border-box;
         #game-name {
             width: 800px;
             border-radius: 5px;

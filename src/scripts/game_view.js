@@ -124,14 +124,14 @@ class GameView {
                 player.pressedKey.right = false;
                 break;
             case "ArrowUp":
-                switch (player.dir) {
-                    case "left":
-                        player.img = player.idleLeft;
-                        break;
-                    case "right":
-                        player.img = player.idleRight;
-                        break;
-                }
+                // switch (player.dir) {
+                //     case "left":
+                //         player.img = player.idleLeft;
+                //         break;
+                //     case "right":
+                //         player.img = player.idleRight;
+                //         break;
+                // }
                 break;
             case " ":
                 switch (player.dir) {

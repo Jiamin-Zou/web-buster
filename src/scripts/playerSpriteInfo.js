@@ -12,13 +12,13 @@ export const idleLeft = {
 }
 export const runRight = {
     frameCnt: 0,
-    frames: [5, 6, 6, 6, 6, 5],
+    frames: [6, 6, 6, 6, 6, 6],
     src: Util.loadSprite("src/assets/images/sprites/player-run-shoot-right.png")
 }
 
 export const runLeft = {
     frameCnt: 0,
-    frames: [5, 6, 6, 6, 6, 5],
+    frames: [6, 6, 6, 6, 6, 6],
     src: Util.loadSprite("src/assets/images/sprites/player-run-shoot-left.png")
 }
 
