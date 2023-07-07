@@ -5,9 +5,11 @@ export function loadSprite(src) {
 }
 
 export function switchSprite(obj, sprite) {
+  if (obj.img !== sprite) {
     obj.img = sprite;
     obj.img.frameCnt = 0;
     obj.frameX = 0;
+  }
 }
 
 export function dist(pos1, pos2) {

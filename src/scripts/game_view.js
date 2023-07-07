@@ -1,5 +1,6 @@
 
 import Player from "./player.js";
+import { switchSprite } from "./util.js";
 let reqID;
 
 class GameView {
@@ -81,15 +82,15 @@ class GameView {
 
         switch (key) {
             case "ArrowLeft":
-                player.dir = "left";
-                player.img = player.runLeft;
+                // player.dir = "left";
+                // player.img = player.runLeft;
                 player.pressedKey.left = true;
                 break;
             case "ArrowDown":
                 break;
             case "ArrowRight":
-                player.dir = "right";
-                player.img = player.runRight;
+                // player.dir = "right";
+                // player.img = player.runRight;
                 player.pressedKey.right = true;
                 break;
             case "ArrowUp":
@@ -100,6 +101,7 @@ class GameView {
                 }
                 break;
             case " ":
+                player.pressedKey.shoot = true;
                 player.shoot();
                 break;
         }
@@ -134,6 +136,7 @@ class GameView {
                 // }
                 break;
             case " ":
+                player.pressedKey.shoot = false;
                 switch (player.dir) {
                     case "left":
                         player.img = player.idleLeft;

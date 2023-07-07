@@ -3,7 +3,7 @@ import MenuHandler from "./scripts/main_menu.js";
 
 window.addEventListener('load', () => {
     const canvas = document.getElementById("canvas");
-    canvas.width = 600;
+    canvas.width = 800;
     canvas.height = 600;
     // const ctx = canvas.getContext("2d");
 
