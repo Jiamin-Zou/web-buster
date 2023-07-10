@@ -251,19 +251,8 @@ class Game {
           if (!obj.isHurt) {
             obj.health--;
             obj.isHurt = true;
+            obj.hurtBasetime = Date.now();
             if (this.player.health === 0) this.isGameEnd = true;
-            switch (prj.dir) {
-              case "left":
-                // obj.pos[0] -= 20;
-                // obj.img = obj.hurtRight;
-                // obj.dir = "right";
-                break;
-              case "right":
-                // obj.pos[0] += 20;
-                // obj.img = obj.hurtLeft;
-                // obj.dir = "left";
-                break;
-            }
           }
           prj.health--;
         }
@@ -279,36 +268,18 @@ class Game {
           if (obj1.type === "player" && !obj1.isHurt) {
             obj1.health--;
             obj1.isHurt = true;
+            obj1.hurtBasetime = Date.now();
             if (this.player.health === 0) {
               this.isGameEnd = true;
-            }
-            switch (obj1.dir) {
-              case "left":
-                // obj1.img = obj1.hurtLeft;
-                // obj1.pos[0] -= 40;
-                break;
-              case "right":
-                // obj1.img = obj1.hurtRight;
-                // obj1.pos[0] += 40;
-                break;
             }
             obj2.vel[0] = 0;
           } else if (obj2.type === "player" && !obj2.isHurt) {
             obj2.health--;
             obj2.isHurt = true;
+            obj1.hurtBasetime = Date.now();
 
             if (this.player.health === 0) {
               this.isGameEnd = true;
-            }
-            switch (obj2.dir) {
-              case "left":
-                // obj2.img = obj2.hurtLeft;
-                // obj2.pos[0] -= 40;
-                break;
-              case "right":
-                // obj2.img = obj2.hurtRight;
-                // obj2.pos[0] += 40;
-                break;
             }
             obj1.vel[0] = 0;
           }
@@ -349,6 +320,8 @@ class Game {
     this.platforms = [];
     this.projectiles = [];
     this.scrollOffset = 0;
+    this.killCount = 0;
+    this.score = 0;
     this.player = this.addPlayer();
     this.createBackgrounds();
     this.createPlatforms();

@@ -15,11 +15,11 @@ class MovingObject {
     this.height = args.height;
     this.pos = args.pos;
     this.vel = args.vel || [0, 0];
-    this.speed = args.speed || 5;
+    this.speed = args.speed || 7;
     this.health = args.health || 1; //projectile
     this.game = args.game;
     this.type = args.type;
-    if (this.type === "enemy") this.speed = 4;
+    if (this.type === "enemy") this.speed = 6;
     this.dir = args.dir;
     this.isAlive = true;
     this.inJump = false;

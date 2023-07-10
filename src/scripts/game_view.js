@@ -13,19 +13,38 @@ class GameView {
     this.enemyCountDisplay.innerText = this.game.enemies.length;
     this.difficultyDisplay = document.querySelector("#game-difficulty");
     this.difficultyDisplay.innerText = this.game.difficulty;
+    this.scoreDisplay = document.querySelector("#score-count");
+    this.timeDisplay = document.querySelector("#game-time");
     this.animate = this.animate.bind(this);
     this.start = this.start.bind(this);
     this.bindKeyHandlers();
     this.lastFrameTime = 0;
-    this.scoreTime = 0;
     this.frameDuration = 1000 / 60;
+    this.scoreTime = 0;
+    this.scoreTimeInc = 200;
+    this.scoreInc = this.timeScore();
+    this.gameTime = 0;
+  }
+
+  timeScore() {
+    let increment = 0;
+    switch (this.game.difficulty) {
+      case 1:
+        return (increment = 20);
+      case 2:
+        return (increment = 50);
+      case 3:
+        return (increment = 100);
+      default:
+        return (increment = 20);
+    }
   }
 
   start() {
     const timeNow = performance.now();
     this.lastFrameTime = timeNow;
     this.scoreTime = timeNow;
-    // this.animate();
+    this.gameTime = timeNow;
     reqID = requestAnimationFrame(this.animate);
   }
 
@@ -33,10 +52,12 @@ class GameView {
     cancelAnimationFrame(reqID);
     this.game.reset(difficulty, this.ctx);
     this.difficultyDisplay.innerText = this.game.difficulty;
+    this.scoreInc = this.timeScore();
     this.bindKeyHandlers();
     const timeNow = performance.now();
     this.lastFrameTime = timeNow;
     this.scoreTime = timeNow;
+    this.gameTime = timeNow;
     reqID = requestAnimationFrame(this.animate);
   }
 
@@ -55,8 +76,10 @@ class GameView {
       this.executeGameEnd();
       return;
     }
-
+    this.updateGameTime(currentTime);
+    this.updateScore(currentTime);
     const elapsed = currentTime - this.lastFrameTime;
+
     if (elapsed >= this.frameDuration) {
       this.lastFrameTime = performance.now();
       this.game.step();
@@ -170,9 +193,22 @@ class GameView {
   }
 
   updateEnemyCount() {
-    const count = this.game.enemies.length;
-    this.enemyCountDisplay.innerHTML = count;
-    this.enemyCountDisplay.innerHTML = this.game.score;
+    this.enemyCountDisplay.innerHTML = this.game.killCount;
+  }
+
+  updateScore(currentTime) {
+    const elapsed = currentTime - this.scoreTime;
+    if (elapsed > this.scoreTimeInc) {
+      this.game.score += this.scoreInc;
+      this.scoreTime = performance.now();
+    }
+    this.scoreDisplay.innerText = this.game.score;
+  }
+
+  updateGameTime(currentTime) {
+    const elapsed = currentTime - this.gameTime;
+    const formattedTime = (elapsed / 1000).toFixed(3);
+    this.timeDisplay.innerText = formattedTime;
   }
 }
 
