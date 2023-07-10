@@ -26,11 +26,12 @@ class MovingObject {
     this.isHurt = false;
     this.shootCooldown = false;
     this.shootBasetime = performance.now();
-    this.hurtBasetime = Date.now();
+    this.hurtBasetime = performance.now();
     this.frameX = 0;
     // scaled 2x
     this.dWidth = this.width * 2;
     this.dHeight = this.height * 2;
+    this.inHurtTime = 0;
   }
 
   draw(ctx) {
@@ -39,21 +40,29 @@ class MovingObject {
       this.frameX = (this.frameX + 1) % this.img.frames.length;
       this.img.frameCnt = 0;
     }
-    this.img.frameCnt++;
     const sX = this.frameX * this.width;
     const sY = 0;
 
-    ctx.drawImage(
-      this.img.src,
-      sX,
-      sY,
-      this.width,
-      this.height,
-      dX,
-      dY,
-      this.dWidth,
-      this.dHeight
-    );
+    const now = performance.now();
+    const elapsed = now - this.inHurtTime;
+    if (this.isHurt && elapsed > 100) {
+      if (elapsed > 220) {
+        this.inHurtTime = now;
+      }
+    } else {
+      ctx.drawImage(
+        this.img.src,
+        sX,
+        sY,
+        this.width,
+        this.height,
+        dX,
+        dY,
+        this.dWidth,
+        this.dHeight
+      );
+    }
+    this.img.frameCnt++;
   }
 
   update(delta) {
@@ -91,7 +100,8 @@ class MovingObject {
   }
 
   checkiFrame() {
-    const now = Date.now();
+    // const now = Date.now();
+    const now = performance.now();
     const check = now - this.hurtBasetime;
     // 2.5 sec iFrame for player
     // 1 sec iFrame for enemy

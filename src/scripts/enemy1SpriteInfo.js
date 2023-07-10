@@ -2,12 +2,12 @@ import * as Util from "./util.js"
 
 export const idleRight = {
     frameCnt: 0,
-    frames: Array(4).fill(10),
+    frames: Array(4).fill(8),
     src: Util.loadSprite("src/assets/images/sprites/enemy_1_Idle_right.png")
 } 
 export const idleLeft = {
     frameCnt: 0,
-    frames: Array(4).fill(10),
+    frames: Array(4).fill(8),
     src: Util.loadSprite("src/assets/images/sprites/enemy_1_Idle_left.png")
 }
 export const runRight = {

@@ -113,6 +113,9 @@ class Player extends MovingObject {
         args.dir = this.dir;
       }
       new Projectile(args, this);
+      this.game.shootSFX.currentTime = 0;
+      this.game.shootSFX.play();
+      
       this.shootCooldown = true;
     }
   }

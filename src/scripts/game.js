@@ -22,6 +22,8 @@ class Game {
     this.createBackgrounds();
     this.createPlatforms();
     this.createEnemies();
+    this.shootSFX = document.createElement("audio");
+    this.shootSFX.src = "src/assets/sounds/weapon-shot.wav";
   }
 
   addPlayer() {
@@ -273,7 +275,8 @@ class Game {
           if (!obj.isHurt) {
             obj.health--;
             obj.isHurt = true;
-            obj.hurtBasetime = Date.now();
+            // obj.hurtBasetime = Date.now();
+            obj.hurtBasetime = performance.now();
           }
           prj.health--;
         }
@@ -289,12 +292,14 @@ class Game {
           if (obj1.type === "player" && !obj1.isHurt) {
             obj1.health--;
             obj1.isHurt = true;
-            obj1.hurtBasetime = Date.now();
+            // obj1.hurtBasetime = Date.now();
+            obj1.hurtBasetime = performance.now();
             obj2.vel[0] = 0;
           } else if (obj2.type === "player" && !obj2.isHurt) {
             obj2.health--;
             obj2.isHurt = true;
-            obj1.hurtBasetime = Date.now();
+            // obj1.hurtBasetime = Date.now();
+            obj1.hurtBasetime = performance.now();
 
             obj1.vel[0] = 0;
           }
@@ -332,10 +337,13 @@ class Game {
 
   handleEnemyKill() {
     this.killCount += 1;
-    this.score += 1000;
-    if (this.killCount % 3 === 0 && this.player.health < 20) {
+    const killScore = 1000 * this.difficulty;
+    const bonusKillScore = 500 * this.difficulty;
+    const hpOnKillCount = 4 - this.difficulty;
+    this.score += killScore;
+    if (this.killCount % hpOnKillCount === 0 && this.player.health < 20) {
       this.player.health += 1;
-      this.score += 500;
+      this.score += bonusKillScore;
     }
   }
 
