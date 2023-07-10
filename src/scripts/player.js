@@ -26,6 +26,8 @@ class Player extends MovingObject {
     args.dir = "right";
     super(args);
 
+    this.despawn = PlayerSprites.despawn;
+
     this.pressedKey = {
       left: false,
       right: false,
@@ -52,7 +54,6 @@ class Player extends MovingObject {
         this.pos[0] > 0) ||
       (this.pressedKey.left && x > Player.MOVE_BOUND_LEFT)
     ) {
-      // debugger
       this.vel[0] = -spd;
     } else {
       this.vel[0] = 0;
@@ -61,7 +62,6 @@ class Player extends MovingObject {
         this.game.scrollOffset += 1;
         this.game.Scroll(this.dir);
       } else if (this.pressedKey.left && this.game.scrollOffset > 0) {
-        // debugger
         this.img = this.runLeft;
         this.game.scrollOffset -= 1;
         this.game.Scroll(this.dir);
@@ -71,8 +71,26 @@ class Player extends MovingObject {
     super.update();
   }
 
-  draw(ctx) {
-    
+  drawDespawn(ctx) {
+    const [dX, dY] = this.pos;
+    if (this.img.frameCnt === this.img.frames[this.frameX]) {
+      this.frameX = (this.frameX + 1) % this.img.frames.length;
+      this.img.frameCnt = 0;
+    }
+    this.img.frameCnt++;
+    const sX = this.frameX * this.despawn.width;
+    const sY = 0;
+    ctx.drawImage(
+      this.despawn.src,
+      sX,
+      sY,
+      this.despawn.width,
+      this.despawn.height,
+      dX,
+      dY,
+      this.despawn.dWidth,
+      this.despawn.dHeight
+    );
   }
 
   shoot() {

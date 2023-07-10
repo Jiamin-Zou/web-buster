@@ -42,6 +42,7 @@ export function isOnPlatform(obj, platform) {
 }
 
 export function projectileCollison(projectile, obj) {
+  if (!projectile.isAlive || !obj.isAlive) return false;
   const shooter = projectile.shooter;
   const [pX, pY] = projectile.pos;
   const [oX, oY] = obj.pos;
@@ -55,6 +56,7 @@ export function projectileCollison(projectile, obj) {
 }
 
 export function rectCollision(obj1, obj2) {
+  if (!obj1.isAlive || !obj2.isAlive) return false;
   const [o1x, o1y] = obj1.pos;
   const [o2x, o2y] = obj2.pos;
   const [o1w, o1h] = [obj1.dWidth, obj1.dHeight];

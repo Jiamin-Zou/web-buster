@@ -131,16 +131,12 @@ class Enemy extends MovingObject {
           enemy.pos[0] < this.pos[0]
         ) {
           this.vel[0] = 0;
-          // debugger
-          // if (this.img !== this.idleLeft) Util.switchSprite(this, this.idleLeft);
         } else if (
           this.dir === enemy.dir &&
           enemy.dir === "right" &&
           enemy.pos[0] > this.pos[0]
         ) {
           this.vel[0] = 0;
-          // debugger
-          // if (this.img !== this.idleRight) Util.switchSprite(this, this.idleRight);
         }
       }
     });

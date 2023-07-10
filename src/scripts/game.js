@@ -10,11 +10,14 @@ class Game {
     this.screenHeight = canvas.height;
     this.difficulty = difficulty;
     this.isGameEnd = false;
+    this.gameStop = false;
     this.backgrounds = [];
     this.enemies = [];
     this.projectiles = [];
     this.platforms = [];
     this.scrollOffset = 0;
+    this.killCount = 0;
+    this.score = 0;
     this.player = this.addPlayer();
     this.createBackgrounds();
     this.createPlatforms();
@@ -43,7 +46,6 @@ class Game {
       height: 324,
       layer: 1,
     };
-    console.log(bg1Arg.img.height);
     const bg2Arg = {
       img: Util.loadSprite("src/assets/images/background/background2.png"),
       width: 576,
@@ -174,9 +176,11 @@ class Game {
   }
 
   step() {
-    this.updateAllMovingUpjects();
+    if (!this.isGameEnd) {
+      this.updateAllMovingUpjects();
+      this.checkCollision();
+    }
     this.checkOnPlatform();
-    this.checkCollision();
   }
 
   draw(ctx) {
@@ -188,7 +192,15 @@ class Game {
 
   drawAllMovingObjects(ctx) {
     this.allMovingObjects().forEach((obj) => {
-      obj.draw(ctx);
+      if (this.isGameEnd) {
+        if (obj === this.player) {
+          this.player.drawDespawn(ctx);
+        } else {
+          obj.draw(ctx);
+        }
+      } else {
+        obj.draw(ctx);
+      }
     });
   }
 
@@ -224,6 +236,12 @@ class Game {
   checkCollision() {
     this.checkProjectileCollision();
     this.checkObjCollision();
+    if (this.isGameEnd) {
+      Util.switchSprite(this.player, this.player.despawn);
+      window.setTimeout(() => {
+        this.gameStop = true;
+      }, 2000);
+    }
   }
 
   checkProjectileCollision() {
@@ -261,15 +279,16 @@ class Game {
           if (obj1.type === "player" && !obj1.isHurt) {
             obj1.health--;
             obj1.isHurt = true;
-            if (this.player.health === 0) this.isGameEnd = true;
-            // debugger
+            if (this.player.health === 0) {
+              this.isGameEnd = true;
+            }
             switch (obj1.dir) {
               case "left":
-                obj1.img = obj1.hurtLeft;
+                // obj1.img = obj1.hurtLeft;
                 // obj1.pos[0] -= 40;
                 break;
               case "right":
-                obj1.img = obj1.hurtRight;
+                // obj1.img = obj1.hurtRight;
                 // obj1.pos[0] += 40;
                 break;
             }
@@ -277,15 +296,17 @@ class Game {
           } else if (obj2.type === "player" && !obj2.isHurt) {
             obj2.health--;
             obj2.isHurt = true;
-            if (this.player.health === 0) this.isGameEnd = true;
-            // debugger
+
+            if (this.player.health === 0) {
+              this.isGameEnd = true;
+            }
             switch (obj2.dir) {
               case "left":
-                obj2.img = obj2.hurtLeft;
+                // obj2.img = obj2.hurtLeft;
                 // obj2.pos[0] -= 40;
                 break;
               case "right":
-                obj2.img = obj2.hurtRight;
+                // obj2.img = obj2.hurtRight;
                 // obj2.pos[0] += 40;
                 break;
             }
@@ -300,6 +321,7 @@ class Game {
     if (obj.type === "projectile") {
       this.projectiles.splice(this.projectiles.indexOf(obj), 1);
     } else if (obj.type === "enemy") {
+      this.handleEnemyKill();
       this.enemies.splice(this.enemies.indexOf(obj), 1);
       if (this.enemies.length === 0) this.isGameEnd = true;
     } else if (obj.type === "player") {
@@ -308,10 +330,19 @@ class Game {
     }
   }
 
+  handleEnemyKill() {
+    this.killCount += 1;
+    this.score += 1000;
+    if (this.killCount % 3 === 0 && this.player.health < 20) {
+      this.player.health += 1;
+      this.score += 500;
+    }
+  }
+
   reset(difficulty, ctx) {
-    // debugger
     ctx.clearRect(0, 0, this.screenWidth, this.screenHeight);
     this.isGameEnd = false;
+    this.gameStop = false;
     this.difficulty = difficulty;
     this.backgrounds = [];
     this.enemies = [];
@@ -319,11 +350,9 @@ class Game {
     this.projectiles = [];
     this.scrollOffset = 0;
     this.player = this.addPlayer();
-    // debugger;
     this.createBackgrounds();
     this.createPlatforms();
     this.createEnemies();
-    // debugger;
   }
 }
 
