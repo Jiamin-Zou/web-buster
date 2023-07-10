@@ -129,6 +129,28 @@ class Game {
     });
   }
 
+  addEnemy() {
+    if (this.enemies.length <= 3) {
+      const playerX = this.player.pos[0];
+      const mid = this.screenWidth / 2;
+      let x1, x2;
+      if (playerX + this.player.dWidth < mid + 50) {
+        x1 = mid + 150;
+        x2 = mid + 300;
+      } else {
+        x1 = mid - 300;
+        x2 = mid - 150;
+      }
+      const randPos = Util.randEnemyPos(x1, x2);
+      const args = {
+        pos: randPos,
+        game: this,
+      };
+      const enemy = new Enemy(args, this.difficulty);
+      this.enemies.push(enemy);
+    }
+  }
+
   Scroll(dir) {
     // dir = player moving direction
     //everything should move the opposite direction of player movement
@@ -172,12 +194,17 @@ class Game {
   }
 
   allMovingObjects() {
-    return this.enemies.concat(this.projectiles).concat([this.player]);
+    let allObj = this.enemies.concat(this.projectiles);
+    if (this.player) {
+      allObj = allObj.concat([this.player]);
+    }
+    return allObj;
   }
 
-  step() {
+  step(delta) {
     if (!this.isGameEnd) {
-      this.updateAllMovingUpjects();
+      this.addEnemy();
+      this.updateAllMovingUpjects(delta);
       this.checkCollision();
     }
     this.checkOnPlatform();
@@ -192,12 +219,13 @@ class Game {
 
   drawAllMovingObjects(ctx) {
     this.allMovingObjects().forEach((obj) => {
-      if (this.isGameEnd) {
-        if (obj === this.player) {
-          this.player.drawDespawn(ctx);
-        } else {
-          obj.draw(ctx);
-        }
+      if (
+        this.isGameEnd &&
+        !!this.player &&
+        obj === this.player &&
+        obj.health === 0
+      ) {
+        this.player.drawDespawn(ctx);
       } else {
         obj.draw(ctx);
       }
@@ -216,9 +244,9 @@ class Game {
     });
   }
 
-  updateAllMovingUpjects() {
+  updateAllMovingUpjects(delta) {
     this.allMovingObjects().forEach((obj) => {
-      obj.update();
+      obj.update(delta);
     });
   }
 
@@ -236,12 +264,6 @@ class Game {
   checkCollision() {
     this.checkProjectileCollision();
     this.checkObjCollision();
-    if (this.isGameEnd) {
-      Util.switchSprite(this.player, this.player.despawn);
-      window.setTimeout(() => {
-        this.gameStop = true;
-      }, 2000);
-    }
   }
 
   checkProjectileCollision() {
@@ -252,7 +274,6 @@ class Game {
             obj.health--;
             obj.isHurt = true;
             obj.hurtBasetime = Date.now();
-            if (this.player.health === 0) this.isGameEnd = true;
           }
           prj.health--;
         }
@@ -269,23 +290,29 @@ class Game {
             obj1.health--;
             obj1.isHurt = true;
             obj1.hurtBasetime = Date.now();
-            if (this.player.health === 0) {
-              this.isGameEnd = true;
-            }
             obj2.vel[0] = 0;
           } else if (obj2.type === "player" && !obj2.isHurt) {
             obj2.health--;
             obj2.isHurt = true;
             obj1.hurtBasetime = Date.now();
 
-            if (this.player.health === 0) {
-              this.isGameEnd = true;
-            }
             obj1.vel[0] = 0;
           }
         }
       });
     });
+  }
+
+  checkGameEnd() {
+    // if (this.player.health === 0 || this.killCount >= 3) this.isGameEnd = true;
+    if (this.player.health === 0) {
+      this.isGameEnd = true;
+      Util.switchSprite(this.player, this.player.despawn);
+      window.setTimeout(() => {
+        // this.gameStop = true;
+        this.player.remove();
+      }, 1500);
+    }
   }
 
   remove(obj) {
@@ -294,10 +321,12 @@ class Game {
     } else if (obj.type === "enemy") {
       this.handleEnemyKill();
       this.enemies.splice(this.enemies.indexOf(obj), 1);
-      if (this.enemies.length === 0) this.isGameEnd = true;
+      // if (this.enemies.length === 0) this.isGameEnd = true;
     } else if (obj.type === "player") {
       delete this.player;
-      this.isGameEnd = true;
+      setTimeout(() => {
+        this.gameStop = true;
+      }, 250);
     }
   }
 

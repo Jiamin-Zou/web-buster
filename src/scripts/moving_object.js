@@ -15,17 +15,17 @@ class MovingObject {
     this.height = args.height;
     this.pos = args.pos;
     this.vel = args.vel || [0, 0];
-    this.speed = args.speed || 7;
+    this.speed = args.speed || 6;
     this.health = args.health || 1; //projectile
     this.game = args.game;
     this.type = args.type;
-    if (this.type === "enemy") this.speed = 6;
+    if (this.type === "enemy") this.speed = 5;
     this.dir = args.dir;
     this.isAlive = true;
     this.inJump = false;
     this.isHurt = false;
     this.shootCooldown = false;
-    this.shootBasetime = Date.now();
+    this.shootBasetime = performance.now();
     this.hurtBasetime = Date.now();
     this.frameX = 0;
     // scaled 2x
@@ -56,14 +56,20 @@ class MovingObject {
     );
   }
 
-  update() {
+  update(delta) {
     if (this.isAlive) {
       if (this.health === 0) this.runDespawn();
 
       this.checkiFrame();
 
-      this.pos[0] += this.vel[0];
-      this.pos[1] += this.vel[1];
+      // this.pos[0] += this.vel[0];
+      // this.pos[1] += this.vel[1];
+
+      const velocityScale = delta / (1000 / 60);
+      const offsetX = this.vel[0] * velocityScale;
+      const offsetY = this.vel[1] * velocityScale;
+
+      this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
       if (
         this.pos[1] + this.dHeight + this.vel[1] < this.game.screenHeight &&
         this.type !== "projectile"

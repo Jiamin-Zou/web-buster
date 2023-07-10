@@ -2,12 +2,12 @@ import * as Util from "./util.js";
 
 export const idleRight = {
   frameCnt: 0,
-  frames: Array(6).fill(8),
+  frames: Array(6).fill(5),
   src: Util.loadSprite("src/assets/images/sprites/player-idle-right.png"),
 };
 export const idleLeft = {
   frameCnt: 0,
-  frames: Array(6).fill(8),
+  frames: Array(6).fill(5),
   src: Util.loadSprite("src/assets/images/sprites/player-idle-left.png"),
 };
 export const runRight = {
@@ -24,19 +24,19 @@ export const runLeft = {
 
 export const hurtLeft = {
   frameCnt: 0,
-  frames: [5, 4, 3, 5, 3, 4],
+  frames: [4, 3, 2, 2, 3, 4],
   src: Util.loadSprite("src/assets/images/sprites/player-hurt-left.png"),
 };
 
 export const hurtRight = {
   frameCnt: 0,
-  frames: [5, 4, 3, 5, 3, 4],
+  frames: [4, 3, 2, 2, 3, 4],
   src: Util.loadSprite("src/assets/images/sprites/player-hurt-right.png"),
 };
 
 export const despawn = {
   frameCnt: 0,
-  frames: [6, 5, 6, 4, 5],
+  frames: [5, 4, 5, 3, 4],
   src: Util.loadSprite("src/assets/images/sprites/player-despawn.png"),
   width: 16,
   height: 16,

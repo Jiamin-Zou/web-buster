@@ -5,17 +5,27 @@ export function loadSprite(src) {
 }
 
 export function switchSprite(obj, sprite) {
-  if (obj.img !== sprite) {
+  if (obj.img.src !== sprite.src) {
     obj.img = sprite;
     obj.img.frameCnt = 0;
     obj.frameX = 0;
   }
 }
 
-export function dist(pos1, pos2) {
+export function distance(pos1, pos2) {
   return Math.sqrt(
     Math.pow(pos1[0] - pos2[0], 2) + Math.pow(pos1[1] - pos2[1], 2)
   );
+}
+
+export function randEnemyPos(x1, x2) {
+  const rand = Math.random();
+  const [y1, y2] = [100, 455];
+  const xRange = Math.abs(x2 - x1);
+  const yRange = Math.abs(y2 - y1)
+  const randomX = Math.floor(rand * xRange) + x1;
+  const randomY = Math.floor(rand * yRange) + y1;
+  return [randomX, randomY]
 }
 
 // dims width x height

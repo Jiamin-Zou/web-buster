@@ -46,8 +46,8 @@ class Projectile extends MovingObject {
     return [fX, fY];
   }
 
-  update() {
-    super.update();
+  update(delta) {
+    super.update(delta);
     const dX = this.pos[0];
     this.travelDist += this.vel[0];
     if (Math.abs(this.travelDist) >= this.maxDist || this.health === 0) {

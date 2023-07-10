@@ -76,17 +76,27 @@ class GameView {
       this.executeGameEnd();
       return;
     }
-    this.updateGameTime(currentTime);
-    this.updateScore(currentTime);
     const elapsed = currentTime - this.lastFrameTime;
 
-    if (elapsed >= this.frameDuration) {
-      this.lastFrameTime = performance.now();
-      this.game.step();
+    // if (elapsed >= this.frameDuration) {
+    //   this.lastFrameTime = performance.now();
+    //   this.game.draw(this.ctx);
+    //   this.game.step();
+    //   this.updateHealthDisplay();
+    //   this.updateEnemyCount();
+    // }
+
+    if(!this.game.isGameEnd) {
+      this.updateGameTime(currentTime);
+      this.updateScore(currentTime);
+      this.game.step(elapsed);
+      this.game.checkGameEnd()
       this.updateHealthDisplay();
-      this.updateEnemyCount();
-      this.game.draw(this.ctx);
     }
+    this.updateEnemyCount();
+    this.game.draw(this.ctx);
+    this.lastFrameTime = performance.now();
+    
 
     reqID = requestAnimationFrame(this.animate);
   }

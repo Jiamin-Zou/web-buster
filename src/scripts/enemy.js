@@ -31,16 +31,18 @@ class Enemy extends MovingObject {
     args.dir = "left";
     super(args);
     this.shootCount = 0;
-    this.chaseRange = 350;
+    this.chaseRange = 400;
     this.stopRange = 250;
+    this.newSpawn = true;
+    setTimeout(() => (this.newSpawn = false), 1000);
   }
 
   shoot() {
-    if (!this.isHurt) {
-      const now = Date.now();
+    if (!this.isHurt && !this.newSpawn) {
+      const now = performance.now();
       const check = now - this.shootBasetime;
       // 0.4 second cool
-      if (check / 400 >= 1 && this.shootCount !== Enemy.SHOOT_WAVE) {
+      if (check / 500 >= 1 && this.shootCount !== Enemy.SHOOT_WAVE) {
         this.shootBasetime = now;
         this.shootCooldown = false;
         // 2.5 sec cold down after wave of 2 shots
@@ -54,12 +56,10 @@ class Enemy extends MovingObject {
         this.vel[0] = 0;
         const args = { game: this.game };
         if (this.dir === "left") {
-          // this.img = this.runLeft;
-          Util.switchSprite(this, this.runLeft);
+          // Util.switchSprite(this, this.runLeft);
           args.dir = this.dir;
         } else if (this.dir === "right") {
-          // this.img = this.runRight;
-          Util.switchSprite(this, this.runRight);
+          // Util.switchSprite(this, this.runRight);
           args.dir = this.dir;
         }
         new Projectile(args, this);
@@ -69,58 +69,53 @@ class Enemy extends MovingObject {
     }
   }
 
-  update() {
+  update(delta) {
     // movement to chase player if player is within chase range and sopt range
     const player = this.game.player;
-    const [playerX, playerY] = player.pos;
+    const [playerX, playerY] = this.game.player.pos;
     const [enemyX, enemyY] = this.pos;
-    const dist = Util.dist(player.pos, this.pos);
+    const dist = Util.distance(this.game.player.pos, this.pos);
 
-    if (dist < this.chaseRange) {
+    if (playerX < enemyX) {
+      this.dir = "left";
+    } else {
+      this.dir = "right";
+    }
+
+    if (dist <= this.chaseRange && dist >= this.stopRange) {
       const speed = this.speed;
-      if (playerX < enemyX) {
-        if (this.dir === "right") {
-          this.dir = "left";
-          // this.img = this.runLeft;
-          if (this.img !== this.runLeft) Util.switchSprite(this, this.runLeft);
-        }
+      if (this.dir === "left") {
+        Util.switchSprite(this, this.runLeft);
         this.vel[0] = -speed;
       } else {
-        if (this.dir === "left") {
-          this.dir = "right";
-          // this.img = this.runRight;
-          if (this.img !== this.runRight)
-          Util.switchSprite(this, this.runRight);
-        }
+        Util.switchSprite(this, this.runRight);
         this.vel[0] = speed;
       }
-
-      if (dist <= this.stopRange) {
-        this.vel[0] = 0;
-        if (this.img !== this.idleLeft || this.img !== this.idleRight) {
-          if (this.dir === "left") Util.switchSprite(this, this.idleLeft);
-          else Util.switchSprite(this, this.idleRight);
-        }
-      }
-
-      this.shoot();
-      // Check if on the ground before allowing jump
-      // && if playerY is at least 75px above enemy + (offset height different)
       if (
         !this.inJump &&
-        playerY < enemyY - 75 + (player.dHeight - this.dHeight)
+        playerY < enemyY - 75 + (this.game.player.dHeight - this.dHeight)
       ) {
         const jumpHeight = 12;
         this.vel[1] = -jumpHeight;
         this.inJump = true;
       }
+
+      if (dist <= this.stopRange) {
+        this.vel[0] = 0;
+        if (this.dir === "left") {
+          Util.switchSprite(this, this.idleLeft);
+        } else {
+          Util.switchSprite(this, this.idleRight);
+        }
+      }
     } else {
-      // this.vel[0] = 0;
-      // if (this.img !== this.idleLeft || this.img !== this.idleRight) {
-      //   if (this.dir === "left") Util.switchSprite(this, this.idleLeft);
-      //   else Util.switchSprite(this, this.idleRight);
-      // }
-      // if player not within distance, stand idle
+      this.vel[0] = 0;
+      if (playerX < enemyX) Util.switchSprite(this, this.idleLeft);
+      else Util.switchSprite(this, this.idleRight);
+    }
+
+    if (dist < this.chaseRange) {
+      this.shoot();
     }
 
     this.game.enemies.forEach((enemy) => {
@@ -141,7 +136,7 @@ class Enemy extends MovingObject {
       }
     });
 
-    super.update();
+    super.update(delta);
   }
 }
 

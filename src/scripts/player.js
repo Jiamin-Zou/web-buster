@@ -6,7 +6,7 @@ import { switchSprite } from "./util.js";
 class Player extends MovingObject {
   static START_POS = [100, 600 - 80 - 38 * 2]; // [100, 444];
   static MOVE_BOUND_LEFT = 100;
-  static MOVE_BOUND_RIGHT = 400;
+  static MOVE_BOUND_RIGHT = 500;
   static UP_BOUND = 40;
   // x = 100; from left
   // y = (gameHeight - floorHeight - player dHeight)
@@ -35,7 +35,7 @@ class Player extends MovingObject {
     };
   }
 
-  update() {
+  update(delta) {
     if (this.pressedKey.left) {
       this.dir = "left";
       switchSprite(this, this.runLeft);
@@ -57,7 +57,8 @@ class Player extends MovingObject {
       this.vel[0] = -spd;
     } else {
       this.vel[0] = 0;
-      if (this.pressedKey.right && this.game.scrollOffset < 1890) {
+      console.log(this.game.scrollOffset)
+      if (this.pressedKey.right && this.game.scrollOffset < 1630) {
         this.img = this.runRight;
         this.game.scrollOffset += 1;
         this.game.Scroll(this.dir);
@@ -68,7 +69,7 @@ class Player extends MovingObject {
       }
     }
 
-    super.update();
+    super.update(delta);
   }
 
   drawDespawn(ctx) {
