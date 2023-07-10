@@ -153,7 +153,7 @@ class Game {
     }
   }
 
-  Scroll(dir) {
+  Scroll(dir, delta) {
     // dir = player moving direction
     //everything should move the opposite direction of player movement
     let spd = 0;
@@ -166,6 +166,9 @@ class Game {
         spd = -this.player.speed;
         break;
     }
+
+    const velocityScale = delta / (1000 / 60);
+    spd *= velocityScale;
     this.backgrounds.forEach((background) => {
       switch (background.layer) {
         case 0:

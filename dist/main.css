@@ -223,7 +223,7 @@ table {
   font-size: 30px;
   width: 20%;
   margin: 0 15px;
-  min-width: 80px;
+  min-width: 100px;
   max-width: 200px;
   display: flex;
   flex-direction: column;
@@ -340,6 +340,83 @@ table {
 .main-container .body-container .game-container .game-time-display .game-time-sub-container span {
   justify-self: left;
 }
+.main-container .body-container .game-container .game-over-screen {
+  position: absolute;
+  height: 400px;
+  top: calc(50% - 200px + 8px);
+  left: 8px;
+  width: calc(100% - 16px);
+  background-color: rgba(0, 0, 0, 0.7);
+  box-sizing: border-box;
+  color: white;
+  border: 2px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-container .body-container .game-container .game-over-screen .game-over-content-wrapper {
+  box-sizing: border-box;
+  width: 80%;
+  height: 90%;
+  padding: 30px;
+  font-size: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-shadow: 4px 4px teal;
+}
+.main-container .body-container .game-container .game-over-screen .game-over-content-wrapper h3 {
+  font-size: 50px;
+  color: red;
+  text-shadow: 2px 2px rgba(255, 255, 255, 0.87);
+}
+.main-container .body-container .game-container .game-over-screen .game-over-content {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+.main-container .body-container .game-container .game-over-screen .game-over-content.stat {
+  text-align: left;
+}
+.main-container .body-container .game-container .game-over-screen .game-over-content.stat .summary {
+  font-size: 35px;
+}
+.main-container .body-container .game-container .game-over-screen .game-over-content.stat li {
+  font-size: 28px;
+  display: flex;
+  justify-content: space-between;
+}
+.main-container .body-container .game-container .game-over-screen .game-over-content.stat li span.stat-info {
+  color: red;
+}
+.main-container .body-container .game-container .game-over-screen .game-over-content.btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.main-container .body-container .game-container .game-over-screen button {
+  border: none;
+  background: none;
+  font-family: inherit;
+  color: white;
+  width: 120px;
+  padding: 8px;
+  font-size: 35px;
+  font-weight: double;
+  border-radius: 20px;
+  border: 2px solid blue;
+  text-shadow: 4px 4px blue;
+  box-shadow: 5px 5px rgba(19, 15, 15, 0.5);
+  background-color: rgba(62, 134, 143, 0.5);
+}
+.main-container .body-container .game-container .game-over-screen button:hover {
+  background-color: white;
+  color: teal;
+  text-shadow: 4px 4px orange;
+  cursor: pointer;
+}
 .main-container .body-container .right-container .links {
   width: 80%;
   margin: 5%;
@@ -386,7 +463,7 @@ table {
   src: url(../src/assets/font/ThaleahFat.ttf);
 }
 html {
-  min-width: 1080px;
+  min-width: 1200px;
 }
 
 body {
@@ -405,4 +482,9 @@ body {
   background-color: rgba(8, 141, 123, 0.5);
   border-radius: 10px;
   border: 8px ridge navajowhite;
+}
+
+.separator hr {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }

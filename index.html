@@ -87,6 +87,21 @@
                         <span> s</span>
                     </div>
                 </div>
+                <div class="game-over-screen" id="game-over-screen">
+                    <div class="game-over-content-wrapper">
+                        <h3 class="game-over-content">Game Over ...</h3>
+                        <div class="game-over-content stat">
+                            <div class="summary">Summary:</div>
+                            <div class="separator"><hr /></div>
+                            <ul class="game-over-stats">
+                                <li><span class="info-field">Enemies defeated:</span><span id="game-over-enemy-count" class="stat-info">200</span></li>
+                                <li><span class="info-field">Time:</span><span id="game-end-time" class="stat-info">1897.736 s</span></li>
+                                <li><span class="info-field">Score:</span><span id="game-over-score" class="stat-info">102977567</span></li>
+                            </ul>
+                        </div>
+                        <div class="game-over-content btn"><button id="game-over-to-menu">Menu</button></div>
+                    </div>
+                </div>
                 <canvas id="canvas">
                 </canvas>
             </div>

@@ -1,5 +1,4 @@
 import Player from "./player.js";
-import { switchSprite } from "./util.js";
 let reqID;
 
 class GameView {
@@ -24,6 +23,7 @@ class GameView {
     this.scoreTimeInc = 200;
     this.scoreInc = this.timeScore();
     this.gameTime = 0;
+    this.endStat = {}
   }
 
   timeScore() {
@@ -62,7 +62,7 @@ class GameView {
   }
 
   executeGameEnd() {
-    this.unbindKeyHandlers();
+    // this.unbindKeyHandlers();
     const btn = document.querySelector("#game-start-btn");
     const msg = document.querySelector("#welcome-msg");
     const menu = document.querySelector("#gameModal");
@@ -86,15 +86,19 @@ class GameView {
     //   this.updateEnemyCount();
     // }
 
+    this.game.draw(this.ctx);
     if(!this.game.isGameEnd) {
       this.updateGameTime(currentTime);
       this.updateScore(currentTime);
       this.game.step(elapsed);
-      this.game.checkGameEnd()
       this.updateHealthDisplay();
+      this.updateEnemyCount();
+      this.game.checkGameEnd();
+      if (this.game.isGameEnd) {
+        this.gameStat = this.getGameEndStat(currentTime)
+        this.unbindKeyHandlers()
+      }
     }
-    this.updateEnemyCount();
-    this.game.draw(this.ctx);
     this.lastFrameTime = performance.now();
     
 
@@ -102,13 +106,15 @@ class GameView {
   }
 
   bindKeyHandlers() {
-    document.addEventListener("keydown", this.handleKeyDown.bind(this));
-    document.addEventListener("keyup", this.handleKeyUp.bind(this));
+    this.boundHandleKeyDown = this.handleKeyDown.bind(this);
+    this.boundHandleKeyUp = this.handleKeyUp.bind(this);
+    document.addEventListener("keydown", this.boundHandleKeyDown);
+    document.addEventListener("keyup", this.boundHandleKeyUp);
   }
-
+  
   unbindKeyHandlers() {
-    document.removeEventListener("keydown", this.handleKeyDown.bind(this));
-    document.removeEventListener("keyup", this.handleKeyUp.bind(this));
+    document.removeEventListener("keydown", this.boundHandleKeyDown);
+    document.removeEventListener("keyup", this.boundHandleKeyUp);
   }
 
   handleKeyDown(e) {
@@ -130,10 +136,10 @@ class GameView {
         player.pressedKey.right = true;
         break;
       case "ArrowUp":
-        const upSpd = 10;
+        const upSpd = 25;
         if (player.pos[1] + upSpd >= Player.UP_BOUND && !player.inJump) {
           player.inJump = true;
-          player.vel[1] -= 15;
+          player.vel[1] -= upSpd;
         }
         break;
       case " ":
@@ -219,6 +225,16 @@ class GameView {
     const elapsed = currentTime - this.gameTime;
     const formattedTime = (elapsed / 1000).toFixed(3);
     this.timeDisplay.innerText = formattedTime;
+  }
+
+  getGameEndStat(currentTime) {
+    const elapsed = currentTime - this.gameTime;
+    const gameStat = {
+      runTime: elapsed,
+      score: this.game.score,
+      killCount: this.game.killCount,
+    } 
+    return gameStat
   }
 }
 
