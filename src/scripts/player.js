@@ -21,7 +21,7 @@ class Player extends MovingObject {
     args.hurtRight = PlayerSprites.hurtRight;
     args.width = 32;
     args.height = 38;
-    args.health = 2;
+    args.health = 20;
     args.type = "player";
     args.dir = "right";
     super(args);
@@ -57,14 +57,12 @@ class Player extends MovingObject {
       this.vel[0] = -spd;
     } else {
       this.vel[0] = 0;
-      console.log(this.game.scrollOffset);
-      // 1630 * 1000 /60
-      if (this.pressedKey.right && this.game.scrollOffset < 5500) {
-        this.img = this.runRight;
+      if (this.pressedKey.right && this.game.scrollOffset < 5300) {
+        // this.img = this.runRight;
         this.game.scrollOffset += 1;
         this.game.Scroll(this.dir, delta);
       } else if (this.pressedKey.left && this.game.scrollOffset > 0) {
-        this.img = this.runLeft;
+        // this.img = this.runLeft;
         this.game.scrollOffset -= 1;
         this.game.Scroll(this.dir, delta);
       }

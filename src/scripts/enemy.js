@@ -95,7 +95,7 @@ class Enemy extends MovingObject {
         !this.inJump &&
         playerY < enemyY - 75 + (this.game.player.dHeight - this.dHeight)
       ) {
-        const jumpHeight = 12;
+        const jumpHeight = 27;
         this.vel[1] = -jumpHeight;
         this.inJump = true;
       }

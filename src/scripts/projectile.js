@@ -49,7 +49,8 @@ class Projectile extends MovingObject {
   update(delta) {
     super.update(delta);
     const dX = this.pos[0];
-    this.travelDist += this.vel[0];
+    const velocityScale = delta / (1000 / 60);
+    this.travelDist += this.vel[0] * velocityScale
     if (Math.abs(this.travelDist) >= this.maxDist || this.health === 0) {
       this.game.remove(this);
     }

@@ -1,7 +1,7 @@
 const IFRAME = 2500; // 2.5 second iframe
 const ENEMY_IFRAME = 1000; // 1 second iframe for enemy
 class MovingObject {
-  static GRAVITY = 0.5;
+  static GRAVITY = 2;
 
   constructor(args) {
     this.img = args.img;
@@ -75,15 +75,15 @@ class MovingObject {
       // this.pos[1] += this.vel[1];
 
       const velocityScale = delta / (1000 / 60);
+      
       const offsetX = this.vel[0] * velocityScale;
       const offsetY = this.vel[1] * velocityScale;
-
       this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
       if (
-        this.pos[1] + this.dHeight + this.vel[1] < this.game.screenHeight &&
+        this.pos[1] + this.dHeight + offsetY + MovingObject.GRAVITY < this.game.screenHeight - 80 &&
         this.type !== "projectile"
       ) {
-        this.vel[1] += MovingObject.GRAVITY;
+        this.vel[1] += MovingObject.GRAVITY * velocityScale;
       } else {
         this.vel[1] = 0;
       }
@@ -95,6 +95,9 @@ class MovingObject {
         this.type === "player"
       ) {
         this.pos[0] = this.game.screenWidth - this.dWidth;
+      }
+      if (this.pos[1] >= this.game.screenHeight - 80) {
+        this.pos[1] = this.game.screenHeight - 80
       }
     }
   }

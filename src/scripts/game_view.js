@@ -23,7 +23,7 @@ class GameView {
     this.scoreTimeInc = 200;
     this.scoreInc = this.timeScore();
     this.gameTime = 0;
-    this.endStat = {}
+    this.endStat = {};
   }
 
   timeScore() {
@@ -62,13 +62,29 @@ class GameView {
   }
 
   executeGameEnd() {
-    // this.unbindKeyHandlers();
     const btn = document.querySelector("#game-start-btn");
     const msg = document.querySelector("#welcome-msg");
     const menu = document.querySelector("#gameModal");
     msg.innerText = "Hope you enjoyed playing. Another round?";
     btn.innerText = "Restart Game";
-    menu.style.display = "flex";
+    // menu.style.display = "flex";
+    this.setGameOverStat();
+    const gameOverScreen = document.querySelector("#game-over-screen");
+    gameOverScreen.style.display = "flex";
+  }
+
+  setGameOverStat() {
+    const stats = this.gameStat;
+    const endCount = document.querySelector("#game-over-enemy-count");
+    const endTime = document.querySelector("#game-over-time");
+    const endScore = document.querySelector("#game-over-score");
+    endCount.innerText = stats.killCount;
+    const runTimeSeconds = Math.floor(stats.runTime); // Get the integer part of the runTime
+    const minutes = Math.floor(runTimeSeconds / 60); // Calculate the minutes
+    const seconds = runTimeSeconds % 60; // Calculate the seconds
+
+    endTime.innerText = `${minutes} m : ${seconds} s`;
+    endScore.innerText = `${stats.score} + Pt`;
   }
 
   animate(currentTime) {
@@ -87,7 +103,7 @@ class GameView {
     // }
 
     this.game.draw(this.ctx);
-    if(!this.game.isGameEnd) {
+    if (!this.game.isGameEnd) {
       this.updateGameTime(currentTime);
       this.updateScore(currentTime);
       this.game.step(elapsed);
@@ -95,12 +111,11 @@ class GameView {
       this.updateEnemyCount();
       this.game.checkGameEnd();
       if (this.game.isGameEnd) {
-        this.gameStat = this.getGameEndStat(currentTime)
-        this.unbindKeyHandlers()
+        this.gameStat = this.getGameEndStat(currentTime);
+        this.unbindKeyHandlers();
       }
     }
     this.lastFrameTime = performance.now();
-    
 
     reqID = requestAnimationFrame(this.animate);
   }
@@ -111,7 +126,7 @@ class GameView {
     document.addEventListener("keydown", this.boundHandleKeyDown);
     document.addEventListener("keyup", this.boundHandleKeyUp);
   }
-  
+
   unbindKeyHandlers() {
     document.removeEventListener("keydown", this.boundHandleKeyDown);
     document.removeEventListener("keyup", this.boundHandleKeyUp);
@@ -136,7 +151,7 @@ class GameView {
         player.pressedKey.right = true;
         break;
       case "ArrowUp":
-        const upSpd = 25;
+        const upSpd = 27;
         if (player.pos[1] + upSpd >= Player.UP_BOUND && !player.inJump) {
           player.inJump = true;
           player.vel[1] -= upSpd;
@@ -230,11 +245,11 @@ class GameView {
   getGameEndStat(currentTime) {
     const elapsed = currentTime - this.gameTime;
     const gameStat = {
-      runTime: elapsed,
+      runTime: elapsed/1000,
       score: this.game.score,
       killCount: this.game.killCount,
-    } 
-    return gameStat
+    };
+    return gameStat;
   }
 }
 
