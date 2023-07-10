@@ -15,7 +15,7 @@ class MenuHandler {
         this.difficultySelector = document.querySelector(".game-diff-levels");
         
         this.bgm = document.getElementById("gameBGM");
-        this.audioToggle = document.querySelector(".fa-play")
+        this.audioToggle = document.querySelector(".fa-music")
 
         this.startGameBtn = document.querySelector("#game-start-btn");
         this.startGame = this.startGame.bind(this);

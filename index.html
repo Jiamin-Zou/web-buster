@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +11,7 @@
     <script src="dist/main.js"></script>
     <title>Web Buster!</title>
 </head>
+
 <body>
     <audio id="gameBGM" src="src/assets/sounds/MMBN_Theme.mp3" loop></audio>
     <div class="modal" id="gameModal">
@@ -23,7 +25,7 @@
                 <li class="key"><span>Space Bar</span> to Shoot</li>
                 <li class="key">Note you have <span>2.5 seconds of invinciblity</span> frame upon getting hurt</li>
             </div>
-            
+
             <div class="difficulty-ctn">
                 <div class="diff-select-header">
                     Select Difficulty
@@ -38,7 +40,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="main-container">
 
         <div class="header">
@@ -46,7 +48,7 @@
         </div>
 
         <div class="body-container">
-            
+
 
             <div class="left-container">
 
@@ -58,25 +60,38 @@
                     <div id="player-hp-bar"></div>
                 </div>
 
-                <div class="game-difficulty-display">
-                    <p>Difficulty:</p>
-                    <div id="game-difficulty"></div>
-                </div>
-
-                <div class="enemy-count-display">
-                    <p>Enemy Count:</p>
-                    <div id="enemy-counts"></div>
+                <div class="game-stat-container">
+                    <div class="enemy-count-display">
+                        <p>Enemies Defeated:</p>
+                        <div id="enemy-counts">0</div>
+                    </div>
+                    <div class="game-difficulty-display">
+                        <p>Difficulty:</p>
+                        <div id="game-difficulty"></div>
+                    </div>
                 </div>
 
             </div>
 
-            
-            
+
+
             <div class="game-container">
-                <canvas id="canvas"></canvas>
+                <div class="score-count-display">
+                    <p>Score:</p>
+                    <div id="score-count">0</div>
+                </div>
+                <div class="game-time-display">
+                    <p>Time:</p>
+                    <div class="game-time-sub-container">
+                        <div id="game-time">0</div>
+                        <span> s</span>
+                    </div>
+                </div>
+                <canvas id="canvas">
+                </canvas>
             </div>
 
-            
+
             <div class="right-container">
 
                 <div class="links">
@@ -87,7 +102,7 @@
                     </div>
 
                     <div class="bgm-toggle">
-                        <div class="fa-solid fa-play"></div>
+                        <div class="fa-solid fa-music"></div>
                         <p class="audio-display">Play</p>
                     </div>
 
@@ -113,10 +128,11 @@
 
 
         </div>
-        
+
 
     </div>
 </body>
+
 </html>
 
 <!-- <div class="links">

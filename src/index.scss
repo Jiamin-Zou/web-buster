@@ -3,32 +3,36 @@
 @import "./styles/page.scss";
 
 @font-face {
-    font-family: ThaleahFat;
-    src: url(../src/assets/font/ThaleahFat.ttf);
+  font-family: ThaleahFat;
+  src: url(../src/assets/font/ThaleahFat.ttf);
 }
 
 $color: rgb(18, 241, 241);
 
 $game-font: ThaleahFat;
-
-body {
-    background: url("../src/assets/images/webpage/background.png") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    font-family: $game-font;
+html{
+  min-width: 1080px;
 }
 
-#canvas{
-    background-color: rgb(18, 241, 241);
-    background-color: rgba($color: #088d7b9c, $alpha: 0.5);
-    border-radius: 10px;
-    border: 8px ridge navajowhite;
-    // border-top: 0px;
+body {
+  background: url("../src/assets/images/webpage/background.png") no-repeat
+    center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  font-family: $game-font;
+}
 
-    // width: 800px;
-    // height: 500px;
+#canvas {
+  background-color: rgb(18, 241, 241);
+  background-color: rgba($color: #088d7b9c, $alpha: 0.5);
+  border-radius: 10px;
+  border: 8px ridge navajowhite;
+  // border-top: 0px;
+
+  // width: 800px;
+  // height: 500px;
 }
