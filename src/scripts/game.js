@@ -130,7 +130,7 @@ class Game {
   }
 
   addEnemy() {
-    if (this.enemies.length <= 3) {
+    if (this.enemies.length <= 5) {
       const playerX = this.player.pos[0];
       const mid = this.screenWidth / 2;
       let x1, x2;
