@@ -57,15 +57,14 @@ class Player extends MovingObject {
       this.vel[0] = -spd;
     } else {
       this.vel[0] = 0;
-      console.log(this.game.scrollOffset)
-      if (this.pressedKey.right && this.game.scrollOffset < 1630) {
-        this.img = this.runRight;
+      if (this.pressedKey.right && this.game.scrollOffset < 5300) {
+        // this.img = this.runRight;
         this.game.scrollOffset += 1;
-        this.game.Scroll(this.dir);
+        this.game.Scroll(this.dir, delta);
       } else if (this.pressedKey.left && this.game.scrollOffset > 0) {
-        this.img = this.runLeft;
+        // this.img = this.runLeft;
         this.game.scrollOffset -= 1;
-        this.game.Scroll(this.dir);
+        this.game.Scroll(this.dir, delta);
       }
     }
 
@@ -115,7 +114,7 @@ class Player extends MovingObject {
       new Projectile(args, this);
       this.game.shootSFX.currentTime = 0;
       this.game.shootSFX.play();
-      
+
       this.shootCooldown = true;
     }
   }

@@ -81,9 +81,9 @@ class Game {
   }
 
   createFloor(img, width, height) {
-    let x = -500;
+    let x = -700;
     const y = this.screenHeight - 80;
-    while (x < 11000) {
+    while (x < 12500) {
       const pos = [x, y];
       const args = {
         img: img,
@@ -94,7 +94,7 @@ class Game {
       };
       const floor = new Platform(args);
       this.platforms.push(floor);
-      x += width;
+      x += width - 1;
     }
   }
 
@@ -153,7 +153,7 @@ class Game {
     }
   }
 
-  Scroll(dir) {
+  Scroll(dir, delta) {
     // dir = player moving direction
     //everything should move the opposite direction of player movement
     let spd = 0;
@@ -166,6 +166,9 @@ class Game {
         spd = -this.player.speed;
         break;
     }
+
+    const velocityScale = delta / (1000 / 60);
+    spd *= velocityScale;
     this.backgrounds.forEach((background) => {
       switch (background.layer) {
         case 0:
@@ -209,7 +212,7 @@ class Game {
       this.updateAllMovingUpjects(delta);
       this.checkCollision();
     }
-    this.checkOnPlatform();
+    this.checkOnPlatform(delta);
   }
 
   draw(ctx) {
@@ -252,12 +255,16 @@ class Game {
     });
   }
 
-  checkOnPlatform() {
+  checkOnPlatform(delta) {
     this.platforms.forEach((platform) => {
       this.allMovingObjects().forEach((obj) => {
-        if (Util.isOnPlatform(obj, platform)) {
+        if (Util.isOnPlatform(obj, platform, delta)) {
           obj.inJump = false;
           obj.vel[1] = 0;
+          obj.pos[1] = platform.pos[1] - obj.dHeight 
+        }
+        if (obj.pos[1] >= this.screenHeight - 80) {
+          obj.pos[1] = this.screenHeight - 80
         }
       });
     });
@@ -338,12 +345,24 @@ class Game {
   handleEnemyKill() {
     this.killCount += 1;
     const killScore = 1000 * this.difficulty;
-    const bonusKillScore = 500 * this.difficulty;
+    const bonusKillScore = 300 * this.difficulty;
     const hpOnKillCount = 4 - this.difficulty;
     this.score += killScore;
     if (this.killCount % hpOnKillCount === 0 && this.player.health < 20) {
       this.player.health += 1;
-      this.score += bonusKillScore;
+      // this.score += bonusKillScore;
+    }
+
+    if (this.killCount % 100 === 0) {
+      this.score += bonusKillScore * 10
+    } else if (this.killCount % 50 === 0) {
+      this.score += bonusKillScore * 5
+    } else if ( this.killCount % 25 === 0) {
+      this.score += bonusKillScore * 2.5
+    } else if ( this.killCount % 10 === 0) {
+      this.score += bonusKillScore * 1.5
+    } else if ( this.killCount % 5 === 0) {
+      this.score += bonusKillScore * 1
     }
   }
 

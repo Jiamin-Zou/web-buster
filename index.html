@@ -19,7 +19,8 @@
             <span class="close-game-menu">&times;</span>
             <h2 id="welcome-msg">Welcome to <span>Web Buster</span>, hope you enjoy!</h2>
             <div id="instructions">
-                <h2>Defeat all the enemies to clear the game!</h2>
+                <!-- <h2>Defeat all the enemies to clear the game!</h2> -->
+                <h2>Kill enemies to heal health. Survive as long as you can !</h2>
                 <li class="key"><span>Up Arrow</span> to jump</li>
                 <li class="key"><span>Left / Right</span> to move</li>
                 <li class="key"><span>Space Bar</span> to Shoot</li>
@@ -85,6 +86,21 @@
                     <div class="game-time-sub-container">
                         <div id="game-time">0</div>
                         <span> s</span>
+                    </div>
+                </div>
+                <div class="game-over-screen" id="game-over-screen">
+                    <div class="game-over-content-wrapper">
+                        <h3 class="game-over-content">Game Over ...</h3>
+                        <div class="game-over-content stat">
+                            <div class="summary">Summary:</div>
+                            <div class="separator"><hr /></div>
+                            <ul class="game-over-stats">
+                                <li><span class="info-field">Enemies defeated:</span><span id="game-over-enemy-count" class="stat-info">0</span></li>
+                                <li><span class="info-field">Time:</span><span id="game-over-time" class="stat-info">0 m 0 s</span></li>
+                                <li><span class="info-field">Score:</span><span id="game-over-score" class="stat-info">0 Pt</span></li>
+                            </ul>
+                        </div>
+                        <div class="game-over-content btn"><button id="game-over-to-menu">Menu</button></div>
                     </div>
                 </div>
                 <canvas id="canvas">

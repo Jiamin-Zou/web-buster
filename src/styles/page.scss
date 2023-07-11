@@ -43,7 +43,7 @@ $title-shadow: 4px 4px orange;
       font-size: 30px;
       width: 20%;
       margin: 0 15px;
-      min-width: 80px;
+      min-width: 100px;
       max-width: 200px;
       display: flex;
       flex-direction: column;
@@ -169,6 +169,90 @@ $title-shadow: 4px 4px orange;
           span {
             justify-self: left;
           }
+        }
+      }
+
+      .game-over-screen {
+        position: absolute;
+        height: 400px;
+        top: calc(50% - 200px + 8px);
+        left: 8px;
+        width: calc(100% - 16px);
+        background-color: rgba(0, 0, 0, 0.7);
+        box-sizing: border-box;
+        color: white;
+        border: 2px solid white;
+        // display: flex;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        .game-over-content-wrapper {
+          box-sizing: border-box;
+          width: 80%;
+          height: 90%;
+          padding: 30px;
+          font-size: 26px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          // text-align: left;
+          text-shadow: 4px 4px teal;
+          h3 {
+            font-size: 50px;
+            color: red;
+            text-shadow: 2px 2px rgba(255, 255, 255, 0.87);
+          }
+        }
+        .game-over-content {
+          display: flex;
+          flex-direction: column;
+          width: 80%;
+        }
+
+        .game-over-content.stat {
+          text-align: left;
+          .summary {
+            font-size: 35px;
+          }
+          li {
+            font-size: 28px;
+            display: flex;
+            justify-content: space-between;
+            span.stat-info {
+              color: red;
+              // text-shadow: 1px 1px rgba(255, 255, 255, 0.87);
+            }
+          }
+        }
+
+        .game-over-content.btn {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+        }
+
+        button {
+          border: none;
+          background: none;
+          font-family: inherit;
+          color: white;
+          width: 120px;
+          padding: 8px;
+          font-size: 35px;
+          font-weight: double;
+          border-radius: 20px;
+          border: 2px solid blue;
+          text-shadow: 4px 4px blue;
+          box-shadow: 5px 5px rgba($color: #130f0f, $alpha: 0.5);
+          background-color: rgba($color: #3e868f, $alpha: 0.5);
+        }
+        button:hover{
+          background-color: rgba($color: #ffffffe7, $alpha: 1.0);
+          color: teal;
+          text-shadow: 4px 4px orange;
+          cursor: pointer;
         }
       }
     }
