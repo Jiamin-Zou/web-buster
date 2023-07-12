@@ -238,13 +238,15 @@ class GameView {
       if (runTime / 1000 >= 300) {
         increment *= 2;
       } else if (runTime >= 120) {
-        increment *= 1.4;
+        increment *= 1.5;
       } else if (runTime >= 60) {
         increment *= 1.2;
       } else if (runTime >= 30) {
         increment *= 1.1;
       }
       this.game.score += increment * killCountFactor + killCountFactor;
+      this.gamescore = Math.round(this.gamescore)
+      // in case of a decimal
       this.scoreTime = performance.now();
     }
     this.scoreDisplay.innerText = this.game.score;

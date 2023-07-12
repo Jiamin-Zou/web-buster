@@ -150,6 +150,36 @@ class Game {
       };
       const enemy = new Enemy(args, this.difficulty);
       this.enemies.push(enemy);
+
+      let randPos2, randPos3;
+
+      if (this.backgrounds[0].pos[0] > 3000) {
+        randPos2 = Util.randEnemyPos(-100, -350);
+        randPos3 = Util.randEnemyPos(-100, -350);
+      } else {
+        randPos2 = Util.randEnemyPos(
+          this.screenWidth + 100,
+          this.screenWidth + 350
+        );
+        randPos3 = Util.randEnemyPos(
+          this.screenWidth + 100,
+          this.screenWidth + 350
+        );
+      }
+
+      const args2 = {
+        pos: randPos2,
+        game: this,
+      };
+      const args3 = {
+        pos: randPos3,
+        game: this,
+      };
+
+      const enemy2 = new Enemy(args2, this.difficulty);
+      this.enemies.push(enemy2);
+      const enemy3 = new Enemy(args3, this.difficulty);
+      this.enemies.push(enemy3);
     }
   }
 
@@ -261,10 +291,10 @@ class Game {
         if (Util.isOnPlatform(obj, platform, delta)) {
           obj.inJump = false;
           obj.vel[1] = 0;
-          obj.pos[1] = platform.pos[1] - obj.dHeight 
+          obj.pos[1] = platform.pos[1] - obj.dHeight;
         }
         if (obj.pos[1] >= this.screenHeight - 80) {
-          obj.pos[1] = this.screenHeight - 80
+          obj.pos[1] = this.screenHeight - 80;
           obj.vel[1] = 0;
           obj.inJump = false;
         }
@@ -356,15 +386,15 @@ class Game {
     }
 
     if (this.killCount % 100 === 0) {
-      this.score += bonusKillScore * 10
+      this.score += bonusKillScore * 10;
     } else if (this.killCount % 50 === 0) {
-      this.score += bonusKillScore * 5
-    } else if ( this.killCount % 25 === 0) {
-      this.score += bonusKillScore * 2.5
-    } else if ( this.killCount % 10 === 0) {
-      this.score += bonusKillScore * 1.5
-    } else if ( this.killCount % 5 === 0) {
-      this.score += bonusKillScore * 1
+      this.score += bonusKillScore * 5;
+    } else if (this.killCount % 25 === 0) {
+      this.score += bonusKillScore * 2.5;
+    } else if (this.killCount % 10 === 0) {
+      this.score += bonusKillScore * 1.5;
+    } else if (this.killCount % 5 === 0) {
+      this.score += bonusKillScore * 1;
     }
   }
 
