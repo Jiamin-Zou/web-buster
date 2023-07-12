@@ -20,7 +20,7 @@ class GameView {
     this.lastFrameTime = 0;
     this.frameDuration = 1000 / 60;
     this.scoreTime = 0;
-    this.scoreTimeInc = 200;
+    this.scoreTimeInc = 150;
     this.scoreInc = this.timeScore();
     this.gameTime = 0;
     this.endStat = {};
@@ -84,7 +84,7 @@ class GameView {
     const seconds = runTimeSeconds % 60; // Calculate the seconds
 
     endTime.innerText = `${minutes} m : ${seconds} s`;
-    endScore.innerText = `${stats.score} + Pt`;
+    endScore.innerText = `${stats.score} Pt`;
   }
 
   animate(currentTime) {
@@ -229,8 +229,22 @@ class GameView {
 
   updateScore(currentTime) {
     const elapsed = currentTime - this.scoreTime;
+    const runTime = (currentTime - this.gameTime) / 1000;
+    const killCountFactor = Math.floor(this.game.killCount / 5) + 1;
+    let increment = this.scoreInc;
+    // console.log(runTime);
+    console.log(killCountFactor)
     if (elapsed > this.scoreTimeInc) {
-      this.game.score += this.scoreInc;
+      if (runTime / 1000 >= 300) {
+        increment *= 2;
+      } else if (runTime >= 120) {
+        increment *= 1.4;
+      } else if (runTime >= 60) {
+        increment *= 1.2;
+      } else if (runTime >= 30) {
+        increment *= 1.1;
+      }
+      this.game.score += increment * killCountFactor + killCountFactor;
       this.scoreTime = performance.now();
     }
     this.scoreDisplay.innerText = this.game.score;
@@ -245,7 +259,7 @@ class GameView {
   getGameEndStat(currentTime) {
     const elapsed = currentTime - this.gameTime;
     const gameStat = {
-      runTime: elapsed/1000,
+      runTime: elapsed / 1000,
       score: this.game.score,
       killCount: this.game.killCount,
     };

@@ -265,6 +265,8 @@ class Game {
         }
         if (obj.pos[1] >= this.screenHeight - 80) {
           obj.pos[1] = this.screenHeight - 80
+          obj.vel[1] = 0;
+          obj.inJump = false;
         }
       });
     });

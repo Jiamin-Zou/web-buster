@@ -57,12 +57,12 @@ class Player extends MovingObject {
       this.vel[0] = -spd;
     } else {
       this.vel[0] = 0;
-      if (this.pressedKey.right && this.game.scrollOffset < 5300) {
-        // this.img = this.runRight;
+      const bgPos = this.game.backgrounds[0].pos[0]
+      // if (this.pressedKey.right && this.game.scrollOffset < 5300) {
+      if (this.pressedKey.right && bgPos > -6500) {
         this.game.scrollOffset += 1;
         this.game.Scroll(this.dir, delta);
       } else if (this.pressedKey.left && this.game.scrollOffset > 0) {
-        // this.img = this.runLeft;
         this.game.scrollOffset -= 1;
         this.game.Scroll(this.dir, delta);
       }
