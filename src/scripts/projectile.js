@@ -3,18 +3,18 @@ import * as ProjectileSprites from "./projectileSpriteInfo.js";
 
 class Projectile extends MovingObject {
   constructor(args, shooter) {
+    let spd = shooter.speed + 0.5;
+    if (shooter.type === "enemy") spd = shooter.speed - 0.5;
     switch (args.dir) {
       case "left":
         args.img = ProjectileSprites.leftShot;
-        args.vel = [-6, 0];
-        if (shooter.type === "enemy") args.vel = [-3, 0];
+        spd *= -1;
         break;
       case "right":
         args.img = ProjectileSprites.rightShot;
-        args.vel = [6, 0];
-        if (shooter.type === "enemy") args.vel = [3, 0];
         break;
     }
+    args.vel = [spd, 0];
     args.pos = [0, 0];
     args.width = 16;
     args.height = 16;
@@ -22,6 +22,8 @@ class Projectile extends MovingObject {
     // need to pass in pos args
     super(args);
     this.shooter = shooter;
+    console.log(this.shooter);
+    console.log(this.vel);
     this.travelDist = 0;
     this.maxDist = 300;
     if (this.shooter.type === "player") this.maxDist = 415;
@@ -48,9 +50,8 @@ class Projectile extends MovingObject {
 
   update(delta) {
     super.update(delta);
-    const dX = this.pos[0];
     const velocityScale = delta / (1000 / 60);
-    this.travelDist += this.vel[0] * velocityScale
+    this.travelDist += this.vel[0] * velocityScale;
     if (Math.abs(this.travelDist) >= this.maxDist || this.health === 0) {
       this.game.remove(this);
     }
