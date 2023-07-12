@@ -232,8 +232,6 @@ class GameView {
     const runTime = (currentTime - this.gameTime) / 1000;
     const killCountFactor = Math.floor(this.game.killCount / 5) + 1;
     let increment = this.scoreInc;
-    // console.log(runTime);
-    console.log(killCountFactor)
     if (elapsed > this.scoreTimeInc) {
       if (runTime / 1000 >= 300) {
         increment *= 2;

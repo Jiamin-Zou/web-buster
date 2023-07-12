@@ -22,8 +22,6 @@ class Projectile extends MovingObject {
     // need to pass in pos args
     super(args);
     this.shooter = shooter;
-    console.log(this.shooter);
-    console.log(this.vel);
     this.travelDist = 0;
     this.maxDist = 300;
     if (this.shooter.type === "player") this.maxDist = 415;
