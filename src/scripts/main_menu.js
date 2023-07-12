@@ -19,8 +19,13 @@ class MenuHandler {
     this.bgm = document.getElementById("gameBGM");
     this.audioToggle = document.querySelector(".fa-music");
 
+    this.toUnmute = document.querySelector(".fa-volume-xmark");
+    this.toMute = document.querySelector(".fa-volume-high");
+    this.muteText = document.querySelector(".mute-display");
+
     this.startGameBtn = document.querySelector("#game-start-btn");
     this.startGame = this.startGame.bind(this);
+    this.handleBGMPlay = this.handleBGMPlay.bind(this)
     this.bindEventListeners();
   }
 
@@ -45,26 +50,43 @@ class MenuHandler {
       }
     });
 
-    this.audioToggle.addEventListener("click", () => {
-      let audioControl = document.querySelector(".audio-display");
-      if (this.bgm.paused) {
-        this.bgm.play();
-        audioControl.innerText = "Pause";
-      } else {
-        this.bgm.pause();
-        audioControl.innerText = "Play";
-      }
+    this.audioToggle.addEventListener("click",this.handleBGMPlay);
+
+    this.toUnmute.addEventListener("click", () => {
+      this.muteText.innerText = "Mute";
+      this.toUnmute.style.display = "none";
+      this.toMute.style.display = "block";
+      this.handleBGMPlay()
+    });
+    this.toMute.addEventListener("click", () => {
+      this.muteText.innerText = "Unmute";
+      this.toMute.style.display = "none";
+      this.toUnmute.style.display = "block";
+      this.handleBGMPlay()
     });
 
     this.openModal.addEventListener("click", () => {
       this.modal.style.display = "flex";
     });
-    
+
     this.gameOverMenuBtn.addEventListener("click", () => {
-        this.modal.style.display = "flex";
-    })
+      this.modal.style.display = "flex";
+    });
   }
 
+  handleBGMPlay() {
+    let audioControl = document.querySelector(".audio-display");
+    if (this.bgm.paused) {
+      if (this.muteText.innerText === "Unmute") {
+        this.bgm.volume = 0.0;
+      } else this.bgm.volume = 0.5;
+      this.bgm.play();
+      audioControl.innerText = "Pause BGM";
+    } else {
+      this.bgm.pause();
+      audioControl.innerText = "Play BGM";
+    }
+  }
   startGame() {
     let difficulty = document.querySelector(".difficulty-selected").innerText;
     difficulty = parseInt(difficulty);

@@ -91,6 +91,13 @@ class Enemy extends MovingObject {
         Util.switchSprite(this, this.runRight);
         this.vel[0] = speed;
       }
+    } else {
+      this.vel[0] = 0;
+      if (playerX < enemyX) Util.switchSprite(this, this.idleLeft);
+      else Util.switchSprite(this, this.idleRight);
+    }
+
+    if (dist < this.chaseRange) {
       if (
         !this.inJump &&
         playerY < enemyY - 75 + (this.game.player.dHeight - this.dHeight)
@@ -99,22 +106,6 @@ class Enemy extends MovingObject {
         this.vel[1] = -jumpHeight;
         this.inJump = true;
       }
-
-      if (dist <= this.stopRange) {
-        this.vel[0] = 0;
-        if (this.dir === "left") {
-          Util.switchSprite(this, this.idleLeft);
-        } else {
-          Util.switchSprite(this, this.idleRight);
-        }
-      }
-    } else {
-      this.vel[0] = 0;
-      if (playerX < enemyX) Util.switchSprite(this, this.idleLeft);
-      else Util.switchSprite(this, this.idleRight);
-    }
-
-    if (dist < this.chaseRange) {
       this.shoot();
     }
 

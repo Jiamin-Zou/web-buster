@@ -57,7 +57,7 @@ class Player extends MovingObject {
       this.vel[0] = -spd;
     } else {
       this.vel[0] = 0;
-      const bgPos = this.game.backgrounds[0].pos[0]
+      const bgPos = this.game.backgrounds[0].pos[0];
       // if (this.pressedKey.right && this.game.scrollOffset < 5300) {
       if (this.pressedKey.right && bgPos > -6500) {
         this.game.scrollOffset += 1;
@@ -112,8 +112,13 @@ class Player extends MovingObject {
         args.dir = this.dir;
       }
       new Projectile(args, this);
-      this.game.shootSFX.currentTime = 0;
-      this.game.shootSFX.play();
+      const mute =
+        document.querySelector(".mute-display").innerText === "Unmute";
+      if (!mute) {
+        this.game.shootSFX.currentTime = 0;
+        this.game.shootSFX.volume = 0.4;
+        this.game.shootSFX.play();
+      }
 
       this.shootCooldown = true;
     }
