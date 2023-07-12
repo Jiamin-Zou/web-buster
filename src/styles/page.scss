@@ -286,15 +286,17 @@ $title-shadow: 4px 4px orange;
       }
       .control {
         height: 280px;
+        justify-content: space-evenly;
       }
       .links {
         .link-contact {
-          font-size: 26px;
+          font-size: 32px;
           color: white;
+          text-shadow: 2px 2px 3px orange;
           margin-bottom: 15px;
         }
         p {
-          font-size: 22px;
+          font-size: 24px;
         }
       }
 

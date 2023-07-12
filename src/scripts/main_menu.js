@@ -25,7 +25,7 @@ class MenuHandler {
 
     this.startGameBtn = document.querySelector("#game-start-btn");
     this.startGame = this.startGame.bind(this);
-    this.handleBGMPlay = this.handleBGMPlay.bind(this)
+    this.handleBGMPlay = this.handleBGMPlay.bind(this);
     this.bindEventListeners();
   }
 
@@ -50,19 +50,25 @@ class MenuHandler {
       }
     });
 
-    this.audioToggle.addEventListener("click",this.handleBGMPlay);
+    this.audioToggle.addEventListener("click", this.handleBGMPlay);
 
     this.toUnmute.addEventListener("click", () => {
       this.muteText.innerText = "Mute";
       this.toUnmute.style.display = "none";
       this.toMute.style.display = "block";
-      this.handleBGMPlay()
+      let audioControl = document.querySelector(".audio-display");
+      this.bgm.play();
+      this.bgm.volume = 0.5;
+      audioControl.innerText = "Pause BGM";
     });
     this.toMute.addEventListener("click", () => {
       this.muteText.innerText = "Unmute";
       this.toMute.style.display = "none";
       this.toUnmute.style.display = "block";
-      this.handleBGMPlay()
+      let audioControl = document.querySelector(".audio-display");
+      this.bgm.pause();
+      this.bgm.volume = 0;
+      audioControl.innerText = "Play BGM";
     });
 
     this.openModal.addEventListener("click", () => {

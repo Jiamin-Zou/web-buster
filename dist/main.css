@@ -436,14 +436,16 @@ table {
 }
 .main-container .body-container .right-container .control {
   height: 280px;
+  justify-content: space-evenly;
 }
 .main-container .body-container .right-container .links .link-contact {
-  font-size: 26px;
+  font-size: 32px;
   color: white;
+  text-shadow: 2px 2px 3px orange;
   margin-bottom: 15px;
 }
 .main-container .body-container .right-container .links p {
-  font-size: 22px;
+  font-size: 24px;
 }
 .main-container .body-container .right-container p {
   color: white;
